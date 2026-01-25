@@ -19,7 +19,7 @@
     "build:api": "nest build api",
     "start:api": "node dist/apps/api/main",
     "start:dev:api": "nest start api --watch",
-    "start:api:debug": "nest start api --debug --watch",
+    "start:api:debug": "nest start api --debug --watch"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",
