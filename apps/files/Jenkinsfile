@@ -3,7 +3,7 @@ pipeline {
     agent any
     environment {
         ENV_TYPE = "production"
-        PORT = 4173
+        PORT = 4177
         NAMESPACE = "djintech-org"
         REGISTRY_HOSTNAME = "mariiaevd"
         PROJECT = "files-mono"
