@@ -7,6 +7,10 @@ async function bootstrap() {
     FilesModule,
     {
       transport: Transport.TCP,
+      options: {
+        host: '0.0.0.0',
+        port: Number( process.env.FILE_SERVICE_PORT || '4177'),
+      }
     },
   );
   await app.listen();
