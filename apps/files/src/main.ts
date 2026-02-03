@@ -14,5 +14,6 @@ async function bootstrap() {
     },
   );
   await app.listen();
+  console.log('Files TCP microservice listening on 4177');
 }
 bootstrap();
