@@ -15,11 +15,16 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/api/test/jest-e2e.json",
-
+   
     "build:api": "nest build api",
     "start:api": "node dist/apps/api/main",
     "start:dev:api": "nest start api --watch",
-    "start:api:debug": "nest start api --debug --watch"
+    "start:api:debug": "nest start api --debug --watch",
+
+    "build:files": "nest build files",
+    "start:files": "node dist/apps/files/main",
+    "start:dev:files": "nest start files --watch",
+    "start:files:debug": "nest start files --debug --watch"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",
