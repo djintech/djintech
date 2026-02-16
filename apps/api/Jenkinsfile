@@ -43,8 +43,7 @@ pipeline {
                        nvm install --lts
                        nvm use --lts
                        yarn install --frozen-lockfile
-                       export NODE_ENV=TEST
-                       yarn test:e2e
+                       npx dotenv -e .env.testing -- yarn test:e2e
                     '''
                 }
             }
