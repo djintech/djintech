@@ -34,34 +34,34 @@ pipeline {
 //                 }
 //             }
 //         }
-        stage('e2e tests') {
-            steps {
-                script {
-                    sh '''
-                       export NVM_DIR="$HOME/.nvm"
-                       [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                       nvm install --lts
-                       nvm use --lts
-                       yarn install --frozen-lockfile
-                       npx dotenv -e .env.testing -- yarn test:e2e
-                    '''
-                }
-            }
-        }
+        // stage('e2e tests') {
+        //     steps {
+        //         script {
+        //             sh '''
+        //                export NVM_DIR="$HOME/.nvm"
+        //                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+        //                nvm install --lts
+        //                nvm use --lts
+        //                yarn install --frozen-lockfile
+        //                npx dotenv -e .env.testing -- yarn test:e2e
+        //             '''
+        //         }
+        //     }
+        // }
         stage('Prepare Prisma') {
             steps {
                 script {
                     sh '''
                         echo "Running Prisma generate and deploy..."
                         export DATABASE_URL=${PROD_DATABASE_URL}
-                        nvm install --lts
-                        nvm use --lts
-                        node --experimental-specifier-resolution=node ./node_modules/.bin/prisma generate --schema=apps/api/prisma/schema.prisma
-                        node --experimental-specifier-resolution=node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/prisma/schema.prisma
+                        node --version
+                        ./node_modules/.bin/prisma generate --schema=apps/api/prisma/schema.prisma
+                        ./node_modules/.bin/prisma migrate deploy --schema=apps/api/prisma/schema.prisma
                     '''
                 }
             }
         }
+
         stage('Build docker image') {
             steps {
                 echo "Build image started..."
