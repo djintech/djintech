@@ -52,10 +52,12 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    echo "Running Prisma generate and deploy..."
-                    export DATABASE_URL=${PROD_DATABASE_URL}
-                    npx prisma generate --schema=apps/api/prisma/schema.prisma
-                    npx prisma migrate deploy --schema=apps/api/prisma/schema.prisma
+                        echo "Running Prisma generate and deploy..."
+                        export DATABASE_URL=${PROD_DATABASE_URL}
+                        nvm install --lts
+                        nvm use --lts
+                        node --experimental-specifier-resolution=node ./node_modules/.bin/prisma generate --schema=apps/api/prisma/schema.prisma
+                        node --experimental-specifier-resolution=node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/prisma/schema.prisma
                     '''
                 }
             }
