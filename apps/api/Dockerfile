@@ -30,6 +30,9 @@ RUN npm run build:${SERVICE}
 
 # Bind to all network interfaces so that it can be mapped to the host OS
 
+# Запуск prisma generate
+RUN npx prisma generate --schema=apps/api/prisma/schema.prisma
+
 EXPOSE ${PORT}
 
-CMD npm run 'start:api'
+CMD npx prisma migrate deploy --config=apps/api/prisma/prisma.config.ts && npm run 'start:api'

@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            Int   @id @default(autoincrement())
+  email         String  @unique
+  username      String  @unique
+  passwordHash  String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+
+  emailConfirmation EmailConfirmation?
+  passwordRecovery  PasswordRecovery?
+
+  @@map("users")
+}
+
+model EmailConfirmation {
+  id               Int   @id @default(autoincrement())
+  confirmationCode String
+  expirationDate   DateTime?
+  isConfirmed      Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  userId           Int      @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("emailConfirmations")
+}
+
+model PasswordRecovery {
+  id                     Int   @id @default(autoincrement())
+  recoveryCode           String
+  recoveryCodeExpireDate DateTime
+  alreadyChangePassword  Boolean  @default(false)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  userId                 Int      @unique
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("passwordRecoveries")
+}

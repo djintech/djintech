@@ -19,9 +19,10 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/*": [
-        "libs/*/src"
-      ]
+      "@src/*": ["apps/api/src/*"],
+      "@modules/*": ["apps/api/src/modules/*"],
+      "@core/*": ["apps/api/src/core/*"],
+      "@libs/*": ["libs/*"]
     }
   }
 }
