@@ -10,7 +10,6 @@ pipeline {
         SERVICE="api"
         REGISTRY = "registry.hub.docker.com"
         DEPLOYMENT_NAME = "gateway-api-deployment"
-        PROD_DATABASE_URL = "postgresql://neondb_owner:npg_SEJYrjbNn72d@ep-purple-sea-agkosg2u-pooler.c-2.eu-central-1.aws.neon.tech/gateway_db?sslmode=require&channel_binding=require"
         IMAGE_NAME = "${env.BUILD_ID}_${env.ENV_TYPE}_${env.GIT_COMMIT}"
         DOCKER_BUILD_NAME = "${env.REGISTRY_HOSTNAME}/${env.PROJECT}:${env.IMAGE_NAME}"
     }
@@ -48,20 +47,6 @@ pipeline {
                 }
             }
         }
-        stage('Prepare Prisma') {
-            steps {
-                script {
-                    sh '''
-                        echo "Running Prisma generate and deploy..."
-                        export DATABASE_URL=${PROD_DATABASE_URL}
-                        node --version
-                        ./node_modules/.bin/prisma generate --schema=apps/api/prisma/schema.prisma
-                        ./node_modules/.bin/prisma migrate deploy --schema=apps/api/prisma/schema.prisma
-                    '''
-                }
-            }
-        }
-
         stage('Build docker image') {
             steps {
                 echo "Build image started..."
