@@ -42,6 +42,8 @@ pipeline {
                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                        nvm install --lts
                        nvm use --lts
+                       yarn install --frozen-lockfile
+                       export NODE_ENV=testing
                        yarn test:e2e
                     '''
                 }
