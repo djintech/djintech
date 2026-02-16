@@ -35,4 +35,4 @@ RUN npx prisma generate --schema=apps/api/prisma/schema.prisma
 
 EXPOSE ${PORT}
 
-CMD npx prisma migrate deploy --schema=apps/api/prisma/schema.prisma && node dist/main.js && npm run 'start:api'
+CMD npx prisma migrate deploy --config=apps/api/prisma/prisma.config.ts && npm run 'start:api'
