@@ -76,6 +76,11 @@ spec:
                  secretKeyRef:
                    name: gateway-api-production-config-secret
                    key: EMAIL_PORT
+             - name: CORS_ORIGIN
+               valueFrom:
+                 secretKeyRef:
+                   name: gateway-api-production-config-secret
+                   key: CORS_ORIGIN
              - name: NODE_ENV
                valueFrom:
                  secretKeyRef:

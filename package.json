@@ -14,7 +14,6 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e_test": "cross-env NODE_ENV=testing jest --config ./apps/api/test/jest-e2e.json",
     "test:e2e": "cross-env NODE_ENV=testing jest --config ./apps/api/test/jest-e2e.json --runInBand",
     "build:api": "nest build api",
     "start:api": "cross-env NODE_ENV=production node dist/apps/api/main.js",
@@ -27,7 +26,6 @@
     "prisma:api:generate": "prisma generate --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:generate:dev": "cross-env NODE_ENV=development dotenv -e .env.development -- prisma generate --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:migrate:dev": "cross-env NODE_ENV=development dotenv -e .env.development -- prisma migrate dev --config=apps/api/prisma/prisma.config.ts",
-    "prisma:api:migrate:deploy:prod": "cross-env NODE_ENV=production prisma migrate deploy --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:migrate:deploy:test": "cross-env NODE_ENV=testing  dotenv -e .env.testing -- prisma migrate deploy --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:studio:dev": "cross-env NODE_ENV=development prisma studio --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:studio:test": "cross-env NODE_ENV=testing prisma studio --config=apps/api/prisma/prisma.config.ts"
