@@ -1,0 +1,25 @@
+import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
+import { EmailService } from "../../email.service";
+import { UserRegisteredEvent } from "../../../user-accounts/domain/events/user-registered.event";
+
+// https://docs.nestjs.com/recipes/cqrs#events
+@EventsHandler(UserRegisteredEvent)
+export class SendConfirmationEmailWhenUserRegisteredEventHandler
+  implements IEventHandler<UserRegisteredEvent>
+{
+  constructor(private emailService: EmailService) {}
+
+  async handle(event: UserRegisteredEvent) {
+    // Ошибки в EventHandlers не могут быть пойманы фильтрами исключений:
+    // необходимо обрабатывать вручную
+    try {
+      await this.emailService.sendConfirmationEmail(
+        event.email,
+        event.confirmationCode,
+        event.emailExamples
+      );
+    } catch (e) {
+      console.error('send email', e);
+    }
+  }
+}
