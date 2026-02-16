@@ -15,7 +15,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e_test": "cross-env NODE_ENV=testing jest --config ./apps/api/test/jest-e2e.json",
-    "test:e2e": "cross-env NODE_ENV=TEST jest --config ./apps/api/test/jest-e2e.json --runInBand",
+    "test:e2e": "cross-env NODE_ENV=testing jest --config ./apps/api/test/jest-e2e.json --runInBand",
     "build:api": "nest build api",
     "start:api": "cross-env NODE_ENV=production node dist/apps/api/main.js",
     "start:dev:api": "cross-env NODE_ENV=development nest start api --watch",
