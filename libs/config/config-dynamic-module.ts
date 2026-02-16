@@ -10,6 +10,6 @@ export const configModule = (serviceName: ServiceName) =>
   isGlobal: true, //isGlobal делает модуль глобальным (автоматически регистрируется в каждый модуле)  
   ignoreEnvFile:
       process.env.NODE_ENV !== Environments.DEVELOPMENT && process.env.NODE_ENV !== Environments.TESTING,
-  envFilePath: getEnvFilePath(process.env.NODE_ENV as Environments),//envFilePaths,
+  envFilePath: getEnvFilePath(process.env.NODE_ENV as Environments),
   load: [() => configuration(serviceName)],
 });
