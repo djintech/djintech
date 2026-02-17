@@ -11,4 +11,5 @@
 export type * from './models/User'
 export type * from './models/EmailConfirmation'
 export type * from './models/PasswordRecovery'
+export type * from './models/Device'
 export type * from './commonInputTypes'

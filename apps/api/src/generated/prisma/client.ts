@@ -52,3 +52,8 @@ export type EmailConfirmation = Prisma.EmailConfirmationModel
  * 
  */
 export type PasswordRecovery = Prisma.PasswordRecoveryModel
+/**
+ * Model Device
+ * 
+ */
+export type Device = Prisma.DeviceModel

@@ -234,6 +234,7 @@ export type UserWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   emailConfirmation?: Prisma.XOR<Prisma.EmailConfirmationNullableScalarRelationFilter, Prisma.EmailConfirmationWhereInput> | null
   passwordRecovery?: Prisma.XOR<Prisma.PasswordRecoveryNullableScalarRelationFilter, Prisma.PasswordRecoveryWhereInput> | null
+  Device?: Prisma.DeviceListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -246,6 +247,7 @@ export type UserOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   emailConfirmation?: Prisma.EmailConfirmationOrderByWithRelationInput
   passwordRecovery?: Prisma.PasswordRecoveryOrderByWithRelationInput
+  Device?: Prisma.DeviceOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -261,6 +263,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   emailConfirmation?: Prisma.XOR<Prisma.EmailConfirmationNullableScalarRelationFilter, Prisma.EmailConfirmationWhereInput> | null
   passwordRecovery?: Prisma.XOR<Prisma.PasswordRecoveryNullableScalarRelationFilter, Prisma.PasswordRecoveryWhereInput> | null
+  Device?: Prisma.DeviceListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -300,6 +303,7 @@ export type UserCreateInput = {
   deletedAt?: Date | string | null
   emailConfirmation?: Prisma.EmailConfirmationCreateNestedOneWithoutUserInput
   passwordRecovery?: Prisma.PasswordRecoveryCreateNestedOneWithoutUserInput
+  Device?: Prisma.DeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -312,6 +316,7 @@ export type UserUncheckedCreateInput = {
   deletedAt?: Date | string | null
   emailConfirmation?: Prisma.EmailConfirmationUncheckedCreateNestedOneWithoutUserInput
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedCreateNestedOneWithoutUserInput
+  Device?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -323,6 +328,7 @@ export type UserUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailConfirmation?: Prisma.EmailConfirmationUpdateOneWithoutUserNestedInput
   passwordRecovery?: Prisma.PasswordRecoveryUpdateOneWithoutUserNestedInput
+  Device?: Prisma.DeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -335,6 +341,7 @@ export type UserUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailConfirmation?: Prisma.EmailConfirmationUncheckedUpdateOneWithoutUserNestedInput
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedUpdateOneWithoutUserNestedInput
+  Device?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -457,6 +464,20 @@ export type UserUpdateOneRequiredWithoutPasswordRecoveryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPasswordRecoveryInput, Prisma.UserUpdateWithoutPasswordRecoveryInput>, Prisma.UserUncheckedUpdateWithoutPasswordRecoveryInput>
 }
 
+export type UserCreateNestedOneWithoutDeviceInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDeviceInput, Prisma.UserUncheckedCreateWithoutDeviceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDeviceInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutDeviceNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDeviceInput, Prisma.UserUncheckedCreateWithoutDeviceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDeviceInput
+  upsert?: Prisma.UserUpsertWithoutDeviceInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDeviceInput, Prisma.UserUpdateWithoutDeviceInput>, Prisma.UserUncheckedUpdateWithoutDeviceInput>
+}
+
 export type UserCreateWithoutEmailConfirmationInput = {
   email: string
   username: string
@@ -465,6 +486,7 @@ export type UserCreateWithoutEmailConfirmationInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   passwordRecovery?: Prisma.PasswordRecoveryCreateNestedOneWithoutUserInput
+  Device?: Prisma.DeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEmailConfirmationInput = {
@@ -476,6 +498,7 @@ export type UserUncheckedCreateWithoutEmailConfirmationInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedCreateNestedOneWithoutUserInput
+  Device?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEmailConfirmationInput = {
@@ -502,6 +525,7 @@ export type UserUpdateWithoutEmailConfirmationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordRecovery?: Prisma.PasswordRecoveryUpdateOneWithoutUserNestedInput
+  Device?: Prisma.DeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEmailConfirmationInput = {
@@ -513,6 +537,7 @@ export type UserUncheckedUpdateWithoutEmailConfirmationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedUpdateOneWithoutUserNestedInput
+  Device?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPasswordRecoveryInput = {
@@ -523,6 +548,7 @@ export type UserCreateWithoutPasswordRecoveryInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   emailConfirmation?: Prisma.EmailConfirmationCreateNestedOneWithoutUserInput
+  Device?: Prisma.DeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPasswordRecoveryInput = {
@@ -534,6 +560,7 @@ export type UserUncheckedCreateWithoutPasswordRecoveryInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   emailConfirmation?: Prisma.EmailConfirmationUncheckedCreateNestedOneWithoutUserInput
+  Device?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPasswordRecoveryInput = {
@@ -560,6 +587,7 @@ export type UserUpdateWithoutPasswordRecoveryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailConfirmation?: Prisma.EmailConfirmationUpdateOneWithoutUserNestedInput
+  Device?: Prisma.DeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPasswordRecoveryInput = {
@@ -571,8 +599,100 @@ export type UserUncheckedUpdateWithoutPasswordRecoveryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailConfirmation?: Prisma.EmailConfirmationUncheckedUpdateOneWithoutUserNestedInput
+  Device?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
+export type UserCreateWithoutDeviceInput = {
+  email: string
+  username: string
+  passwordHash: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  emailConfirmation?: Prisma.EmailConfirmationCreateNestedOneWithoutUserInput
+  passwordRecovery?: Prisma.PasswordRecoveryCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutDeviceInput = {
+  id?: number
+  email: string
+  username: string
+  passwordHash: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  emailConfirmation?: Prisma.EmailConfirmationUncheckedCreateNestedOneWithoutUserInput
+  passwordRecovery?: Prisma.PasswordRecoveryUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutDeviceInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDeviceInput, Prisma.UserUncheckedCreateWithoutDeviceInput>
+}
+
+export type UserUpsertWithoutDeviceInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDeviceInput, Prisma.UserUncheckedUpdateWithoutDeviceInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDeviceInput, Prisma.UserUncheckedCreateWithoutDeviceInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDeviceInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDeviceInput, Prisma.UserUncheckedUpdateWithoutDeviceInput>
+}
+
+export type UserUpdateWithoutDeviceInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailConfirmation?: Prisma.EmailConfirmationUpdateOneWithoutUserNestedInput
+  passwordRecovery?: Prisma.PasswordRecoveryUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDeviceInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailConfirmation?: Prisma.EmailConfirmationUncheckedUpdateOneWithoutUserNestedInput
+  passwordRecovery?: Prisma.PasswordRecoveryUncheckedUpdateOneWithoutUserNestedInput
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  Device: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Device?: boolean | UserCountOutputTypeCountDeviceArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDeviceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DeviceWhereInput
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -585,6 +705,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   deletedAt?: boolean
   emailConfirmation?: boolean | Prisma.User$emailConfirmationArgs<ExtArgs>
   passwordRecovery?: boolean | Prisma.User$passwordRecoveryArgs<ExtArgs>
+  Device?: boolean | Prisma.User$DeviceArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -621,6 +743,8 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   emailConfirmation?: boolean | Prisma.User$emailConfirmationArgs<ExtArgs>
   passwordRecovery?: boolean | Prisma.User$passwordRecoveryArgs<ExtArgs>
+  Device?: boolean | Prisma.User$DeviceArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -630,6 +754,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     emailConfirmation: Prisma.$EmailConfirmationPayload<ExtArgs> | null
     passwordRecovery: Prisma.$PasswordRecoveryPayload<ExtArgs> | null
+    Device: Prisma.$DevicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1035,6 +1160,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   emailConfirmation<T extends Prisma.User$emailConfirmationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$emailConfirmationArgs<ExtArgs>>): Prisma.Prisma__EmailConfirmationClient<runtime.Types.Result.GetResult<Prisma.$EmailConfirmationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   passwordRecovery<T extends Prisma.User$passwordRecoveryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$passwordRecoveryArgs<ExtArgs>>): Prisma.Prisma__PasswordRecoveryClient<runtime.Types.Result.GetResult<Prisma.$PasswordRecoveryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Device<T extends Prisma.User$DeviceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$DeviceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1494,6 +1620,30 @@ export type User$passwordRecoveryArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.PasswordRecoveryInclude<ExtArgs> | null
   where?: Prisma.PasswordRecoveryWhereInput
+}
+
+/**
+ * User.Device
+ */
+export type User$DeviceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Device
+   */
+  select?: Prisma.DeviceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Device
+   */
+  omit?: Prisma.DeviceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DeviceInclude<ExtArgs> | null
+  where?: Prisma.DeviceWhereInput
+  orderBy?: Prisma.DeviceOrderByWithRelationInput | Prisma.DeviceOrderByWithRelationInput[]
+  cursor?: Prisma.DeviceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DeviceScalarFieldEnum | Prisma.DeviceScalarFieldEnum[]
 }
 
 /**
