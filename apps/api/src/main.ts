@@ -13,8 +13,8 @@ async function bootstrap() {
   appSetup(app, coreConfig.isSwaggerEnabled); //global settings
 
   app.use(cookieParser());
-  
-   app.enableCors({
+
+  app.enableCors({
     origin: coreConfig.corsOrigin.split(','), //[coreConfig.corsOrigin], // any localhost with any port
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: ['Authorization', 'Content-Type'],

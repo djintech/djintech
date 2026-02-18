@@ -1,4 +1,4 @@
-import { Extension } from "../domain-exceptions";
+import { Extension } from '../domain-exceptions';
 
 export type ErrorResponseBody = {
   errorsMessages: Extension[];

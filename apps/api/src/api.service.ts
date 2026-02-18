@@ -19,11 +19,10 @@ export class ApiService {
     try {
       //const res =  await firstValueFrom(this.fileClient.send({ cmd: 'pattern' }, {}));
       //return res.message;
-      return this.client.send('pattern', {})
-
+      return this.client.send('pattern', {});
     } catch (err) {
       console.error('Error calling Files microservice:', err);
-      return 'Error '+ err;
+      return 'Error ' + err;
     }
   }
 }

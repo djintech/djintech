@@ -10,15 +10,14 @@ export class CoreConfig extends BaseCoreConfig {
   isSwaggerEnabled: boolean;
 
   @IsString({
-    message:
-       'Set Env variable CORS_ORIGIN  example: http://localhost:5001',
-    })
+    message: 'Set Env variable CORS_ORIGIN  example: http://localhost:5001',
+  })
   corsOrigin: string;
 
   @IsString({
     message:
-       'Set Env variable DATABASE_URL. example: postgresql://user:password@ep-cool-name.eu-central-1.aws.neon.tech/auth_db?sslmode=require',
-    })
+      'Set Env variable DATABASE_URL. example: postgresql://user:password@ep-cool-name.eu-central-1.aws.neon.tech/auth_db?sslmode=require',
+  })
   databaseUrl: string;
 
   @IsNumber(
@@ -45,11 +44,11 @@ export class CoreConfig extends BaseCoreConfig {
     this.corsOrigin = configService.get('CORS_ORIGIN');
     this.databaseUrl = configService.get('DATABASE_URL');
     this.costFactor = Number(configService.get('COST_FACTOR'));
- 
+
     this.includeTestingModule = configValidationUtility.convertToBoolean(
       this.configService.get('INCLUDE_TESTING_MODULE'),
     ) as boolean;
-      
+
     configValidationUtility.validateConfig(this);
   }
 }

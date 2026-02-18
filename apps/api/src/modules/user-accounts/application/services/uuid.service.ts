@@ -6,4 +6,4 @@ export class UuidService {
   generate() {
     return randomUUID();
   }
-};
+}

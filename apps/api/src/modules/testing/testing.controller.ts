@@ -11,19 +11,24 @@ export class TestingController {
   @Delete('all-data')
   @HttpCode(HttpStatus.OK)
   async deleteAll() {
-    if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'testing') {
+    if (
+      process.env.NODE_ENV !== 'development' &&
+      process.env.NODE_ENV !== 'testing'
+    ) {
       throw new Error('Cannot truncate tables in non-dev/test environment');
     }
 
     const excluded = ['_prisma_migrations'];
 
-    const rawTables = await this.prisma.$queryRaw<Array<{ table_name: string }>>`
+    const rawTables = await this.prisma.$queryRaw<
+      Array<{ table_name: string }>
+    >`
       SELECT table_name
       FROM information_schema.tables
       WHERE table_schema = 'public'
         AND table_type = 'BASE TABLE'
         AND table_name NOT IN (${Prisma.join(
-          excluded.map((t) => Prisma.sql`${t}`)
+          excluded.map((t) => Prisma.sql`${t}`),
         )})
     `;
 
@@ -32,13 +37,13 @@ export class TestingController {
     if (tableNames.length > 0) {
       const tablesList = tableNames.join(', ');
       await this.prisma.$executeRawUnsafe(
-        `TRUNCATE TABLE ${tablesList} RESTART IDENTITY CASCADE;`
+        `TRUNCATE TABLE ${tablesList} RESTART IDENTITY CASCADE;`,
       );
     }
 
     return {
       status: 'succeeded',
-      trunkatedTables: tableNames
+      trunkatedTables: tableNames,
     };
   }
 }

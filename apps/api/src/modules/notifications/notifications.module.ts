@@ -17,7 +17,7 @@ import { SendConfirmationEmailWhenUserRegisteredEventHandler } from './applicati
           auth: {
             user: config.email,
             pass: config.emailPass,
-          }
+          },
         },
         defaults: {
           from: `"No Reply" <${config.email}>`,

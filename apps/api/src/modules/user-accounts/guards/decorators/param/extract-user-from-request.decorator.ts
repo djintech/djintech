@@ -1,0 +1,21 @@
+import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
+import { DomainException } from '@libs/core/exceptions/domain-exceptions';
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { UserContextDto } from '@src/modules/user-accounts/dto/user-context.dto';
+
+export const ExtractUserFromRequest = createParamDecorator(
+  (data: unknown, context: ExecutionContext): UserContextDto => {
+    const request = context.switchToHttp().getRequest();
+
+    const user = request.user;
+
+    if (!user) {
+      throw new DomainException({
+        code: DomainExceptionCode.BadRequest,
+        message: 'there is no user in the request object!',
+      });
+    }
+
+    return user;
+  },
+);

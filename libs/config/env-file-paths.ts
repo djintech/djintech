@@ -1,4 +1,4 @@
-import { Environments } from "./base-core.config";
+import { Environments } from './base-core.config';
 
 export const getEnvFilePath = (env: Environments) => {
   const defaultEnvFilePath = [
@@ -8,7 +8,7 @@ export const getEnvFilePath = (env: Environments) => {
   ];
 
   if (env === Environments.TESTING) {
-    return [ '.env.test', ...defaultEnvFilePath];
+    return ['.env.test', ...defaultEnvFilePath];
   }
 
   return defaultEnvFilePath;

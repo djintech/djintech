@@ -1,10 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "@src/db/prisma.service";
-import { Prisma, User } from "@src/generated/prisma/client";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '@src/db/prisma.service';
+import { Prisma, User } from '@src/generated/prisma/client';
 
 @Injectable()
 export class UsersRepository {
-
   constructor(private prisma: PrismaService) {}
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
@@ -15,22 +14,22 @@ export class UsersRepository {
     return this.prisma.user.update({ where: { id }, data });
   }
 
-  async findByUsernameOrEmail(username: string, email: string): Promise<User | null> {
+  async findByUsernameOrEmail(
+    username: string,
+    email: string,
+  ): Promise<User | null> {
     return this.prisma.user.findFirst({
       where: {
         deletedAt: null,
-        OR: [
-          { username },
-          { email },
-        ],
+        OR: [{ username }, { email }],
       },
     });
   }
 
-  async findByEmail( email: string ): Promise< User | null > {
+  async findByEmail(email: string): Promise<User | null> {
     return this.prisma.user.findFirst({
-      where: { email }
-    })
+      where: { email },
+    });
   }
 
   // async save(user: Prisma.UserCreateInput & { id?: number }): Promise<User> {
@@ -63,7 +62,7 @@ export class UsersRepository {
   //     throw new DomainException({
   //       code: DomainExceptionCode.NotFound,
   //       message: 'not fouund',
-  //     }); 
+  //     });
   //   }
 
   //   return result;

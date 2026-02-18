@@ -1,8 +1,8 @@
-import { Module } from "@nestjs/common";
-import { NotificationsConfig } from "./notifications.config";
+import { Module } from '@nestjs/common';
+import { NotificationsConfig } from './notifications.config';
 
 @Module({
   providers: [NotificationsConfig],
-  exports: [NotificationsConfig]
+  exports: [NotificationsConfig],
 })
 export class NotificationsInternalModule {}

@@ -1,4 +1,4 @@
-import { DomainExceptionCode } from "./domain-exception-codes";
+import { DomainExceptionCode } from './domain-exception-codes';
 
 export class Extension {
   constructor(
