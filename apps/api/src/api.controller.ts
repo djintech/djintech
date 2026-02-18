@@ -7,13 +7,13 @@ import { firstValueFrom } from 'rxjs'; // Use firstValueFrom with send()
 export class ApiController {
   constructor(
     private readonly apiService: ApiService,
-    @Inject('FILE_SERVICE') private readonly client: ClientProxy, // Inject the client    
+    @Inject('FILE_SERVICE') private readonly client: ClientProxy, // Inject the client
   ) {}
 
   // @Get('hello')
   // async hello() {
   //   const result = this.client.send({ cmd: 'pattern' }, {});
   //   // Convert the Observable result to a Promise for async handling
-  //   return firstValueFrom(result); 
+  //   return firstValueFrom(result);
   // }
 }

@@ -65,6 +65,12 @@ importers:
       dotenv:
         specifier: ^17.2.3
         version: 17.3.1
+      express:
+        specifier: ^5.2.1
+        version: 5.2.1
+      ms:
+        specifier: ^2.1.3
+        version: 2.1.3
       nodemailer:
         specifier: ^7.0.12
         version: 7.0.13
@@ -118,7 +124,7 @@ importers:
         specifier: ^1.4.10
         version: 1.4.10(@types/express@5.0.6)
       '@types/express':
-        specifier: ^5.0.0
+        specifier: ^5.0.6
         version: 5.0.6
       '@types/jest':
         specifier: ^29.5.14

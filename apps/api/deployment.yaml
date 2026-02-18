@@ -81,6 +81,26 @@ spec:
                  secretKeyRef:
                    name: gateway-api-production-config-secret
                    key: CORS_ORIGIN
+             - name: ACCESS_TOKEN_SECRET
+               valueFrom:
+                 secretKeyRef:
+                   name: gateway-api-production-config-secret
+                   key: ACCESS_TOKEN_SECRET
+             - name: REFRESH_TOKEN_SECRET
+               valueFrom:
+                 secretKeyRef:
+                   name: gateway-api-production-config-secret
+                   key: REFRESH_TOKEN_SECRET
+             - name: ACCESS_TOKEN_EXPIRE_IN
+               valueFrom:
+                 secretKeyRef:
+                   name: gateway-api-production-config-secret
+                   key: ACCESS_TOKEN_EXPIRE_IN
+             - name: REFRESH_TOKEN_EXPIRE_IN
+               valueFrom:
+                 secretKeyRef:
+                   name: gateway-api-production-config-secret
+                   key: REFRESH_TOKEN_EXPIRE_IN
              - name: NODE_ENV
                valueFrom:
                  secretKeyRef:

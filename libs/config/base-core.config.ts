@@ -30,7 +30,8 @@ export abstract class BaseCoreConfig {
     this.port = Number(this.configService.get('PORT'));
     this.env = this.configService.get('NODE_ENV');
 
-    this.sendInternalServerErrorDetails = configValidationUtility.convertToBoolean(
+    this.sendInternalServerErrorDetails =
+      configValidationUtility.convertToBoolean(
         this.configService.get('SEND_INTERNAL_SERVER_ERROR_DETAILS'),
       ) as boolean;
   }

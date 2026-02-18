@@ -1,6 +1,13 @@
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
-import { DomainException, Extension } from '@libs/core/exceptions/domain-exceptions';
-import { INestApplication, ValidationError, ValidationPipe } from '@nestjs/common';
+import {
+  DomainException,
+  Extension,
+} from '@libs/core/exceptions/domain-exceptions';
+import {
+  INestApplication,
+  ValidationError,
+  ValidationPipe,
+} from '@nestjs/common';
 
 //функция использует рекурсию для обхода объекта children при вложенных полях при валидации
 //поставьте логи и разберитесь как она работает

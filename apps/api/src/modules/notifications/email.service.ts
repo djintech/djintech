@@ -3,13 +3,13 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class EmailService {
-  constructor( private mailerService: MailerService ) {}
+  constructor(private mailerService: MailerService) {}
 
-  async sendConfirmationEmail( 
-    email: string, 
+  async sendConfirmationEmail(
+    email: string,
     code: string,
-    template: (code: string) => string
-   ): Promise<void> {
+    template: (code: string) => string,
+  ): Promise<void> {
     await this.mailerService.sendMail({
       from: '"DjinTech Platform" <blplatform@yandex.com>',
       to: email,

@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export function swaggerSetup(app: INestApplication, isSwaggerEnabled: boolean) {
-   if (isSwaggerEnabled) {
+  if (isSwaggerEnabled) {
     const config = new DocumentBuilder()
       .setTitle('DJINTECH API')
       .addBearerAuth(
@@ -25,11 +25,12 @@ export function swaggerSetup(app: INestApplication, isSwaggerEnabled: boolean) {
         'basicAuth',
       )
       .addApiKey(
-        { 
-          type: 'apiKey', 
-          description: 'JWT refreshToken inside cookie. Must be correct, and must not expire',
-          name: 'refreshToken', 
-          in: 'cookie' 
+        {
+          type: 'apiKey',
+          description:
+            'JWT refreshToken inside cookie. Must be correct, and must not expire',
+          name: 'refreshToken',
+          in: 'cookie',
         },
         'refreshToken',
       )

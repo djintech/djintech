@@ -1,30 +1,36 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "@src/db/prisma.service";
-import { EmailConfirmation, Prisma } from "@src/generated/prisma/client";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '@src/db/prisma.service';
+import { EmailConfirmation, Prisma } from '@src/generated/prisma/client';
 
 @Injectable()
 export class EmailConfirmationRepository {
-
   constructor(private prisma: PrismaService) {}
-  
-  async create(data: Prisma.EmailConfirmationCreateInput): Promise<EmailConfirmation> {
+
+  async create(
+    data: Prisma.EmailConfirmationCreateInput,
+  ): Promise<EmailConfirmation> {
     return this.prisma.emailConfirmation.create({ data });
   }
 
-  async update(id: number, data: Prisma.EmailConfirmationUpdateInput): Promise<EmailConfirmation> {
+  async update(
+    id: number,
+    data: Prisma.EmailConfirmationUpdateInput,
+  ): Promise<EmailConfirmation> {
     return this.prisma.emailConfirmation.update({ where: { id }, data });
   }
 
-  async findByUserId( userId: number ): Promise<EmailConfirmation | null> {
+  async findByUserId(userId: number): Promise<EmailConfirmation | null> {
     return this.prisma.emailConfirmation.findUnique({ where: { userId } });
   }
 
-  async findUserByConfirmationCode(code: string): Promise<EmailConfirmation | null> {
+  async findUserByConfirmationCode(
+    code: string,
+  ): Promise<EmailConfirmation | null> {
     return this.prisma.emailConfirmation.findFirst({
       where: {
         confirmationCode: code,
         user: { deletedAt: null },
-      }
+      },
     });
   }
 
@@ -39,7 +45,6 @@ export class EmailConfirmationRepository {
   //     return this.prisma.emailConfirmation.create({ data });
   //   }
   // }
-
 
   // async updateEmailConfirmationCode( code: string, userId: number ): Promise<void> {
   //   const emailConfirmation = await this.findbyUserId( userId );

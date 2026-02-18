@@ -1,12 +1,10 @@
-import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
-import { EmailService } from "../../email.service";
-import { UserRegisteredEvent } from "../../../user-accounts/domain/events/user-registered.event";
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { EmailService } from '../../email.service';
+import { UserRegisteredEvent } from '../../../user-accounts/domain/events/user-registered.event';
 
 // https://docs.nestjs.com/recipes/cqrs#events
 @EventsHandler(UserRegisteredEvent)
-export class SendConfirmationEmailWhenUserRegisteredEventHandler
-  implements IEventHandler<UserRegisteredEvent>
-{
+export class SendConfirmationEmailWhenUserRegisteredEventHandler implements IEventHandler<UserRegisteredEvent> {
   constructor(private emailService: EmailService) {}
 
   async handle(event: UserRegisteredEvent) {
@@ -16,7 +14,7 @@ export class SendConfirmationEmailWhenUserRegisteredEventHandler
       await this.emailService.sendConfirmationEmail(
         event.email,
         event.confirmationCode,
-        event.emailExamples
+        event.emailExamples,
       );
     } catch (e) {
       console.error('send email', e);

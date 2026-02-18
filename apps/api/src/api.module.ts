@@ -16,7 +16,7 @@ import { DomainHttpExceptionsFilter } from '@libs/core/exceptions/filters/domain
 
 @Module({
   imports: [
-    configModule( ServiceName.API ),  // 🔝 should e on top!
+    configModule(ServiceName.API), // 🔝 should e on top!
     CoreModule,
     ApiCoreModule,
     PrismaModule,
@@ -26,14 +26,13 @@ import { DomainHttpExceptionsFilter } from '@libs/core/exceptions/filters/domain
         transport: Transport.TCP,
         options: {
           host: process.env.FILE_SERVICE_HOST || 'files-mono-service',
-          port: Number( process.env.FILE_SERVICE_PORT || '4177'),
-        }
-
-      }
+          port: Number(process.env.FILE_SERVICE_PORT || '4177'),
+        },
+      },
     ]),
     UserAccountsModule,
     NotificationsModule,
-  ],  
+  ],
   controllers: [ApiController],
   providers: [
     ApiService,
