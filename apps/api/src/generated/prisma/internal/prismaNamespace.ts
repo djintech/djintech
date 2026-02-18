@@ -414,8 +414,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never
 export const ModelName = {
   User: 'User',
   EmailConfirmation: 'EmailConfirmation',
-  PasswordRecovery: 'PasswordRecovery',
-} as const;
+  PasswordRecovery: 'PasswordRecovery'
+} as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 
@@ -436,9 +436,9 @@ export type TypeMap<
     omit: GlobalOmitOptions;
   };
   meta: {
-    modelProps: 'user' | 'emailConfirmation' | 'passwordRecovery';
-    txIsolationLevel: TransactionIsolationLevel;
-  };
+    modelProps: "user" | "emailConfirmation" | "passwordRecovery"
+    txIsolationLevel: TransactionIsolationLevel
+  }
   model: {
     User: {
       payload: Prisma.$UserPayload<ExtArgs>;
@@ -661,14 +661,12 @@ export type TypeMap<
           result: runtime.Types.Utils.Optional<Prisma.PasswordRecoveryGroupByOutputType>[];
         };
         count: {
-          args: Prisma.PasswordRecoveryCountArgs<ExtArgs>;
-          result:
-            | runtime.Types.Utils.Optional<Prisma.PasswordRecoveryCountAggregateOutputType>
-            | number;
-        };
-      };
-    };
-  };
+          args: Prisma.PasswordRecoveryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PasswordRecoveryCountAggregateOutputType> | number
+        }
+      }
+    }
+  }
 } & {
   other: {
     payload: any;
@@ -743,8 +741,8 @@ export const PasswordRecoveryScalarFieldEnum = {
   userId: 'userId',
 } as const;
 
-export type PasswordRecoveryScalarFieldEnum =
-  (typeof PasswordRecoveryScalarFieldEnum)[keyof typeof PasswordRecoveryScalarFieldEnum];
+export type PasswordRecoveryScalarFieldEnum = (typeof PasswordRecoveryScalarFieldEnum)[keyof typeof PasswordRecoveryScalarFieldEnum]
+
 
 export const SortOrder = {
   asc: 'asc',
@@ -946,10 +944,10 @@ export type PrismaClientOptions = (
   comments?: runtime.SqlCommenterPlugin[];
 };
 export type GlobalOmitConfig = {
-  user?: Prisma.UserOmit;
-  emailConfirmation?: Prisma.EmailConfirmationOmit;
-  passwordRecovery?: Prisma.PasswordRecoveryOmit;
-};
+  user?: Prisma.UserOmit
+  emailConfirmation?: Prisma.EmailConfirmationOmit
+  passwordRecovery?: Prisma.PasswordRecoveryOmit
+}
 
 /* Types for Logging */
 export type LogLevel = 'info' | 'query' | 'warn' | 'error';

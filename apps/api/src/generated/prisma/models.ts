@@ -7,7 +7,8 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User';
-export type * from './models/EmailConfirmation';
-export type * from './models/PasswordRecovery';
-export type * from './commonInputTypes';
+export type * from './models/User'
+export type * from './models/EmailConfirmation'
+export type * from './models/PasswordRecovery'
+export type * from './models/Device'
+export type * from './commonInputTypes'

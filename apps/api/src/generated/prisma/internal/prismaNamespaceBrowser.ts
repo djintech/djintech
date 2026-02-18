@@ -57,7 +57,8 @@ export const ModelName = {
   User: 'User',
   EmailConfirmation: 'EmailConfirmation',
   PasswordRecovery: 'PasswordRecovery',
-} as const;
+  Device: 'Device'
+} as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 
@@ -113,6 +114,22 @@ export const PasswordRecoveryScalarFieldEnum = {
 
 export type PasswordRecoveryScalarFieldEnum =
   (typeof PasswordRecoveryScalarFieldEnum)[keyof typeof PasswordRecoveryScalarFieldEnum];
+
+export const DeviceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  deviceName: 'deviceName',
+  deviceId: 'deviceId',
+  ip: 'ip',
+  lastActiveAt: 'lastActiveAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]
+
 
 export const SortOrder = {
   asc: 'asc',
