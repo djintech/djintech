@@ -1,10 +1,11 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import {
   Body,
   Controller,
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -45,12 +46,19 @@ export class AuthController {
   })
   async login(
     @ExtractUserFromRequest() user: UserContextDto,
+    @Req() req: Request,
     @Res({ passthrough: true }) response: Response,
   ): Promise<{ accessToken: string }> {
     const { accessToken, refreshToken } = await this.commandBus.execute<
       LoginUserCommand,
       { accessToken: string; refreshToken: string }
-    >(new LoginUserCommand({ userId: user.id }));
+    >(
+      new LoginUserCommand({
+        userId: user.id,
+        ip: req.ip,
+        deviceName: req.headers['user-agent'] ?? 'unknown',
+      }),
+    );
 
     CookieService.setRefreshTokenCookie(response, refreshToken);
     return { accessToken };
