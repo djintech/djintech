@@ -28,6 +28,8 @@ import { NewPasswordUseCase } from './application/usecases/users/new-password.us
 import { GoogleRecaptchaService } from './application/services/recaptcha.service';
 import { PasswordRecoveryUseCase } from './application/usecases/users/password-recovery.usecase';
 import { PasswordRecoveryRepository } from './infrastructure/password-recovery.repository';
+import { LogoutDeviceUseCase } from '@modules/user-accounts/application/usecases/users/logout-user.usecase';
+import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.repository';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -36,6 +38,7 @@ const commandHandlers = [
   LoginUserUseCase,
   NewPasswordUseCase,
   PasswordRecoveryUseCase,
+  LogoutDeviceUseCase,
 ];
 
 const queryHandlers = [];
@@ -85,6 +88,7 @@ const queryHandlers = [];
     AuthService,
     UserAccountsConfig,
     GoogleRecaptchaService,
+    DeviceRepository,
   ],
   exports: [],
 })
