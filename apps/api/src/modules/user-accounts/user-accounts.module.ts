@@ -23,12 +23,15 @@ import {
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { UserAccountsConfig } from './config/user-accounts.config';
 import type { StringValue } from 'ms';
+import { LogoutDeviceUseCase } from '@modules/user-accounts/application/usecases/users/logout-user.usecase';
+import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.repository';
 
 const commandHandlers = [
   RegisterUserUseCase,
   RegistrationConfirmationUseCase,
   RegistrationEmailResendingUseCase,
   LoginUserUseCase,
+  LogoutDeviceUseCase,
 ];
 
 const queryHandlers = [];
@@ -76,6 +79,7 @@ const queryHandlers = [];
     LocalStrategy,
     AuthService,
     UserAccountsConfig,
+    DeviceRepository,
   ],
   exports: [],
 })

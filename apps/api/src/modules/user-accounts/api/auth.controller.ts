@@ -1,10 +1,11 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import {
   Body,
   Controller,
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -22,6 +23,8 @@ import { ExtractUserFromRequest } from '../guards/decorators/param/extract-user-
 import { UserContextDto } from '../dto/user-context.dto';
 import { CookieService } from '../application/services/cookie.service';
 import { JwtRefreshTokenGuard } from '../guards/refresh-token/jwt-refresh-token.guard';
+import { ExtractDeviceFromRefresh } from '@modules/user-accounts/guards/decorators/param/extract-device-from-refresh.decorator';
+import { LogoutDeviceCommand } from '@modules/user-accounts/application/usecases/users/logout-user.usecase';
 
 @Controller('auth')
 export class AuthController {
@@ -45,12 +48,19 @@ export class AuthController {
   })
   async login(
     @ExtractUserFromRequest() user: UserContextDto,
+    @Req() req: Request,
     @Res({ passthrough: true }) response: Response,
   ): Promise<{ accessToken: string }> {
     const { accessToken, refreshToken } = await this.commandBus.execute<
       LoginUserCommand,
       { accessToken: string; refreshToken: string }
-    >(new LoginUserCommand({ userId: user.id }));
+    >(
+      new LoginUserCommand({
+        userId: user.id,
+        ip: req.ip,
+        deviceName: req.headers['user-agent'] ?? 'unknown',
+      }),
+    );
 
     CookieService.setRefreshTokenCookie(response, refreshToken);
     return { accessToken };
@@ -85,7 +95,11 @@ export class AuthController {
   @Post('logout')
   @UseGuards(JwtRefreshTokenGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
-  async logout(@Res({ passthrough: true }) response: Response) {
+  async logout(
+    @Res({ passthrough: true }) response: Response,
+    @ExtractDeviceFromRefresh() payload: { deviceId: string; userId: number },
+  ) {
+    await this.commandBus.execute(new LogoutDeviceCommand(payload.deviceId));
     CookieService.clearRefreshTokenCookie(response);
   }
 }
