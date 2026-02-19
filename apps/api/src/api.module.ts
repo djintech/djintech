@@ -13,6 +13,7 @@ import { configModule } from '@libs/config/config-dynamic-module';
 import { ServiceName } from '@libs/config/configuration';
 import { CoreModule } from '@libs/core/core.module';
 import { DomainHttpExceptionsFilter } from '@libs/core/exceptions/filters/domain-exceptions.filter';
+import { SessionsModule } from '@modules/sessions/sessions.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { DomainHttpExceptionsFilter } from '@libs/core/exceptions/filters/domain
     ]),
     UserAccountsModule,
     NotificationsModule,
+    SessionsModule,
   ],
   controllers: [ApiController],
   providers: [

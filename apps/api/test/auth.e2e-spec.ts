@@ -2,7 +2,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { initSettings } from './helpers/init-settings';
 import { deleteAllData } from './helpers/delete-all-data';
-import { CreateUserDto } from '../src/modules/user-accounts/application/dto/create-user.dto';
+import { CreateUserDto } from '@modules/user-accounts/application/dto/create-user.dto';
 import { EmailService } from '@src/modules/notifications/email.service';
 import { ACCESS_TOKEN_STRATEGY_INJECT_TOKEN } from '@src/modules/user-accounts/constants/auth-tokens.inject-constants';
 import { JwtService } from '@nestjs/jwt';
