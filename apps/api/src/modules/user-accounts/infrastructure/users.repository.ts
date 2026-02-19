@@ -32,6 +32,13 @@ export class UsersRepository {
     });
   }
 
+  async updatePasswordHash( passwordHash: string, id: number ): Promise<void> {
+    await this.prisma.user.update({
+      where: { id },
+      data: { passwordHash }
+    });
+  }
+
   // async save(user: Prisma.UserCreateInput & { id?: number }): Promise<User> {
   //   if (user.id) {
   //     const { id, ...data } = user;
@@ -72,11 +79,5 @@ export class UsersRepository {
   //   return this.user.findOneBy({ email })
   // }
 
-  // async updatePasswordHash( passwordHash: string, id: number ): Promise<void> {
-  //   await this.user.update(
-  //     { id },
-  //     { passwordHash }
-  //   );
-  //   return;
-  // }
+
 }

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
+import { HttpModule } from '@nestjs/axios';
 import { AuthController } from './api/auth.controller';
 import { RegisterUserUseCase } from './application/usecases/users/register-user.usecase';
 import { NotificationsModule } from '../notifications/notifications.module';
@@ -23,18 +24,24 @@ import {
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { UserAccountsConfig } from './config/user-accounts.config';
 import type { StringValue } from 'ms';
+import { NewPasswordUseCase } from './application/usecases/users/new-password.usecase';
+import { GoogleRecaptchaService } from './application/services/recaptcha.service';
+import { PasswordRecoveryUseCase } from './application/usecases/users/password-recovery.usecase';
+import { PasswordRecoveryRepository } from './infrastructure/password-recovery.repository';
 
 const commandHandlers = [
   RegisterUserUseCase,
   RegistrationConfirmationUseCase,
   RegistrationEmailResendingUseCase,
   LoginUserUseCase,
+  NewPasswordUseCase,
+  PasswordRecoveryUseCase,
 ];
 
 const queryHandlers = [];
 
 @Module({
-  imports: [JwtModule, CqrsModule, NotificationsModule],
+  imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule],
   controllers: [AuthController],
   providers: [
     ...commandHandlers,
@@ -73,9 +80,11 @@ const queryHandlers = [];
     UsersFactory,
     EmailConfirmationFactory,
     EmailConfirmationRepository,
+    PasswordRecoveryRepository,
     LocalStrategy,
     AuthService,
     UserAccountsConfig,
+    GoogleRecaptchaService,
   ],
   exports: [],
 })
