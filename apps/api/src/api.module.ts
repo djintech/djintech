@@ -14,6 +14,7 @@ import { ServiceName } from '@libs/config/configuration';
 import { CoreModule } from '@libs/core/core.module';
 import { DomainHttpExceptionsFilter } from '@libs/core/exceptions/filters/domain-exceptions.filter';
 import { SessionsModule } from '@modules/sessions/sessions.module';
+import { PoliciesModule } from '@modules/privacy/policies.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { SessionsModule } from '@modules/sessions/sessions.module';
     UserAccountsModule,
     NotificationsModule,
     SessionsModule,
+    PoliciesModule,
   ],
   controllers: [ApiController],
   providers: [
