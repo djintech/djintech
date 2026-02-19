@@ -23,6 +23,8 @@ import { ExtractUserFromRequest } from '../guards/decorators/param/extract-user-
 import { UserContextDto } from '../dto/user-context.dto';
 import { CookieService } from '../application/services/cookie.service';
 import { JwtRefreshTokenGuard } from '../guards/refresh-token/jwt-refresh-token.guard';
+import { ExtractDeviceFromRefresh } from '@modules/user-accounts/guards/decorators/param/extract-device-from-refresh.decorator';
+import { LogoutDeviceCommand } from '@modules/user-accounts/application/usecases/users/logout-user.usecase';
 
 @Controller('auth')
 export class AuthController {
@@ -93,7 +95,11 @@ export class AuthController {
   @Post('logout')
   @UseGuards(JwtRefreshTokenGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
-  async logout(@Res({ passthrough: true }) response: Response) {
+  async logout(
+    @Res({ passthrough: true }) response: Response,
+    @ExtractDeviceFromRefresh() payload: { deviceId: string; userId: number },
+  ) {
+    await this.commandBus.execute(new LogoutDeviceCommand(payload.deviceId));
     CookieService.clearRefreshTokenCookie(response);
   }
 }
