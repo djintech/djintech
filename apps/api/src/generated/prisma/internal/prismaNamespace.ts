@@ -387,7 +387,8 @@ export const ModelName = {
   User: 'User',
   EmailConfirmation: 'EmailConfirmation',
   PasswordRecovery: 'PasswordRecovery',
-  Device: 'Device'
+  Device: 'Device',
+  Policies: 'Policies'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "emailConfirmation" | "passwordRecovery" | "device"
+    modelProps: "user" | "emailConfirmation" | "passwordRecovery" | "device" | "policies"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +704,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Policies: {
+      payload: Prisma.$PoliciesPayload<ExtArgs>
+      fields: Prisma.PoliciesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PoliciesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PoliciesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload>
+        }
+        findFirst: {
+          args: Prisma.PoliciesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PoliciesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload>
+        }
+        findMany: {
+          args: Prisma.PoliciesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload>[]
+        }
+        create: {
+          args: Prisma.PoliciesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload>
+        }
+        createMany: {
+          args: Prisma.PoliciesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PoliciesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload>[]
+        }
+        delete: {
+          args: Prisma.PoliciesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload>
+        }
+        update: {
+          args: Prisma.PoliciesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload>
+        }
+        deleteMany: {
+          args: Prisma.PoliciesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PoliciesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PoliciesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload>[]
+        }
+        upsert: {
+          args: Prisma.PoliciesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PoliciesPayload>
+        }
+        aggregate: {
+          args: Prisma.PoliciesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePolicies>
+        }
+        groupBy: {
+          args: Prisma.PoliciesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PoliciesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PoliciesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PoliciesCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -797,6 +872,17 @@ export const DeviceScalarFieldEnum = {
 export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]
 
 
+export const PoliciesScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  content: 'content',
+  version: 'version',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PoliciesScalarFieldEnum = (typeof PoliciesScalarFieldEnum)[keyof typeof PoliciesScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -873,6 +959,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'PolicyType'
+ */
+export type EnumPolicyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PolicyType'>
+    
+
+
+/**
+ * Reference to a field of type 'PolicyType[]'
+ */
+export type ListEnumPolicyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PolicyType[]'>
     
 
 
@@ -988,6 +1088,7 @@ export type GlobalOmitConfig = {
   emailConfirmation?: Prisma.EmailConfirmationOmit
   passwordRecovery?: Prisma.PasswordRecoveryOmit
   device?: Prisma.DeviceOmit
+  policies?: Prisma.PoliciesOmit
 }
 
 /* Types for Logging */
