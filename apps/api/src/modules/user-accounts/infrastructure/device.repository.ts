@@ -32,18 +32,4 @@ export class DeviceRepository {
       data: { deletedAt: new Date() },
     });
   }
-
-  async softDeleteAllExcept(
-    userId: number,
-    currentDeviceId: string,
-  ): Promise<Prisma.BatchPayload> {
-    return this.prisma.device.updateMany({
-      where: {
-        userId,
-        deviceId: { not: currentDeviceId },
-        deletedAt: null,
-      },
-      data: { deletedAt: new Date() },
-    });
-  }
 }

@@ -47,6 +47,6 @@ export class AuthService {
       });
     }
 
-    return { id: user.id!.toString() };
+    return { id: user.id.toString() };
   }
 }

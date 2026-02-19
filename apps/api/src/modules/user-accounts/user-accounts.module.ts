@@ -50,6 +50,7 @@ const queryHandlers = [];
     ...commandHandlers,
     ...queryHandlers,
     UsersRepository,
+    DeviceRepository,
     {
       provide: ACCESS_TOKEN_STRATEGY_INJECT_TOKEN,
       useFactory: (userAccountConfig: UserAccountsConfig): JwtService => {
@@ -90,6 +91,6 @@ const queryHandlers = [];
     GoogleRecaptchaService,
     DeviceRepository,
   ],
-  exports: [],
+  exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN],
 })
 export class UserAccountsModule {}
