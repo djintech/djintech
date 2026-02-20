@@ -25,6 +25,7 @@ import { CookieService } from '../application/services/cookie.service';
 import { JwtRefreshTokenGuard } from '../guards/refresh-token/jwt-refresh-token.guard';
 import { ExtractDeviceFromRefresh } from '@modules/user-accounts/guards/decorators/param/extract-device-from-refresh.decorator';
 import { LogoutDeviceCommand } from '@modules/user-accounts/application/usecases/users/logout-user.usecase';
+import { RefreshTokenCommand } from '@modules/user-accounts/application/usecases/users/refresh-token.usecase';
 
 @Controller('auth')
 export class AuthController {
@@ -101,5 +102,21 @@ export class AuthController {
   ) {
     await this.commandBus.execute(new LogoutDeviceCommand(payload.deviceId));
     CookieService.clearRefreshTokenCookie(response);
+  }
+
+  @ApiSecurity('refreshToken')
+  @Post('refresh-token')
+  @UseGuards(JwtRefreshTokenGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async refreshToken(
+    @Res({ passthrough: true }) response: Response,
+    @ExtractDeviceFromRefresh() payload: { deviceId: string; userId: number },
+  ) {
+    const { accessToken, refreshToken } = await this.commandBus.execute<
+      RefreshTokenCommand,
+      { accessToken: string; refreshToken: string }
+    >(new RefreshTokenCommand(payload));
+    CookieService.setRefreshTokenCookie(response, refreshToken);
+    return { accessToken };
   }
 }
