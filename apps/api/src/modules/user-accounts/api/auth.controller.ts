@@ -23,6 +23,12 @@ import { ExtractUserFromRequest } from '../guards/decorators/param/extract-user-
 import { UserContextDto } from '../dto/user-context.dto';
 import { CookieService } from '../application/services/cookie.service';
 import { JwtRefreshTokenGuard } from '../guards/refresh-token/jwt-refresh-token.guard';
+import { SkipThrottle } from '@nestjs/throttler';
+import { NewPasswordInputDto } from './input-dto/new-password.input-dto';
+import { NewPasswordCommand } from '../application/usecases/users/new-password.usecase';
+import { RecaptchaGuard } from '../guards/recaptcha/recaptcha.guard';
+import { PasswordRecoveryInputDto } from './input-dto/password-recovery.input-dto';
+import { PasswordRecoveryCommand } from '../application/usecases/users/password-recovery.usecase';
 import { ExtractDeviceFromRefresh } from '@modules/user-accounts/guards/decorators/param/extract-device-from-refresh.decorator';
 import { LogoutDeviceCommand } from '@modules/user-accounts/application/usecases/users/logout-user.usecase';
 import { RefreshTokenCommand } from '@modules/user-accounts/application/usecases/users/refresh-token.usecase';
@@ -35,7 +41,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  //@SkipThrottle({ default: false }) // Rate limiting is applied to this route.
+  @SkipThrottle({ default: false }) // Rate limiting is applied to this route.
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   @ApiBody({
@@ -68,14 +74,14 @@ export class AuthController {
   }
 
   @Post('registration')
-  //@SkipThrottle({ default: false }) // Rate limiting is applied to this route.
+  @SkipThrottle({ default: false }) // Rate limiting is applied to this route.
   @HttpCode(HttpStatus.NO_CONTENT)
   registration(@Body() body: CreateUserInputDto): Promise<void> {
     return this.commandBus.execute(new RegisterUserCommand(body));
   }
 
   @Post('registration-confirmation')
-  //@SkipThrottle({ default: false }) // Rate limiting is applied to this route.
+  @SkipThrottle({ default: false }) // Rate limiting is applied to this route.
   @HttpCode(HttpStatus.NO_CONTENT)
   registrationConfirmation(
     @Body() body: RegistrationConfirmationInputDto,
@@ -84,7 +90,7 @@ export class AuthController {
   }
 
   @Post('registration-email-resending')
-  //@SkipThrottle({ default: false }) // Rate limiting is applied to this route.
+  @SkipThrottle({ default: false }) // Rate limiting is applied to this route.
   @HttpCode(HttpStatus.NO_CONTENT)
   registrationEmailResending(
     @Body() body: RegistrationEmailResendingInputDto,
@@ -104,6 +110,21 @@ export class AuthController {
     CookieService.clearRefreshTokenCookie(response);
   }
 
+  @Post('password-recovery')
+  @SkipThrottle({ default: false }) // Rate limiting is applied to this route.
+  @UseGuards(RecaptchaGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  passwordRecovery(@Body() body: PasswordRecoveryInputDto): Promise<void>{
+    return this.commandBus.execute(new PasswordRecoveryCommand({ email: body.email }));
+  }
+
+  @Post('new-password')
+  @SkipThrottle({ default: false }) // Rate limiting is applied to this route.
+  @HttpCode(HttpStatus.NO_CONTENT)
+  newPassword (@Body() body: NewPasswordInputDto): Promise<void>{
+    return this.commandBus.execute(new NewPasswordCommand( body ));
+  }
+  
   @ApiSecurity('refreshToken')
   @Post('refresh-token')
   @UseGuards(JwtRefreshTokenGuard)

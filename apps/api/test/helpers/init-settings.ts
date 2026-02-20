@@ -7,6 +7,8 @@ import { initAppModule } from '@src/init-app-module';
 import { CoreConfig } from '@src/core/config/core.config';
 import { PrismaService } from '@src/db/prisma.service';
 import { UsersTestManager } from './users-test-manager';
+import { GoogleRecaptchaService } from '@src/modules/user-accounts/application/services/recaptcha.service';
+import { GoogleRecaptchaServiceMock } from '../mock/recaptcha-service.mock';
 
 export const initSettings = async (
   addSettingsToModuleBuilder?: (moduleBuilder: TestingModuleBuilder) => void,
@@ -17,7 +19,9 @@ export const initSettings = async (
     imports: [DynamicAppModule],
   })
     .overrideProvider(EmailService)
-    .useClass(EmailServiceMock);
+    .useClass(EmailServiceMock)
+    .overrideProvider(GoogleRecaptchaService)
+    .useClass(GoogleRecaptchaServiceMock);
 
   if (addSettingsToModuleBuilder) {
     addSettingsToModuleBuilder(testingModuleBuilder);

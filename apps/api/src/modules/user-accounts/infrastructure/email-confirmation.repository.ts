@@ -19,6 +19,16 @@ export class EmailConfirmationRepository {
     return this.prisma.emailConfirmation.update({ where: { id }, data });
   }
 
+  async updateByUserId(
+    userId: number,
+    data: Prisma.EmailConfirmationUpdateInput,
+  ): Promise<EmailConfirmation> {
+    return this.prisma.emailConfirmation.update({
+      where: { userId },
+      data,
+    });
+  }
+
   async findByUserId(userId: number): Promise<EmailConfirmation | null> {
     return this.prisma.emailConfirmation.findUnique({ where: { userId } });
   }

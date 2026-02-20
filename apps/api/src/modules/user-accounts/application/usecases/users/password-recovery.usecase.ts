@@ -1,0 +1,51 @@
+import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
+import { PasswordRecoveryDto } from "../../dto/password-recovery.dto";
+import { DomainException } from "@libs/core/exceptions/domain-exceptions";
+import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
+import { UsersRepository } from "@src/modules/user-accounts/infrastructure/users.repository";
+import { UuidService } from "../../services/uuid.service";
+import { add } from "date-fns/add";
+import { EmailExamples } from "@src/modules/notifications/email-examples";
+import { UserRegisteredEvent } from "@src/modules/user-accounts/domain/events/user-registered.event";
+import { PasswordRecoveryRepository } from "@src/modules/user-accounts/infrastructure/password-recovery.repository";
+
+
+export class PasswordRecoveryCommand {
+  constructor(public dto: PasswordRecoveryDto) {}
+}
+
+/**
+ * Создание администратором пользователя через админскую панель
+ */
+@CommandHandler(PasswordRecoveryCommand)
+export class PasswordRecoveryUseCase
+  implements ICommandHandler<PasswordRecoveryCommand>
+{
+  constructor(
+    private usersRepository: UsersRepository,
+    private uuidService: UuidService,
+    private eventBus: EventBus,
+    private emailExamples: EmailExamples,
+    private passwordRecoveryRepository: PasswordRecoveryRepository,
+  ) {}
+
+  async execute({ dto }: PasswordRecoveryCommand): Promise<void> {
+    const user = await this.usersRepository.findByEmail( dto.email );
+
+    if ( !user ) {
+      throw new DomainException({
+        code: DomainExceptionCode.BadRequest,
+        message: ''         
+      })
+    }
+
+    const code = this.uuidService.generate();
+    await this.passwordRecoveryRepository.create({
+      recoveryCodeExpireDate: add(new Date(), { hours: 1 }),
+      recoveryCode: code,
+      user: { connect: { id: user.id } },
+    });
+
+    this.eventBus.publish(new UserRegisteredEvent(user.email, code, this.emailExamples.passwordRecoveryEmail));
+  }
+}

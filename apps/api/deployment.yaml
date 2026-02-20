@@ -101,6 +101,21 @@ spec:
                  secretKeyRef:
                    name: gateway-api-production-config-secret
                    key: REFRESH_TOKEN_EXPIRE_IN
+             - name: THROTTLE_TTL
+               valueFrom:
+                 secretKeyRef:
+                   name: gateway-api-production-config-secret
+                   key: THROTTLE_TTL
+             - name: THROTTLE_LIMIT
+               valueFrom:
+                 secretKeyRef:
+                   name: gateway-api-production-config-secret
+                   key: THROTTLE_LIMIT
+             - name: RECAPTCHA_SECRET
+               valueFrom:
+                 secretKeyRef:
+                   name: gateway-api-production-config-secret
+                   key: RECAPTCHA_SECRET
              - name: NODE_ENV
                valueFrom:
                  secretKeyRef:

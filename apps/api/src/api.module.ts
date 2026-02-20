@@ -4,7 +4,7 @@ import { ApiService } from './api.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ApiCoreModule } from './core/api.core.module';
 import { CoreConfig } from './core/config/core.config';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { PrismaModule } from './db/prisma.module';
 import { UserAccountsModule } from './modules/user-accounts/user-accounts.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
@@ -13,6 +13,7 @@ import { configModule } from '@libs/config/config-dynamic-module';
 import { ServiceName } from '@libs/config/configuration';
 import { CoreModule } from '@libs/core/core.module';
 import { DomainHttpExceptionsFilter } from '@libs/core/exceptions/filters/domain-exceptions.filter';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { SessionsModule } from '@modules/sessions/sessions.module';
 import { PoliciesModule } from '@modules/privacy/policies.module';
 
@@ -22,6 +23,14 @@ import { PoliciesModule } from '@modules/privacy/policies.module';
     CoreModule,
     ApiCoreModule,
     PrismaModule,
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: Number(process.env.THROTTLE_TTL), 
+          limit: Number(process.env.THROTTLE_LIMIT)
+        },
+      ],
+    }),
     ClientsModule.register([
       {
         name: 'FILE_SERVICE',
@@ -43,6 +52,10 @@ import { PoliciesModule } from '@modules/privacy/policies.module';
     {
       provide: APP_FILTER,
       useClass: DomainHttpExceptionsFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
   exports: [],

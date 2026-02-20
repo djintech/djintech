@@ -1,7 +1,7 @@
 import { configValidationUtility } from '@libs/config/setup/config-validation.utility';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 @Injectable()
 export class UserAccountsConfig {
@@ -25,6 +25,11 @@ export class UserAccountsConfig {
   })
   accessTokenSecret: string;
 
+  @IsString({
+    message: 'Set Env variable RECAPTCHA_SECRET example: wkdaksfhgudo293e48rt7yefiowdkqsnweiort',
+  })
+  recaptchaSecret: string;
+
   constructor(private configService: ConfigService<any, true>) {
     this.accessTokenExpireIn = this.configService.get('ACCESS_TOKEN_EXPIRE_IN');
     this.refreshTokenExpireIn = this.configService.get(
@@ -32,6 +37,9 @@ export class UserAccountsConfig {
     );
     this.accessTokenSecret = this.configService.get('ACCESS_TOKEN_SECRET');
     this.refreshTokenSecret = this.configService.get('REFRESH_TOKEN_SECRET');
+
+    this.recaptchaSecret = this.configService.get('RECAPTCHA_SECRET');
+
     configValidationUtility.validateConfig(this);
   }
 }
