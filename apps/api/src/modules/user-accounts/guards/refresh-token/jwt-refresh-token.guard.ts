@@ -10,11 +10,14 @@ import { JwtService } from '@nestjs/jwt';
 import { RequestWithCookies } from './request-with-cookies';
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
+import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.repository';
+import { RefreshTokenPayloadType } from '@modules/user-accounts/application/dto/refresh-token-payload.type';
 @Injectable()
 export class JwtRefreshTokenGuard implements CanActivate {
   constructor(
     @Inject(REFRESH_TOKEN_STRATEGY_INJECT_TOKEN)
     private readonly jwtService: JwtService,
+    private readonly deviceRepository: DeviceRepository,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -29,7 +32,27 @@ export class JwtRefreshTokenGuard implements CanActivate {
     }
 
     try {
-      await this.jwtService.verifyAsync(refreshToken);
+      const payload =
+        await this.jwtService.verifyAsync<RefreshTokenPayloadType>(
+          refreshToken,
+        );
+      const device = await this.deviceRepository.findByDeviceId(
+        payload.deviceId,
+      );
+      if (!device || device.deletedAt) {
+        throw new DomainException({
+          code: DomainExceptionCode.Unauthorized,
+          message: 'Invalid refresh token',
+        });
+      }
+      const iat = new Date(payload.iat * 1000);
+      const exp = new Date(payload.exp * 1000);
+      if (device.lastActiveAt !== iat && device.expiresAt !== exp) {
+        throw new DomainException({
+          code: DomainExceptionCode.Unauthorized,
+          message: 'Invalid refresh token',
+        });
+      }
     } catch (error) {
       throw new DomainException({
         code: DomainExceptionCode.Unauthorized,

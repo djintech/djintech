@@ -19,10 +19,11 @@ export class DeviceRepository {
   async updateLastActive(
     deviceId: string,
     lastActiveAt: Date,
+    expiresAt: Date,
   ): Promise<Device> {
     return this.prisma.device.update({
       where: { deviceId },
-      data: { lastActiveAt },
+      data: { lastActiveAt, expiresAt },
     });
   }
 
