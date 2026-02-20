@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   EmailConfirmation: 'EmailConfirmation',
   PasswordRecovery: 'PasswordRecovery',
-  Device: 'Device'
+  Device: 'Device',
+  Policies: 'Policies'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -126,6 +127,17 @@ export const DeviceScalarFieldEnum = {
 } as const
 
 export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]
+
+
+export const PoliciesScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  content: 'content',
+  version: 'version',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PoliciesScalarFieldEnum = (typeof PoliciesScalarFieldEnum)[keyof typeof PoliciesScalarFieldEnum]
 
 
 export const SortOrder = {

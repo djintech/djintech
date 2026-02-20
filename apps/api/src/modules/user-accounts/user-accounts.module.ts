@@ -91,6 +91,6 @@ const queryHandlers = [];
     GoogleRecaptchaService,
     DeviceRepository,
   ],
-  exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN],
+  exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository],
 })
 export class UserAccountsModule {}

@@ -9,7 +9,9 @@
 * 🟢 You can import this file directly.
 */
 
+export const PolicyType = {
+  tos: 'tos',
+  privacy: 'privacy'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type PolicyType = (typeof PolicyType)[keyof typeof PolicyType]
