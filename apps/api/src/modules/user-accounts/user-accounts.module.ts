@@ -30,6 +30,9 @@ import { PasswordRecoveryUseCase } from './application/usecases/users/password-r
 import { PasswordRecoveryRepository } from './infrastructure/password-recovery.repository';
 import { LogoutDeviceUseCase } from '@modules/user-accounts/application/usecases/users/logout-user.usecase';
 import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.repository';
+import { JwtStrategy } from './guards/bearer/jwt.strategy';
+import { RefreshTokenUseCase } from './application/usecases/users/refresh-token.usecase';
+import { PoliciesModule } from '../privacy/policies.module';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -39,12 +42,13 @@ const commandHandlers = [
   NewPasswordUseCase,
   PasswordRecoveryUseCase,
   LogoutDeviceUseCase,
+  RefreshTokenUseCase,
 ];
 
 const queryHandlers = [];
 
 @Module({
-  imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule],
+  imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule, PoliciesModule],
   controllers: [AuthController],
   providers: [
     ...commandHandlers,
@@ -76,7 +80,7 @@ const queryHandlers = [];
       inject: [UserAccountsConfig],
     },
 
-    // UsersQueryRepository,
+    JwtStrategy,
     CryptoService,
     UuidService,
     EmailService,
@@ -91,6 +95,6 @@ const queryHandlers = [];
     GoogleRecaptchaService,
     DeviceRepository,
   ],
-  exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository],
+  exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository, JwtStrategy],
 })
 export class UserAccountsModule {}

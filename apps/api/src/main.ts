@@ -15,7 +15,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.enableCors({
-    origin: coreConfig.corsOrigin.split(','), //[coreConfig.corsOrigin], // any localhost with any port
+    origin: coreConfig.corsOrigin.split(','), 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: ['Authorization', 'Content-Type'],
     credentials: true, // for cookier (example refreshToken)

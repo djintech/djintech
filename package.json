@@ -25,8 +25,8 @@
     "start:dev:files": "cross-env NODE_ENV=development nest start files --watch",
     "start:files:debug": "cross-env NODE_ENV=development nest start files --debug --watch",
     "prisma:api:generate": "prisma generate --config=apps/api/prisma/prisma.config.ts",
-    "prisma:api:generate:dev": "cross-env NODE_ENV=development dotenv -e .env.development -- prisma generate --config=apps/api/prisma/prisma.config.ts",
-    "prisma:api:migrate:dev": "cross-env NODE_ENV=development dotenv -e .env.development -- prisma migrate dev --config=apps/api/prisma/prisma.config.ts",
+    "prisma:api:generate:dev": "cross-env NODE_ENV=development dotenv -e .env.development.local -- prisma generate --config=apps/api/prisma/prisma.config.ts",
+    "prisma:api:migrate:dev": "cross-env NODE_ENV=development dotenv -e .env.development.local -- prisma migrate dev --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:migrate:deploy:test": "cross-env NODE_ENV=testing  dotenv -e .env.testing -- prisma migrate deploy --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:studio:dev": "cross-env NODE_ENV=development prisma studio --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:studio:test": "cross-env NODE_ENV=testing prisma studio --config=apps/api/prisma/prisma.config.ts"

@@ -1,5 +1,6 @@
 import { Controller, Get, NotFoundException } from '@nestjs/common';
-import { PoliciesQueryRepository } from '@modules/privacy/infrastructure/policies.query.repository';
+import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import { PoliciesQueryRepository } from '@src/modules/privacy/infrastructure/policies.query.repository';
 
 @Controller('privacy')
 export class PolicyController {
@@ -7,6 +8,8 @@ export class PolicyController {
     private readonly policyQueryRepository: PoliciesQueryRepository,
   ) {}
 
+  @ApiOkResponse({ description: 'success' })
+  @ApiNotFoundResponse({ description: 'terms of service not found' })
   @Get('terms-of-service')
   async getTermsOfService() {
     const policy = await this.policyQueryRepository.getLatestTermsOfService();
@@ -20,6 +23,8 @@ export class PolicyController {
     };
   }
 
+  @ApiOkResponse({ description: 'success' })
+  @ApiNotFoundResponse({ description: 'policy not found' })
   @Get('privacy-policy')
   async getPrivacyPolicy() {
     const policy = await this.policyQueryRepository.getLatestPrivacyPolicy();

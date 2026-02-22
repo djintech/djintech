@@ -13,6 +13,7 @@ export const ExtractUserFromRequest = createParamDecorator(
       throw new DomainException({
         code: DomainExceptionCode.BadRequest,
         message: 'there is no user in the request object!',
+        extensions: [{ message: 'there is no user in the request object!', field: 'user' }],
       });
     }
 

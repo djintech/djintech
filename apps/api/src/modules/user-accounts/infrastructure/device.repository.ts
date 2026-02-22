@@ -9,6 +9,10 @@ export class DeviceRepository {
   async create(data: Prisma.DeviceUncheckedCreateInput): Promise<Device> {
     return this.prisma.device.create({ data });
   }
+  
+  async update(id: number, data: Prisma.DeviceUpdateInput): Promise<Device> {
+    return this.prisma.device.update({ where: { id }, data });
+  }
 
   async findByDeviceId(deviceId: string): Promise<Device | null> {
     return this.prisma.device.findUnique({

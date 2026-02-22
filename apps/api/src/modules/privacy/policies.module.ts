@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { PolicyController } from '@modules/privacy/api/policies.controller';
-import { PoliciesQueryRepository } from '@modules/privacy/infrastructure/policies.query.repository';
+import { PolicyController } from '@src/modules/privacy/api/policies.controller';
+import { PoliciesQueryRepository } from '@src/modules/privacy/infrastructure/policies.query.repository';
 
 @Module({
   imports: [],

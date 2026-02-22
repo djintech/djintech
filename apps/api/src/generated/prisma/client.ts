@@ -62,3 +62,8 @@ export type Device = Prisma.DeviceModel
  * 
  */
 export type Policies = Prisma.PoliciesModel
+/**
+ * Model UserPolicyAgreement
+ * 
+ */
+export type UserPolicyAgreement = Prisma.UserPolicyAgreementModel

@@ -14,6 +14,12 @@ export class UsersRepository {
     return this.prisma.user.update({ where: { id }, data });
   }
 
+  async findById(id: number): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: { id },
+    });
+  }
+
   async findByUsernameOrEmail(
     username: string,
     email: string,

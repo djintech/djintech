@@ -8,13 +8,16 @@ import {
 import { UuidService } from '@modules/user-accounts/application/services/uuid.service';
 import { RefreshTokenPayloadType } from '@modules/user-accounts/application/dto/refresh-token-payload.type';
 import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.repository';
+import { UsersRepository } from '@src/modules/user-accounts/infrastructure/users.repository';
+import { DomainException } from '@libs/core/exceptions/domain-exceptions';
+import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
 
 export class RefreshTokenCommand {
   constructor(public dto: { userId: number; deviceId: string }) {}
 }
 
 @CommandHandler(RefreshTokenCommand)
-export class LoginUserUseCase implements ICommandHandler<RefreshTokenCommand> {
+export class RefreshTokenUseCase implements ICommandHandler<RefreshTokenCommand> {
   constructor(
     @Inject(ACCESS_TOKEN_STRATEGY_INJECT_TOKEN)
     private accessTokenContext: JwtService,
@@ -23,19 +26,36 @@ export class LoginUserUseCase implements ICommandHandler<RefreshTokenCommand> {
     private refreshTokenContext: JwtService,
     private readonly deviceRepository: DeviceRepository,
     private readonly uuidService: UuidService,
+    private readonly usersRepository: UsersRepository,
   ) {}
 
   async execute({ dto }: RefreshTokenCommand): Promise<{
     accessToken: string;
     refreshToken: string;
   }> {
+    const user = await this.usersRepository.findById( Number(dto.userId) );
+    if ( !user ) {
+      throw new DomainException({
+        code: DomainExceptionCode.Unauthorized,
+        message: 'Unauthorized',
+      }); 
+    }
+
+    const device = await this.deviceRepository.findByDeviceId(dto.deviceId);
+    if (!device) {
+      throw new DomainException({
+        code: DomainExceptionCode.Unauthorized,
+        message: 'not found device',
+      });
+    }
+
     const accessToken = this.accessTokenContext.sign({ id: dto.userId });
     const refreshToken = this.refreshTokenContext.sign({
       id: dto.userId,
       deviceId: dto.deviceId,
     });
-    const payload =
-      this.refreshTokenContext.verify<RefreshTokenPayloadType>(refreshToken);
+    const payload = this.refreshTokenContext.verify<RefreshTokenPayloadType>(refreshToken);
+    
     const lastActiveAt = new Date(payload.iat * 1000);
     const expiresAt = new Date(payload.exp * 1000);
     await this.deviceRepository.updateLastActive(

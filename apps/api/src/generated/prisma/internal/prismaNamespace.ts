@@ -388,7 +388,8 @@ export const ModelName = {
   EmailConfirmation: 'EmailConfirmation',
   PasswordRecovery: 'PasswordRecovery',
   Device: 'Device',
-  Policies: 'Policies'
+  Policies: 'Policies',
+  UserPolicyAgreement: 'UserPolicyAgreement'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "emailConfirmation" | "passwordRecovery" | "device" | "policies"
+    modelProps: "user" | "emailConfirmation" | "passwordRecovery" | "device" | "policies" | "userPolicyAgreement"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserPolicyAgreement: {
+      payload: Prisma.$UserPolicyAgreementPayload<ExtArgs>
+      fields: Prisma.UserPolicyAgreementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserPolicyAgreementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserPolicyAgreementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        findFirst: {
+          args: Prisma.UserPolicyAgreementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserPolicyAgreementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        findMany: {
+          args: Prisma.UserPolicyAgreementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>[]
+        }
+        create: {
+          args: Prisma.UserPolicyAgreementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        createMany: {
+          args: Prisma.UserPolicyAgreementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserPolicyAgreementCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>[]
+        }
+        delete: {
+          args: Prisma.UserPolicyAgreementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        update: {
+          args: Prisma.UserPolicyAgreementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserPolicyAgreementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserPolicyAgreementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserPolicyAgreementUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserPolicyAgreementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        aggregate: {
+          args: Prisma.UserPolicyAgreementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserPolicyAgreement>
+        }
+        groupBy: {
+          args: Prisma.UserPolicyAgreementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPolicyAgreementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserPolicyAgreementCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPolicyAgreementCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -877,10 +952,21 @@ export const PoliciesScalarFieldEnum = {
   type: 'type',
   content: 'content',
   version: 'version',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
 } as const
 
 export type PoliciesScalarFieldEnum = (typeof PoliciesScalarFieldEnum)[keyof typeof PoliciesScalarFieldEnum]
+
+
+export const UserPolicyAgreementScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  policyId: 'policyId',
+  acceptedAt: 'acceptedAt'
+} as const
+
+export type UserPolicyAgreementScalarFieldEnum = (typeof UserPolicyAgreementScalarFieldEnum)[keyof typeof UserPolicyAgreementScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1089,6 +1175,7 @@ export type GlobalOmitConfig = {
   passwordRecovery?: Prisma.PasswordRecoveryOmit
   device?: Prisma.DeviceOmit
   policies?: Prisma.PoliciesOmit
+  userPolicyAgreement?: Prisma.UserPolicyAgreementOmit
 }
 
 /* Types for Logging */

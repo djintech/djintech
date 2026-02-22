@@ -42,6 +42,7 @@ export type PoliciesMinAggregateOutputType = {
   content: string | null
   version: number | null
   updatedAt: Date | null
+  createdAt: Date | null
 }
 
 export type PoliciesMaxAggregateOutputType = {
@@ -50,6 +51,7 @@ export type PoliciesMaxAggregateOutputType = {
   content: string | null
   version: number | null
   updatedAt: Date | null
+  createdAt: Date | null
 }
 
 export type PoliciesCountAggregateOutputType = {
@@ -58,6 +60,7 @@ export type PoliciesCountAggregateOutputType = {
   content: number
   version: number
   updatedAt: number
+  createdAt: number
   _all: number
 }
 
@@ -78,6 +81,7 @@ export type PoliciesMinAggregateInputType = {
   content?: true
   version?: true
   updatedAt?: true
+  createdAt?: true
 }
 
 export type PoliciesMaxAggregateInputType = {
@@ -86,6 +90,7 @@ export type PoliciesMaxAggregateInputType = {
   content?: true
   version?: true
   updatedAt?: true
+  createdAt?: true
 }
 
 export type PoliciesCountAggregateInputType = {
@@ -94,6 +99,7 @@ export type PoliciesCountAggregateInputType = {
   content?: true
   version?: true
   updatedAt?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -189,6 +195,7 @@ export type PoliciesGroupByOutputType = {
   content: string
   version: number
   updatedAt: Date
+  createdAt: Date
   _count: PoliciesCountAggregateOutputType | null
   _avg: PoliciesAvgAggregateOutputType | null
   _sum: PoliciesSumAggregateOutputType | null
@@ -220,6 +227,8 @@ export type PoliciesWhereInput = {
   content?: Prisma.StringFilter<"Policies"> | string
   version?: Prisma.IntFilter<"Policies"> | number
   updatedAt?: Prisma.DateTimeFilter<"Policies"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Policies"> | Date | string
+  policyAgreements?: Prisma.UserPolicyAgreementListRelationFilter
 }
 
 export type PoliciesOrderByWithRelationInput = {
@@ -228,6 +237,8 @@ export type PoliciesOrderByWithRelationInput = {
   content?: Prisma.SortOrder
   version?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  policyAgreements?: Prisma.UserPolicyAgreementOrderByRelationAggregateInput
 }
 
 export type PoliciesWhereUniqueInput = Prisma.AtLeast<{
@@ -239,6 +250,8 @@ export type PoliciesWhereUniqueInput = Prisma.AtLeast<{
   content?: Prisma.StringFilter<"Policies"> | string
   version?: Prisma.IntFilter<"Policies"> | number
   updatedAt?: Prisma.DateTimeFilter<"Policies"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Policies"> | Date | string
+  policyAgreements?: Prisma.UserPolicyAgreementListRelationFilter
 }, "id">
 
 export type PoliciesOrderByWithAggregationInput = {
@@ -247,6 +260,7 @@ export type PoliciesOrderByWithAggregationInput = {
   content?: Prisma.SortOrder
   version?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.PoliciesCountOrderByAggregateInput
   _avg?: Prisma.PoliciesAvgOrderByAggregateInput
   _max?: Prisma.PoliciesMaxOrderByAggregateInput
@@ -263,6 +277,7 @@ export type PoliciesScalarWhereWithAggregatesInput = {
   content?: Prisma.StringWithAggregatesFilter<"Policies"> | string
   version?: Prisma.IntWithAggregatesFilter<"Policies"> | number
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Policies"> | Date | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Policies"> | Date | string
 }
 
 export type PoliciesCreateInput = {
@@ -270,6 +285,8 @@ export type PoliciesCreateInput = {
   content: string
   version: number
   updatedAt?: Date | string
+  createdAt?: Date | string
+  policyAgreements?: Prisma.UserPolicyAgreementCreateNestedManyWithoutPolicyInput
 }
 
 export type PoliciesUncheckedCreateInput = {
@@ -278,6 +295,8 @@ export type PoliciesUncheckedCreateInput = {
   content: string
   version: number
   updatedAt?: Date | string
+  createdAt?: Date | string
+  policyAgreements?: Prisma.UserPolicyAgreementUncheckedCreateNestedManyWithoutPolicyInput
 }
 
 export type PoliciesUpdateInput = {
@@ -285,6 +304,8 @@ export type PoliciesUpdateInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  policyAgreements?: Prisma.UserPolicyAgreementUpdateManyWithoutPolicyNestedInput
 }
 
 export type PoliciesUncheckedUpdateInput = {
@@ -293,6 +314,8 @@ export type PoliciesUncheckedUpdateInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  policyAgreements?: Prisma.UserPolicyAgreementUncheckedUpdateManyWithoutPolicyNestedInput
 }
 
 export type PoliciesCreateManyInput = {
@@ -301,6 +324,7 @@ export type PoliciesCreateManyInput = {
   content: string
   version: number
   updatedAt?: Date | string
+  createdAt?: Date | string
 }
 
 export type PoliciesUpdateManyMutationInput = {
@@ -308,6 +332,7 @@ export type PoliciesUpdateManyMutationInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PoliciesUncheckedUpdateManyInput = {
@@ -316,6 +341,7 @@ export type PoliciesUncheckedUpdateManyInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PoliciesCountOrderByAggregateInput = {
@@ -324,6 +350,7 @@ export type PoliciesCountOrderByAggregateInput = {
   content?: Prisma.SortOrder
   version?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type PoliciesAvgOrderByAggregateInput = {
@@ -337,6 +364,7 @@ export type PoliciesMaxOrderByAggregateInput = {
   content?: Prisma.SortOrder
   version?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type PoliciesMinOrderByAggregateInput = {
@@ -345,6 +373,7 @@ export type PoliciesMinOrderByAggregateInput = {
   content?: Prisma.SortOrder
   version?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type PoliciesSumOrderByAggregateInput = {
@@ -352,10 +381,108 @@ export type PoliciesSumOrderByAggregateInput = {
   version?: Prisma.SortOrder
 }
 
+export type PoliciesScalarRelationFilter = {
+  is?: Prisma.PoliciesWhereInput
+  isNot?: Prisma.PoliciesWhereInput
+}
+
 export type EnumPolicyTypeFieldUpdateOperationsInput = {
   set?: $Enums.PolicyType
 }
 
+export type PoliciesCreateNestedOneWithoutPolicyAgreementsInput = {
+  create?: Prisma.XOR<Prisma.PoliciesCreateWithoutPolicyAgreementsInput, Prisma.PoliciesUncheckedCreateWithoutPolicyAgreementsInput>
+  connectOrCreate?: Prisma.PoliciesCreateOrConnectWithoutPolicyAgreementsInput
+  connect?: Prisma.PoliciesWhereUniqueInput
+}
+
+export type PoliciesUpdateOneRequiredWithoutPolicyAgreementsNestedInput = {
+  create?: Prisma.XOR<Prisma.PoliciesCreateWithoutPolicyAgreementsInput, Prisma.PoliciesUncheckedCreateWithoutPolicyAgreementsInput>
+  connectOrCreate?: Prisma.PoliciesCreateOrConnectWithoutPolicyAgreementsInput
+  upsert?: Prisma.PoliciesUpsertWithoutPolicyAgreementsInput
+  connect?: Prisma.PoliciesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PoliciesUpdateToOneWithWhereWithoutPolicyAgreementsInput, Prisma.PoliciesUpdateWithoutPolicyAgreementsInput>, Prisma.PoliciesUncheckedUpdateWithoutPolicyAgreementsInput>
+}
+
+export type PoliciesCreateWithoutPolicyAgreementsInput = {
+  type: $Enums.PolicyType
+  content: string
+  version: number
+  updatedAt?: Date | string
+  createdAt?: Date | string
+}
+
+export type PoliciesUncheckedCreateWithoutPolicyAgreementsInput = {
+  id?: number
+  type: $Enums.PolicyType
+  content: string
+  version: number
+  updatedAt?: Date | string
+  createdAt?: Date | string
+}
+
+export type PoliciesCreateOrConnectWithoutPolicyAgreementsInput = {
+  where: Prisma.PoliciesWhereUniqueInput
+  create: Prisma.XOR<Prisma.PoliciesCreateWithoutPolicyAgreementsInput, Prisma.PoliciesUncheckedCreateWithoutPolicyAgreementsInput>
+}
+
+export type PoliciesUpsertWithoutPolicyAgreementsInput = {
+  update: Prisma.XOR<Prisma.PoliciesUpdateWithoutPolicyAgreementsInput, Prisma.PoliciesUncheckedUpdateWithoutPolicyAgreementsInput>
+  create: Prisma.XOR<Prisma.PoliciesCreateWithoutPolicyAgreementsInput, Prisma.PoliciesUncheckedCreateWithoutPolicyAgreementsInput>
+  where?: Prisma.PoliciesWhereInput
+}
+
+export type PoliciesUpdateToOneWithWhereWithoutPolicyAgreementsInput = {
+  where?: Prisma.PoliciesWhereInput
+  data: Prisma.XOR<Prisma.PoliciesUpdateWithoutPolicyAgreementsInput, Prisma.PoliciesUncheckedUpdateWithoutPolicyAgreementsInput>
+}
+
+export type PoliciesUpdateWithoutPolicyAgreementsInput = {
+  type?: Prisma.EnumPolicyTypeFieldUpdateOperationsInput | $Enums.PolicyType
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PoliciesUncheckedUpdateWithoutPolicyAgreementsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumPolicyTypeFieldUpdateOperationsInput | $Enums.PolicyType
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type PoliciesCountOutputType
+ */
+
+export type PoliciesCountOutputType = {
+  policyAgreements: number
+}
+
+export type PoliciesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  policyAgreements?: boolean | PoliciesCountOutputTypeCountPolicyAgreementsArgs
+}
+
+/**
+ * PoliciesCountOutputType without action
+ */
+export type PoliciesCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PoliciesCountOutputType
+   */
+  select?: Prisma.PoliciesCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PoliciesCountOutputType without action
+ */
+export type PoliciesCountOutputTypeCountPolicyAgreementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserPolicyAgreementWhereInput
+}
 
 
 export type PoliciesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -364,6 +491,9 @@ export type PoliciesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   content?: boolean
   version?: boolean
   updatedAt?: boolean
+  createdAt?: boolean
+  policyAgreements?: boolean | Prisma.Policies$policyAgreementsArgs<ExtArgs>
+  _count?: boolean | Prisma.PoliciesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["policies"]>
 
 export type PoliciesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -372,6 +502,7 @@ export type PoliciesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   content?: boolean
   version?: boolean
   updatedAt?: boolean
+  createdAt?: boolean
 }, ExtArgs["result"]["policies"]>
 
 export type PoliciesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -380,6 +511,7 @@ export type PoliciesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   content?: boolean
   version?: boolean
   updatedAt?: boolean
+  createdAt?: boolean
 }, ExtArgs["result"]["policies"]>
 
 export type PoliciesSelectScalar = {
@@ -388,19 +520,29 @@ export type PoliciesSelectScalar = {
   content?: boolean
   version?: boolean
   updatedAt?: boolean
+  createdAt?: boolean
 }
 
-export type PoliciesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "content" | "version" | "updatedAt", ExtArgs["result"]["policies"]>
+export type PoliciesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "content" | "version" | "updatedAt" | "createdAt", ExtArgs["result"]["policies"]>
+export type PoliciesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  policyAgreements?: boolean | Prisma.Policies$policyAgreementsArgs<ExtArgs>
+  _count?: boolean | Prisma.PoliciesCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type PoliciesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type PoliciesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $PoliciesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Policies"
-  objects: {}
+  objects: {
+    policyAgreements: Prisma.$UserPolicyAgreementPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     type: $Enums.PolicyType
     content: string
     version: number
     updatedAt: Date
+    createdAt: Date
   }, ExtArgs["result"]["policies"]>
   composites: {}
 }
@@ -795,6 +937,7 @@ readonly fields: PoliciesFieldRefs;
  */
 export interface Prisma__PoliciesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  policyAgreements<T extends Prisma.Policies$policyAgreementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Policies$policyAgreementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPolicyAgreementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -829,6 +972,7 @@ export interface PoliciesFieldRefs {
   readonly content: Prisma.FieldRef<"Policies", 'String'>
   readonly version: Prisma.FieldRef<"Policies", 'Int'>
   readonly updatedAt: Prisma.FieldRef<"Policies", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Policies", 'DateTime'>
 }
     
 
@@ -845,6 +989,10 @@ export type PoliciesFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the Policies
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
   /**
    * Filter, which Policies to fetch.
    */
@@ -864,6 +1012,10 @@ export type PoliciesFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
+  /**
    * Filter, which Policies to fetch.
    */
   where: Prisma.PoliciesWhereUniqueInput
@@ -881,6 +1033,10 @@ export type PoliciesFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Policies
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
   /**
    * Filter, which Policies to fetch.
    */
@@ -930,6 +1086,10 @@ export type PoliciesFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
+  /**
    * Filter, which Policies to fetch.
    */
   where?: Prisma.PoliciesWhereInput
@@ -978,6 +1138,10 @@ export type PoliciesFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
+  /**
    * Filter, which Policies to fetch.
    */
   where?: Prisma.PoliciesWhereInput
@@ -1020,6 +1184,10 @@ export type PoliciesCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Policies
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
   /**
    * The data needed to create a Policies.
    */
@@ -1068,6 +1236,10 @@ export type PoliciesUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Policies
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
   /**
    * The data needed to update a Policies.
    */
@@ -1135,6 +1307,10 @@ export type PoliciesUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
+  /**
    * The filter to search for the Policies to update in case it exists.
    */
   where: Prisma.PoliciesWhereUniqueInput
@@ -1161,6 +1337,10 @@ export type PoliciesDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
+  /**
    * Filter which Policies to delete.
    */
   where: Prisma.PoliciesWhereUniqueInput
@@ -1181,6 +1361,30 @@ export type PoliciesDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Policies.policyAgreements
+ */
+export type Policies$policyAgreementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserPolicyAgreement
+   */
+  select?: Prisma.UserPolicyAgreementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserPolicyAgreement
+   */
+  omit?: Prisma.UserPolicyAgreementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserPolicyAgreementInclude<ExtArgs> | null
+  where?: Prisma.UserPolicyAgreementWhereInput
+  orderBy?: Prisma.UserPolicyAgreementOrderByWithRelationInput | Prisma.UserPolicyAgreementOrderByWithRelationInput[]
+  cursor?: Prisma.UserPolicyAgreementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserPolicyAgreementScalarFieldEnum | Prisma.UserPolicyAgreementScalarFieldEnum[]
+}
+
+/**
  * Policies without action
  */
 export type PoliciesDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1192,4 +1396,8 @@ export type PoliciesDefaultArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Policies
    */
   omit?: Prisma.PoliciesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PoliciesInclude<ExtArgs> | null
 }

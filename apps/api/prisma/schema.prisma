@@ -19,6 +19,7 @@ model User {
   emailConfirmation EmailConfirmation?
   passwordRecovery  PasswordRecovery?
   Device            Device[]
+  policyAgreements  UserPolicyAgreement[]
 
   @@map("users")
 }
@@ -78,4 +79,22 @@ model Policies {
   content   String
   version   Int
   updatedAt DateTime   @updatedAt
+  createdAt DateTime @default(now())
+
+  policyAgreements  UserPolicyAgreement[]
+ 
+  @@map("policies")
+}
+
+model UserPolicyAgreement {
+  id        Int        @id @default(autoincrement())
+  userId    Int
+  policyId  Int
+  acceptedAt DateTime  @default(now())
+
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  policy Policies @relation(fields: [policyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, policyId])
+  @@map("userPolicyAgreements")
 }

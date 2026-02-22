@@ -55,7 +55,8 @@ export const ModelName = {
   EmailConfirmation: 'EmailConfirmation',
   PasswordRecovery: 'PasswordRecovery',
   Device: 'Device',
-  Policies: 'Policies'
+  Policies: 'Policies',
+  UserPolicyAgreement: 'UserPolicyAgreement'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -134,10 +135,21 @@ export const PoliciesScalarFieldEnum = {
   type: 'type',
   content: 'content',
   version: 'version',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
 } as const
 
 export type PoliciesScalarFieldEnum = (typeof PoliciesScalarFieldEnum)[keyof typeof PoliciesScalarFieldEnum]
+
+
+export const UserPolicyAgreementScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  policyId: 'policyId',
+  acceptedAt: 'acceptedAt'
+} as const
+
+export type UserPolicyAgreementScalarFieldEnum = (typeof UserPolicyAgreementScalarFieldEnum)[keyof typeof UserPolicyAgreementScalarFieldEnum]
 
 
 export const SortOrder = {
