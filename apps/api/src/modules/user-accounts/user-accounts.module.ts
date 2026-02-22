@@ -33,6 +33,8 @@ import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.r
 import { JwtStrategy } from './guards/bearer/jwt.strategy';
 import { RefreshTokenUseCase } from './application/usecases/users/refresh-token.usecase';
 import { PoliciesModule } from '../privacy/policies.module';
+import { GetMeQueryHandler } from './application/queries/get-me.query';
+import { AuthQueryRepository } from './infrastructure/query/auth.query-repository';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -45,7 +47,9 @@ const commandHandlers = [
   RefreshTokenUseCase,
 ];
 
-const queryHandlers = [];
+const queryHandlers = [
+  GetMeQueryHandler
+];
 
 @Module({
   imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule, PoliciesModule],
@@ -54,6 +58,7 @@ const queryHandlers = [];
     ...commandHandlers,
     ...queryHandlers,
     UsersRepository,
+    AuthQueryRepository,
     DeviceRepository,
     {
       provide: ACCESS_TOKEN_STRATEGY_INJECT_TOKEN,

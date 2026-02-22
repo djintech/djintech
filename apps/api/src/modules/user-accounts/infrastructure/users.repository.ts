@@ -1,3 +1,5 @@
+import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
+import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/db/prisma.service';
 import { Prisma, User } from '@src/generated/prisma/client';
@@ -45,6 +47,19 @@ export class UsersRepository {
     });
   }
 
+  async findOrNotFoundFail(id: number): Promise<User> {
+    const result = await this.prisma.user.findFirst({ where: { id } });
+
+    if (!result) {
+      throw new DomainException({
+        code: DomainExceptionCode.NotFound,
+        message: 'User not found',
+      });
+    }
+
+    return result;
+  }
+
   // async save(user: Prisma.UserCreateInput & { id?: number }): Promise<User> {
   //   if (user.id) {
   //     const { id, ...data } = user;
@@ -66,19 +81,6 @@ export class UsersRepository {
 
   // async findById(id: number): Promise<User | null> {
   //   return this.user.findOneBy({ id }); //не включает soft-deleted записи, если не указать withDeleted: true
-  // }
-
-  // async findOrNotFoundFail(id: number): Promise<User> {
-  //   const result = await this.findById(id);
-
-  //   if ( !result ) {
-  //     throw new DomainException({
-  //       code: DomainExceptionCode.NotFound,
-  //       message: 'not fouund',
-  //     });
-  //   }
-
-  //   return result;
   // }
 
   // async findByEmail( email: string ): Promise<User | null> {

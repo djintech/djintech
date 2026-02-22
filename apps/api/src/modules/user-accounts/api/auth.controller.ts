@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -15,7 +16,7 @@ import { RegistrationConfirmationInputDto } from './input-dto/registration-confi
 import { RegistrationEmailResendingInputDto } from './input-dto/registration-email-resending.input-dto';
 import { RegistrationConfirmationCommand } from '../application/usecases/users/registration-confirmation.usecase';
 import { RegistrationEmailResendingCommand } from '../application/usecases/users/registration-email-resending.usecase';
-import { ApiBadRequestResponse, ApiBody, ApiNoContentResponse, ApiOkResponse, ApiSecurity, ApiTooManyRequestsResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiBody, ApiNoContentResponse, ApiOkResponse, ApiSecurity, ApiTooManyRequestsResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../guards/local/local-auth.guard';
 import { LoginUserCommand } from '../application/usecases/users/login-user.usecase';
 import { ExtractUserFromRequest } from '../guards/decorators/param/extract-user-from-request.decorator';
@@ -39,6 +40,8 @@ import { SecurityDeviceContextDto } from '../dto/security-device-context.dto';
 import { JwtAuthGuard } from '../guards/bearer/jwt-auth.guard';
 import { ErrorResponseDto } from '@src/core/error-dto/error-response.dto';
 import { RefreshTokenViewDto } from './view-dto/refresh-token.view-dto';
+import { MeViewDto } from './view-dto/me.view-dto';
+import { GetMeQuery } from '../application/queries/get-me.query';
 
 @SkipThrottle()
 @Controller('auth')
@@ -47,6 +50,15 @@ export class AuthController {
     private commandBus: CommandBus,
     private readonly queryBus: QueryBus,
   ) {}
+  
+  @ApiBearerAuth('JwtAuth')
+  @ApiOkResponse({ description: 'success' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized: JJWT refreshToken inside cookie is missing, expired or incorrect' })
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  me(@ExtractUserFromRequest() user: UserContextDto): Promise<MeViewDto> {
+    return this.queryBus.execute( new GetMeQuery( user )); 
+  }
 
   @Post('login')
   @SkipThrottle({ default: false }) // Rate limiting is applied to this route.
