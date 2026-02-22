@@ -7,9 +7,10 @@ import { ExtractDeviceFromRefresh } from '@modules/user-accounts/guards/decorato
 import { JwtAuthGuard } from '@src/modules/user-accounts/guards/bearer/jwt-auth.guard';
 import { ApiSecurity, ApiTooManyRequestsResponse } from '@nestjs/swagger';
 import { SkipThrottle } from '@nestjs/throttler';
+import { JwtRefreshTokenGuard } from '@src/modules/user-accounts/guards/refresh-token/jwt-refresh-token.guard';
 
 @SkipThrottle()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, JwtRefreshTokenGuard)
 @Controller('security/devices')
 export class SessionsController {
   constructor(private readonly commandBus: CommandBus) {}
