@@ -52,7 +52,7 @@ export class AuthController {
   ) {}
   
   @ApiBearerAuth('JwtAuth')
-  @ApiOkResponse({ description: 'success' })
+  @ApiOkResponse({ type: MeViewDto, description: 'success' })
   @ApiUnauthorizedResponse({ description: 'Unauthorized: JJWT refreshToken inside cookie is missing, expired or incorrect' })
   @Get('me')
   @UseGuards(JwtAuthGuard)
