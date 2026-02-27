@@ -2,7 +2,6 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { initSettings } from '../helpers/init-settings';
 import { deleteAllData } from '../helpers/delete-all-data';
-import { CreateUserDto } from '@src/modules/user-accounts/application/dto/create-user.dto';
 import { EmailService } from '@src/modules/notifications/email.service';
 import { ACCESS_TOKEN_STRATEGY_INJECT_TOKEN } from '@src/modules/user-accounts/constants/auth-tokens.inject-constants';
 import { JwtService } from '@nestjs/jwt';
@@ -10,6 +9,7 @@ import { UserAccountsConfig } from '@src/modules/user-accounts/config/user-accou
 import { UsersTestManager } from '../helpers/users-test-manager';
 import { PasswordRecoveryInputDto } from '@src/modules/user-accounts/api/input-dto/password-recovery.input-dto';
 import { GoogleRecaptchaService } from '@src/modules/user-accounts/application/services/recaptcha.service';
+import { CreateUserInputDto } from '@src/modules/user-accounts/api/input-dto/users.input-dto';
 
 describe('auth', () => {
   let app: INestApplication;
@@ -53,7 +53,7 @@ describe('auth', () => {
         email: 'email@email.com',
         password: 'stringA1',
         username: 'string',
-      } as CreateUserDto)
+      } as CreateUserInputDto)
       .expect(HttpStatus.NO_CONTENT);
   });
 
@@ -68,14 +68,14 @@ describe('auth', () => {
         email: 'email@email.com',
         password: 'stringA1',
         username: 'string',
-      } as CreateUserDto)
+      } as CreateUserInputDto)
       .expect(HttpStatus.NO_CONTENT);
 
     expect(sendEmailMethod).toHaveBeenCalled();
   });
 
   it(`should login user`, async () => {
-    const body: CreateUserDto = {
+    const body: CreateUserInputDto = {
       username: 'username1',
       password: 'username1A',
       email: 'email1@email.com',
@@ -93,7 +93,7 @@ describe('auth', () => {
   });
 
   it(`should not login user, if user not confirmed`, async () => {
-    const body: CreateUserDto = {
+    const body: CreateUserInputDto = {
       username: 'username1',
       password: 'username1A',
       email: 'email@email.com',
@@ -111,7 +111,7 @@ describe('auth', () => {
   });
 
   it(`should send password recovery without really verify recaptcha and send email`, async () => {
-    const body: CreateUserDto = {
+    const body: CreateUserInputDto = {
       username: 'username1',
       password: 'username1A',
       email: 'email@email.com',
@@ -128,7 +128,7 @@ describe('auth', () => {
   });
 
   it(`should call verify recaptcha and email sending method while password recovery`, async () => {
-    const body: CreateUserDto = {
+    const body: CreateUserInputDto = {
       username: 'username1',
       password: 'username1A',
       email: 'email@email.com',
