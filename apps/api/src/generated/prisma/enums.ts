@@ -15,3 +15,11 @@ export const PolicyType = {
 } as const
 
 export type PolicyType = (typeof PolicyType)[keyof typeof PolicyType]
+
+
+export const ProviderType = {
+  google: 'google',
+  github: 'github'
+} as const
+
+export type ProviderType = (typeof ProviderType)[keyof typeof ProviderType]

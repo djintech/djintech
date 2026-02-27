@@ -8,21 +8,22 @@ export class UsersFactory {
   constructor(private readonly cryptoService: CryptoService) {}
 
   async create(dto: CreateUserDto): Promise<Prisma.UserCreateInput> {
-    const passwordHash = await this.cryptoService.createPasswordHash(
+    const passwordHash = dto.password ? await this.cryptoService.createPasswordHash(
       dto.password,
-    );
-
+    ) : null;
+  
     return {
       email: dto.email,
       username: dto.username,
       passwordHash,
+      isConfirmed: dto.isConfirmed ?? false,
     };
   }
 
   async update(dto: CreateUserDto): Promise<Prisma.UserUpdateInput> {
-    const passwordHash = await this.cryptoService.createPasswordHash(
+    const passwordHash = dto.password ? await this.cryptoService.createPasswordHash(
       dto.password,
-    );
+    ) : null;
 
     return {
       email: dto.email,

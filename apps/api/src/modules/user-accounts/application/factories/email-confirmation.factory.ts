@@ -9,7 +9,6 @@ export class EmailConfirmationFactory {
   create(dto: CreateEmailConfirmationDto): Prisma.EmailConfirmationCreateInput {
     return {
       user: { connect: { id: dto.userId } },
-      isConfirmed: dto.isEmailConfirmed ?? false,
       expirationDate: dto.expirationDate,
       confirmationCode: dto.confirmationCode,
     };

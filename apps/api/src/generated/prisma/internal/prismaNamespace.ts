@@ -388,7 +388,9 @@ export const ModelName = {
   EmailConfirmation: 'EmailConfirmation',
   PasswordRecovery: 'PasswordRecovery',
   Device: 'Device',
-  Policies: 'Policies'
+  Policies: 'Policies',
+  UserPolicyAgreement: 'UserPolicyAgreement',
+  UserProvider: 'UserProvider'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "emailConfirmation" | "passwordRecovery" | "device" | "policies"
+    modelProps: "user" | "emailConfirmation" | "passwordRecovery" | "device" | "policies" | "userPolicyAgreement" | "userProvider"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +780,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserPolicyAgreement: {
+      payload: Prisma.$UserPolicyAgreementPayload<ExtArgs>
+      fields: Prisma.UserPolicyAgreementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserPolicyAgreementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserPolicyAgreementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        findFirst: {
+          args: Prisma.UserPolicyAgreementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserPolicyAgreementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        findMany: {
+          args: Prisma.UserPolicyAgreementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>[]
+        }
+        create: {
+          args: Prisma.UserPolicyAgreementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        createMany: {
+          args: Prisma.UserPolicyAgreementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserPolicyAgreementCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>[]
+        }
+        delete: {
+          args: Prisma.UserPolicyAgreementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        update: {
+          args: Prisma.UserPolicyAgreementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserPolicyAgreementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserPolicyAgreementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserPolicyAgreementUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserPolicyAgreementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPolicyAgreementPayload>
+        }
+        aggregate: {
+          args: Prisma.UserPolicyAgreementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserPolicyAgreement>
+        }
+        groupBy: {
+          args: Prisma.UserPolicyAgreementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPolicyAgreementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserPolicyAgreementCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPolicyAgreementCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserProvider: {
+      payload: Prisma.$UserProviderPayload<ExtArgs>
+      fields: Prisma.UserProviderFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserProviderFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserProviderFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload>
+        }
+        findFirst: {
+          args: Prisma.UserProviderFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserProviderFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload>
+        }
+        findMany: {
+          args: Prisma.UserProviderFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload>[]
+        }
+        create: {
+          args: Prisma.UserProviderCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload>
+        }
+        createMany: {
+          args: Prisma.UserProviderCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserProviderCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload>[]
+        }
+        delete: {
+          args: Prisma.UserProviderDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload>
+        }
+        update: {
+          args: Prisma.UserProviderUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserProviderDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserProviderUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserProviderUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserProviderUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProviderPayload>
+        }
+        aggregate: {
+          args: Prisma.UserProviderAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserProvider>
+        }
+        groupBy: {
+          args: Prisma.UserProviderGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserProviderGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserProviderCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserProviderCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -822,6 +972,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   username: 'username',
   passwordHash: 'passwordHash',
+  isConfirmed: 'isConfirmed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -834,7 +985,6 @@ export const EmailConfirmationScalarFieldEnum = {
   id: 'id',
   confirmationCode: 'confirmationCode',
   expirationDate: 'expirationDate',
-  isConfirmed: 'isConfirmed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'
@@ -877,10 +1027,33 @@ export const PoliciesScalarFieldEnum = {
   type: 'type',
   content: 'content',
   version: 'version',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
 } as const
 
 export type PoliciesScalarFieldEnum = (typeof PoliciesScalarFieldEnum)[keyof typeof PoliciesScalarFieldEnum]
+
+
+export const UserPolicyAgreementScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  policyId: 'policyId',
+  acceptedAt: 'acceptedAt'
+} as const
+
+export type UserPolicyAgreementScalarFieldEnum = (typeof UserPolicyAgreementScalarFieldEnum)[keyof typeof UserPolicyAgreementScalarFieldEnum]
+
+
+export const UserProviderScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  provider: 'provider',
+  providerId: 'providerId',
+  providerEmail: 'providerEmail',
+  createdAt: 'createdAt'
+} as const
+
+export type UserProviderScalarFieldEnum = (typeof UserProviderScalarFieldEnum)[keyof typeof UserProviderScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -942,6 +1115,13 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -956,13 +1136,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'PolicyType'
  */
 export type EnumPolicyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PolicyType'>
@@ -973,6 +1146,20 @@ export type EnumPolicyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'PolicyType[]'
  */
 export type ListEnumPolicyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PolicyType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ProviderType'
+ */
+export type EnumProviderTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProviderType'>
+    
+
+
+/**
+ * Reference to a field of type 'ProviderType[]'
+ */
+export type ListEnumProviderTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProviderType[]'>
     
 
 
@@ -1089,6 +1276,8 @@ export type GlobalOmitConfig = {
   passwordRecovery?: Prisma.PasswordRecoveryOmit
   device?: Prisma.DeviceOmit
   policies?: Prisma.PoliciesOmit
+  userPolicyAgreement?: Prisma.UserPolicyAgreementOmit
+  userProvider?: Prisma.UserProviderOmit
 }
 
 /* Types for Logging */

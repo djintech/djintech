@@ -40,7 +40,6 @@ export type EmailConfirmationMinAggregateOutputType = {
   id: number | null
   confirmationCode: string | null
   expirationDate: Date | null
-  isConfirmed: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: number | null
@@ -50,7 +49,6 @@ export type EmailConfirmationMaxAggregateOutputType = {
   id: number | null
   confirmationCode: string | null
   expirationDate: Date | null
-  isConfirmed: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: number | null
@@ -60,7 +58,6 @@ export type EmailConfirmationCountAggregateOutputType = {
   id: number
   confirmationCode: number
   expirationDate: number
-  isConfirmed: number
   createdAt: number
   updatedAt: number
   userId: number
@@ -82,7 +79,6 @@ export type EmailConfirmationMinAggregateInputType = {
   id?: true
   confirmationCode?: true
   expirationDate?: true
-  isConfirmed?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -92,7 +88,6 @@ export type EmailConfirmationMaxAggregateInputType = {
   id?: true
   confirmationCode?: true
   expirationDate?: true
-  isConfirmed?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -102,7 +97,6 @@ export type EmailConfirmationCountAggregateInputType = {
   id?: true
   confirmationCode?: true
   expirationDate?: true
-  isConfirmed?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -199,7 +193,6 @@ export type EmailConfirmationGroupByOutputType = {
   id: number
   confirmationCode: string
   expirationDate: Date | null
-  isConfirmed: boolean
   createdAt: Date
   updatedAt: Date
   userId: number
@@ -232,7 +225,6 @@ export type EmailConfirmationWhereInput = {
   id?: Prisma.IntFilter<"EmailConfirmation"> | number
   confirmationCode?: Prisma.StringFilter<"EmailConfirmation"> | string
   expirationDate?: Prisma.DateTimeNullableFilter<"EmailConfirmation"> | Date | string | null
-  isConfirmed?: Prisma.BoolFilter<"EmailConfirmation"> | boolean
   createdAt?: Prisma.DateTimeFilter<"EmailConfirmation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EmailConfirmation"> | Date | string
   userId?: Prisma.IntFilter<"EmailConfirmation"> | number
@@ -243,7 +235,6 @@ export type EmailConfirmationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   confirmationCode?: Prisma.SortOrder
   expirationDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  isConfirmed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -258,7 +249,6 @@ export type EmailConfirmationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.EmailConfirmationWhereInput | Prisma.EmailConfirmationWhereInput[]
   confirmationCode?: Prisma.StringFilter<"EmailConfirmation"> | string
   expirationDate?: Prisma.DateTimeNullableFilter<"EmailConfirmation"> | Date | string | null
-  isConfirmed?: Prisma.BoolFilter<"EmailConfirmation"> | boolean
   createdAt?: Prisma.DateTimeFilter<"EmailConfirmation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EmailConfirmation"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -268,7 +258,6 @@ export type EmailConfirmationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   confirmationCode?: Prisma.SortOrder
   expirationDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  isConfirmed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -286,7 +275,6 @@ export type EmailConfirmationScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"EmailConfirmation"> | number
   confirmationCode?: Prisma.StringWithAggregatesFilter<"EmailConfirmation"> | string
   expirationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"EmailConfirmation"> | Date | string | null
-  isConfirmed?: Prisma.BoolWithAggregatesFilter<"EmailConfirmation"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"EmailConfirmation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"EmailConfirmation"> | Date | string
   userId?: Prisma.IntWithAggregatesFilter<"EmailConfirmation"> | number
@@ -295,7 +283,6 @@ export type EmailConfirmationScalarWhereWithAggregatesInput = {
 export type EmailConfirmationCreateInput = {
   confirmationCode: string
   expirationDate?: Date | string | null
-  isConfirmed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutEmailConfirmationInput
@@ -305,7 +292,6 @@ export type EmailConfirmationUncheckedCreateInput = {
   id?: number
   confirmationCode: string
   expirationDate?: Date | string | null
-  isConfirmed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: number
@@ -314,7 +300,6 @@ export type EmailConfirmationUncheckedCreateInput = {
 export type EmailConfirmationUpdateInput = {
   confirmationCode?: Prisma.StringFieldUpdateOperationsInput | string
   expirationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isConfirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutEmailConfirmationNestedInput
@@ -324,7 +309,6 @@ export type EmailConfirmationUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   confirmationCode?: Prisma.StringFieldUpdateOperationsInput | string
   expirationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isConfirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -334,7 +318,6 @@ export type EmailConfirmationCreateManyInput = {
   id?: number
   confirmationCode: string
   expirationDate?: Date | string | null
-  isConfirmed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: number
@@ -343,7 +326,6 @@ export type EmailConfirmationCreateManyInput = {
 export type EmailConfirmationUpdateManyMutationInput = {
   confirmationCode?: Prisma.StringFieldUpdateOperationsInput | string
   expirationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isConfirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -352,7 +334,6 @@ export type EmailConfirmationUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   confirmationCode?: Prisma.StringFieldUpdateOperationsInput | string
   expirationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isConfirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -367,7 +348,6 @@ export type EmailConfirmationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   confirmationCode?: Prisma.SortOrder
   expirationDate?: Prisma.SortOrder
-  isConfirmed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -382,7 +362,6 @@ export type EmailConfirmationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   confirmationCode?: Prisma.SortOrder
   expirationDate?: Prisma.SortOrder
-  isConfirmed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -392,7 +371,6 @@ export type EmailConfirmationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   confirmationCode?: Prisma.SortOrder
   expirationDate?: Prisma.SortOrder
-  isConfirmed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -435,14 +413,9 @@ export type EmailConfirmationUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmailConfirmationUpdateToOneWithWhereWithoutUserInput, Prisma.EmailConfirmationUpdateWithoutUserInput>, Prisma.EmailConfirmationUncheckedUpdateWithoutUserInput>
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type EmailConfirmationCreateWithoutUserInput = {
   confirmationCode: string
   expirationDate?: Date | string | null
-  isConfirmed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -451,7 +424,6 @@ export type EmailConfirmationUncheckedCreateWithoutUserInput = {
   id?: number
   confirmationCode: string
   expirationDate?: Date | string | null
-  isConfirmed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -475,7 +447,6 @@ export type EmailConfirmationUpdateToOneWithWhereWithoutUserInput = {
 export type EmailConfirmationUpdateWithoutUserInput = {
   confirmationCode?: Prisma.StringFieldUpdateOperationsInput | string
   expirationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isConfirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -484,7 +455,6 @@ export type EmailConfirmationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   confirmationCode?: Prisma.StringFieldUpdateOperationsInput | string
   expirationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isConfirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -495,7 +465,6 @@ export type EmailConfirmationSelect<ExtArgs extends runtime.Types.Extensions.Int
   id?: boolean
   confirmationCode?: boolean
   expirationDate?: boolean
-  isConfirmed?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -506,7 +475,6 @@ export type EmailConfirmationSelectCreateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   confirmationCode?: boolean
   expirationDate?: boolean
-  isConfirmed?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -517,7 +485,6 @@ export type EmailConfirmationSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   confirmationCode?: boolean
   expirationDate?: boolean
-  isConfirmed?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -528,13 +495,12 @@ export type EmailConfirmationSelectScalar = {
   id?: boolean
   confirmationCode?: boolean
   expirationDate?: boolean
-  isConfirmed?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
 }
 
-export type EmailConfirmationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "confirmationCode" | "expirationDate" | "isConfirmed" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["emailConfirmation"]>
+export type EmailConfirmationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "confirmationCode" | "expirationDate" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["emailConfirmation"]>
 export type EmailConfirmationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -554,7 +520,6 @@ export type $EmailConfirmationPayload<ExtArgs extends runtime.Types.Extensions.I
     id: number
     confirmationCode: string
     expirationDate: Date | null
-    isConfirmed: boolean
     createdAt: Date
     updatedAt: Date
     userId: number
@@ -985,7 +950,6 @@ export interface EmailConfirmationFieldRefs {
   readonly id: Prisma.FieldRef<"EmailConfirmation", 'Int'>
   readonly confirmationCode: Prisma.FieldRef<"EmailConfirmation", 'String'>
   readonly expirationDate: Prisma.FieldRef<"EmailConfirmation", 'DateTime'>
-  readonly isConfirmed: Prisma.FieldRef<"EmailConfirmation", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"EmailConfirmation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"EmailConfirmation", 'DateTime'>
   readonly userId: Prisma.FieldRef<"EmailConfirmation", 'Int'>

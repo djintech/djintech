@@ -1,16 +1,20 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { Request as ExpressRequest } from 'express';
-import { RefreshTokenPayloadType } from '@modules/user-accounts/application/dto/refresh-token-payload.type';
+import { DomainException } from '@libs/core/exceptions/domain-exceptions';
+import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
+import { SecurityDeviceContextDto } from '@src/modules/user-accounts/dto/security-device-context.dto';
 
-interface RequestWithCookies extends ExpressRequest {
-  cookies: Record<string, string>;
-}
 export const ExtractDeviceFromRefresh = createParamDecorator(
-  (jwtService: JwtService, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest<RequestWithCookies>();
-    const token = request.cookies?.['refreshToken'];
-    if (!token) return null;
-    return jwtService.verify<RefreshTokenPayloadType>(token);
+  (data: unknown, ctx: ExecutionContext): SecurityDeviceContextDto => {
+    const request = ctx.switchToHttp().getRequest();
+
+    const securityContext = request.securityContext;
+    if (!securityContext) {      
+      throw new DomainException({
+        code: DomainExceptionCode.Unauthorized,
+        message: 'there is no securityContext in the request object!',
+      });
+    }
+
+    return securityContext;
   },
 );

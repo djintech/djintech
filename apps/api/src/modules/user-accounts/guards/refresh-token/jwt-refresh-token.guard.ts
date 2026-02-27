@@ -47,12 +47,17 @@ export class JwtRefreshTokenGuard implements CanActivate {
       }
       const iat = new Date(payload.iat * 1000);
       const exp = new Date(payload.exp * 1000);
-      if (device.lastActiveAt !== iat && device.expiresAt !== exp) {
+      if (device.lastActiveAt.getTime() !== iat.getTime() && device.expiresAt.getTime() !== exp.getTime()) {
         throw new DomainException({
           code: DomainExceptionCode.Unauthorized,
           message: 'Invalid refresh token',
         });
       }
+
+      request.securityContext = {
+        userId: device.userId,
+        deviceId: device.deviceId + '',
+      };
     } catch (error) {
       throw new DomainException({
         code: DomainExceptionCode.Unauthorized,

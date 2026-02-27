@@ -39,7 +39,7 @@ export class RegisterUserUseCase implements ICommandHandler<RegisterUserCommand>
       const emailConfirmation =
         await this.emailConfirmationRepository.findByUserId(existingUser.id);
 
-      if (emailConfirmation && !emailConfirmation.isConfirmed) {
+      if (emailConfirmation && !existingUser.isConfirmed) {
         const user = await this.usersFactory.update(dto);
         savedUser = await this.usersRepository.update(existingUser.id, user);
 

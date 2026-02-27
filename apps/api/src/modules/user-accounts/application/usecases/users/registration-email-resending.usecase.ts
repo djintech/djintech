@@ -41,7 +41,7 @@ export class RegistrationEmailResendingUseCase implements ICommandHandler<Regist
     const emailConfirmation =
       await this.emailConfirmationRepository.findByUserId(existingUser.id);
 
-    if (emailConfirmation && emailConfirmation.isConfirmed === true) {
+    if (emailConfirmation && existingUser.isConfirmed === true) {
       throw new DomainException({
         code: DomainExceptionCode.BadRequest,
         message: 'email is already confirmed',

@@ -28,7 +28,7 @@ export class AuthService {
 
     const emailConfirmation =
       await this.emailConfirmationRepository.findByUserId(user.id);
-    if (emailConfirmation && !emailConfirmation.isConfirmed) {
+    if (emailConfirmation && !user.isConfirmed) {
       throw new DomainException({
         code: DomainExceptionCode.Unauthorized,
         message: 'Unauthorized',

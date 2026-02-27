@@ -18,7 +18,7 @@ export class TestingController {
       throw new Error('Cannot truncate tables in non-dev/test environment');
     }
 
-    const excluded = ['_prisma_migrations'];
+    const excluded = ['_prisma_migrations', 'policies'];
 
     const rawTables = await this.prisma.$queryRaw<
       Array<{ table_name: string }>

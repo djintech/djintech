@@ -30,6 +30,16 @@ import { PasswordRecoveryUseCase } from './application/usecases/users/password-r
 import { PasswordRecoveryRepository } from './infrastructure/password-recovery.repository';
 import { LogoutDeviceUseCase } from '@modules/user-accounts/application/usecases/users/logout-user.usecase';
 import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.repository';
+import { JwtStrategy } from './guards/bearer/jwt.strategy';
+import { RefreshTokenUseCase } from './application/usecases/users/refresh-token.usecase';
+import { PoliciesModule } from '../privacy/policies.module';
+import { GetMeQueryHandler } from './application/queries/get-me.query';
+import { AuthQueryRepository } from './infrastructure/query/auth.query-repository';
+import { GoogleAuthController } from './api/google-oauth.controller';
+import { GoogleOAuthConfig } from './config/google-oauth.config';
+import { GoogleStrategy } from './guards/google/google.strategy';
+import { LoginUserByProviderUseCase } from './application/usecases/users/login-user-by-provider.usecase';
+import { UserProvidersRepository } from './infrastructure/user-providers.repository';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -39,17 +49,23 @@ const commandHandlers = [
   NewPasswordUseCase,
   PasswordRecoveryUseCase,
   LogoutDeviceUseCase,
+  RefreshTokenUseCase,
+  LoginUserByProviderUseCase,
 ];
 
-const queryHandlers = [];
+const queryHandlers = [
+  GetMeQueryHandler
+];
 
 @Module({
-  imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule],
-  controllers: [AuthController],
+  imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule, PoliciesModule],
+  controllers: [AuthController, GoogleAuthController],
   providers: [
     ...commandHandlers,
     ...queryHandlers,
     UsersRepository,
+    UserProvidersRepository,
+    AuthQueryRepository,
     DeviceRepository,
     {
       provide: ACCESS_TOKEN_STRATEGY_INJECT_TOKEN,
@@ -76,7 +92,9 @@ const queryHandlers = [];
       inject: [UserAccountsConfig],
     },
 
-    // UsersQueryRepository,
+    JwtStrategy,
+    LocalStrategy,
+    GoogleStrategy,
     CryptoService,
     UuidService,
     EmailService,
@@ -85,12 +103,12 @@ const queryHandlers = [];
     EmailConfirmationFactory,
     EmailConfirmationRepository,
     PasswordRecoveryRepository,
-    LocalStrategy,
     AuthService,
     UserAccountsConfig,
+    GoogleOAuthConfig,
     GoogleRecaptchaService,
     DeviceRepository,
   ],
-  exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository],
+  exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository, JwtStrategy],
 })
 export class UserAccountsModule {}

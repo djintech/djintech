@@ -14,9 +14,6 @@ export class PasswordRecoveryCommand {
   constructor(public dto: PasswordRecoveryDto) {}
 }
 
-/**
- * Создание администратором пользователя через админскую панель
- */
 @CommandHandler(PasswordRecoveryCommand)
 export class PasswordRecoveryUseCase
   implements ICommandHandler<PasswordRecoveryCommand>
@@ -40,11 +37,22 @@ export class PasswordRecoveryUseCase
     }
 
     const code = this.uuidService.generate();
-    await this.passwordRecoveryRepository.create({
-      recoveryCodeExpireDate: add(new Date(), { hours: 1 }),
-      recoveryCode: code,
-      user: { connect: { id: user.id } },
-    });
+
+    const existing = await this.passwordRecoveryRepository.findByUserId(user.id);
+
+    if (existing) {
+      await this.passwordRecoveryRepository.update(existing.id, {
+        recoveryCode: code,
+        recoveryCodeExpireDate: add(new Date(), { hours: 1 }),
+        alreadyChangePassword: false,
+      });
+    } else {
+      await this.passwordRecoveryRepository.create({
+        recoveryCodeExpireDate: add(new Date(), { hours: 1 }),
+        recoveryCode: code,
+        user: { connect: { id: user.id } },
+      });
+    }
 
     this.eventBus.publish(new UserRegisteredEvent(user.email, code, this.emailExamples.passwordRecoveryEmail));
   }
