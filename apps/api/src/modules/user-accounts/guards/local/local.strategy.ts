@@ -23,6 +23,14 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       });
     }
 
+    if (password === '') {
+      throw new DomainException({
+        code: DomainExceptionCode.Unauthorized,
+        message: 'Invalid email or password',
+        extensions: [{ message: 'recommended recovery password', field: 'password'}]
+      });
+    }
+
     return user;
   }
 }

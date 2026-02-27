@@ -18,11 +18,18 @@ export class PasswordRecoveryRepository {
     }
 
   async findByRecoveryCode( code: string ): Promise<PasswordRecovery | null> {
+    return this.prisma.passwordRecovery.findFirst({
+      where: {
+        recoveryCode: code,
+        user: { deletedAt: null },
+      },
+    });
+  }
+
+   async findByUserId(userId: number): Promise<PasswordRecovery | null> {
       return this.prisma.passwordRecovery.findFirst({
-        where: {
-          recoveryCode: code,
-          user: { deletedAt: null },
-        },
+        where: { userId },
       });
     }
+  
 }

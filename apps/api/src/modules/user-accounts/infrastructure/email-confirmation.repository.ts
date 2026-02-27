@@ -33,14 +33,21 @@ export class EmailConfirmationRepository {
     return this.prisma.emailConfirmation.findUnique({ where: { userId } });
   }
 
-  async findUserByConfirmationCode(
-    code: string,
-  ): Promise<EmailConfirmation | null> {
+  async findUserByConfirmationCode( 
+    code: string 
+  ): Promise<Prisma.EmailConfirmationGetPayload<{ include: { user: { select: { isConfirmed: true }}}}> | null> {
     return this.prisma.emailConfirmation.findFirst({
       where: {
         confirmationCode: code,
         user: { deletedAt: null },
       },
+      include: {
+      user: {
+        select: {
+          isConfirmed: true,
+        },
+      },
+    },
     });
   }
 

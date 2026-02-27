@@ -3,6 +3,7 @@ import { RegistrationConfirmationInputDto } from '../../../../user-accounts/api/
 import { EmailConfirmationRepository } from '../../../infrastructure/email-confirmation.repository';
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
+import { UsersRepository } from '@src/modules/user-accounts/infrastructure/users.repository';
 
 export class RegistrationConfirmationCommand {
   constructor(public dto: RegistrationConfirmationInputDto) {}
@@ -12,6 +13,7 @@ export class RegistrationConfirmationCommand {
 export class RegistrationConfirmationUseCase implements ICommandHandler<RegistrationConfirmationCommand> {
   constructor(
     private emailConfirmationRepository: EmailConfirmationRepository,
+    private usersRepository: UsersRepository,
   ) {}
 
   async execute({ dto }: RegistrationConfirmationCommand): Promise<void> {
@@ -21,7 +23,7 @@ export class RegistrationConfirmationUseCase implements ICommandHandler<Registra
       );
     if (
       !emailConfirmation ||
-      emailConfirmation.isConfirmed === true ||
+      emailConfirmation.user.isConfirmed === true ||
       emailConfirmation.confirmationCode !== dto.code ||
       (emailConfirmation.expirationDate &&
         emailConfirmation.expirationDate < new Date())
@@ -38,7 +40,7 @@ export class RegistrationConfirmationUseCase implements ICommandHandler<Registra
       });
     }
 
-    await this.emailConfirmationRepository.update(emailConfirmation.id, {
+    await this.usersRepository.update(emailConfirmation.userId, {
       isConfirmed: true,
     });
   }

@@ -11,7 +11,8 @@ model User {
   id           Int       @id @default(autoincrement())
   email        String    @unique
   username     String    @unique
-  passwordHash String
+  passwordHash String? 
+  isConfirmed  Boolean   @default(false)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   deletedAt    DateTime?
@@ -20,6 +21,7 @@ model User {
   passwordRecovery  PasswordRecovery?
   Device            Device[]
   policyAgreements  UserPolicyAgreement[]
+  providers         UserProvider[]
 
   @@map("users")
 }
@@ -28,7 +30,6 @@ model EmailConfirmation {
   id               Int       @id @default(autoincrement())
   confirmationCode String
   expirationDate   DateTime?
-  isConfirmed      Boolean   @default(false)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
   userId           Int       @unique
@@ -98,3 +99,23 @@ model UserPolicyAgreement {
   @@unique([userId, policyId])
   @@map("userPolicyAgreements")
 }
+
+enum ProviderType {
+  google
+  github
+}
+
+model UserProvider {
+  id            Int        @id @default(autoincrement())
+  userId        Int
+  provider      ProviderType
+  providerId    String
+  providerEmail String?
+  createdAt     DateTime @default(now())
+
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([provider, providerId])
+  @@index([userId])
+  @@map("userProviders")
+} 

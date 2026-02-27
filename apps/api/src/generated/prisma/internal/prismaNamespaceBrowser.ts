@@ -56,7 +56,8 @@ export const ModelName = {
   PasswordRecovery: 'PasswordRecovery',
   Device: 'Device',
   Policies: 'Policies',
-  UserPolicyAgreement: 'UserPolicyAgreement'
+  UserPolicyAgreement: 'UserPolicyAgreement',
+  UserProvider: 'UserProvider'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -80,6 +81,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   username: 'username',
   passwordHash: 'passwordHash',
+  isConfirmed: 'isConfirmed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -92,7 +94,6 @@ export const EmailConfirmationScalarFieldEnum = {
   id: 'id',
   confirmationCode: 'confirmationCode',
   expirationDate: 'expirationDate',
-  isConfirmed: 'isConfirmed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'
@@ -150,6 +151,18 @@ export const UserPolicyAgreementScalarFieldEnum = {
 } as const
 
 export type UserPolicyAgreementScalarFieldEnum = (typeof UserPolicyAgreementScalarFieldEnum)[keyof typeof UserPolicyAgreementScalarFieldEnum]
+
+
+export const UserProviderScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  provider: 'provider',
+  providerId: 'providerId',
+  providerEmail: 'providerEmail',
+  createdAt: 'createdAt'
+} as const
+
+export type UserProviderScalarFieldEnum = (typeof UserProviderScalarFieldEnum)[keyof typeof UserProviderScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -47,3 +47,8 @@ export type Policies = Prisma.PoliciesModel
  * 
  */
 export type UserPolicyAgreement = Prisma.UserPolicyAgreementModel
+/**
+ * Model UserProvider
+ * 
+ */
+export type UserProvider = Prisma.UserProviderModel

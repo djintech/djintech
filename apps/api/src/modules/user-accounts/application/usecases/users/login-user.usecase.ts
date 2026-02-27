@@ -9,6 +9,7 @@ import { UuidService } from '@modules/user-accounts/application/services/uuid.se
 import { RefreshTokenPayloadType } from '@modules/user-accounts/application/dto/refresh-token-payload.type';
 import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.repository';
 import { RequestMetadataDto } from '@src/modules/user-accounts/dto/request-metadata.dto';
+import { Device } from '@src/generated/prisma/client';
 
 export class LoginUserCommand {
   constructor(
@@ -33,7 +34,7 @@ export class LoginUserUseCase implements ICommandHandler<LoginUserCommand> {
   async execute({
     dto,
   }: LoginUserCommand): Promise<{ accessToken: string; refreshToken: string }> {
-    let existingDevice;
+    let existingDevice: Device | null = null;
     let existingPayload;
 
     if (dto.metadata.refreshToken) {

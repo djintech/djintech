@@ -9,6 +9,11 @@ export class EmailExamples {
             </p>`;
   }
 
+  registrationEmailByProvider( providerType: string) {
+    return ` <h1>Thank your for registration</h1>
+             <p>You registered in the system via ${providerType}</p>`;
+  }
+
   passwordRecoveryEmail(code: string) {
     return `  <h1>Password recovery</h1>
        <p>To finish password recovery please follow the link below:

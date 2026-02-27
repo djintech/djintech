@@ -70,7 +70,7 @@ export class AuthController {
     description: 'Authentication errors or registration not confirmed. Possible errors: invalid credentials, email not confirmed',
     type: ErrorResponseDto
   })
-  @ApiUnauthorizedResponse({ description: 'Unauthorized: Invalid email or password, or email not confirmed' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized: Invalid email or password, or email not confirmed'})
   @ApiTooManyRequestsResponse({ description: 'More than 5 attempts from one IP-address during 10 seconds.' })
   async login(
     @RequestMetadata() metadata: RequestMetadataDto,
@@ -148,7 +148,7 @@ export class AuthController {
 
   @Post('password-recovery')
   @ApiNoContentResponse({ description: 'success' })
-  @ApiBadRequestResponse({
+  @ApiBadRequestResponse({ 
     description: 'Validation errors or reCAPTCHA failure. Possible errors: invalid reCAPTCHA, incorrect email format',
     type: ErrorResponseDto
   })
