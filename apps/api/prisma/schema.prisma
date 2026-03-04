@@ -22,6 +22,7 @@ model User {
   Device            Device[]
   policyAgreements  UserPolicyAgreement[]
   providers         UserProvider[]
+  posts             Post[]
 
   @@map("users")
 }
@@ -119,3 +120,36 @@ model UserProvider {
   @@index([userId])
   @@map("userProviders")
 } 
+
+model Post {
+  id           Int @id @default(autoincrement())
+  userId       Int
+  description  String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+
+  postImages   PostImage[]
+  user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("posts")
+}
+
+model PostImage {
+  id          Int @id @default(autoincrement())
+  postId      Int
+  key         String @unique
+  mimeType    String
+  size        Int
+  position    Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  post   Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  @@unique([postId, position])
+  @@index([postId])
+  @@map("postImages")
+}

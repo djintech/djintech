@@ -52,3 +52,13 @@ export type UserPolicyAgreement = Prisma.UserPolicyAgreementModel
  * 
  */
 export type UserProvider = Prisma.UserProviderModel
+/**
+ * Model Post
+ * 
+ */
+export type Post = Prisma.PostModel
+/**
+ * Model PostImage
+ * 
+ */
+export type PostImage = Prisma.PostImageModel

@@ -57,7 +57,9 @@ export const ModelName = {
   Device: 'Device',
   Policies: 'Policies',
   UserPolicyAgreement: 'UserPolicyAgreement',
-  UserProvider: 'UserProvider'
+  UserProvider: 'UserProvider',
+  Post: 'Post',
+  PostImage: 'PostImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -163,6 +165,33 @@ export const UserProviderScalarFieldEnum = {
 } as const
 
 export type UserProviderScalarFieldEnum = (typeof UserProviderScalarFieldEnum)[keyof typeof UserProviderScalarFieldEnum]
+
+
+export const PostScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+export const PostImageScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  key: 'key',
+  mimeType: 'mimeType',
+  size: 'size',
+  position: 'position',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type PostImageScalarFieldEnum = (typeof PostImageScalarFieldEnum)[keyof typeof PostImageScalarFieldEnum]
 
 
 export const SortOrder = {
