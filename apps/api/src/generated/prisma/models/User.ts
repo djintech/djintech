@@ -245,6 +245,7 @@ export type UserWhereInput = {
   Device?: Prisma.DeviceListRelationFilter
   policyAgreements?: Prisma.UserPolicyAgreementListRelationFilter
   providers?: Prisma.UserProviderListRelationFilter
+  posts?: Prisma.PostListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -261,6 +262,7 @@ export type UserOrderByWithRelationInput = {
   Device?: Prisma.DeviceOrderByRelationAggregateInput
   policyAgreements?: Prisma.UserPolicyAgreementOrderByRelationAggregateInput
   providers?: Prisma.UserProviderOrderByRelationAggregateInput
+  posts?: Prisma.PostOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -280,6 +282,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   Device?: Prisma.DeviceListRelationFilter
   policyAgreements?: Prisma.UserPolicyAgreementListRelationFilter
   providers?: Prisma.UserProviderListRelationFilter
+  posts?: Prisma.PostListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -325,6 +328,7 @@ export type UserCreateInput = {
   Device?: Prisma.DeviceCreateNestedManyWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -341,6 +345,7 @@ export type UserUncheckedCreateInput = {
   Device?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderUncheckedCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -356,6 +361,7 @@ export type UserUpdateInput = {
   Device?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -372,6 +378,7 @@ export type UserUncheckedUpdateInput = {
   Device?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUncheckedUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -550,6 +557,20 @@ export type UserUpdateOneRequiredWithoutProvidersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProvidersInput, Prisma.UserUpdateWithoutProvidersInput>, Prisma.UserUncheckedUpdateWithoutProvidersInput>
 }
 
+export type UserCreateNestedOneWithoutPostsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPostsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostsInput
+  upsert?: Prisma.UserUpsertWithoutPostsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPostsInput, Prisma.UserUpdateWithoutPostsInput>, Prisma.UserUncheckedUpdateWithoutPostsInput>
+}
+
 export type UserCreateWithoutEmailConfirmationInput = {
   email: string
   username: string
@@ -562,6 +583,7 @@ export type UserCreateWithoutEmailConfirmationInput = {
   Device?: Prisma.DeviceCreateNestedManyWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEmailConfirmationInput = {
@@ -577,6 +599,7 @@ export type UserUncheckedCreateWithoutEmailConfirmationInput = {
   Device?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderUncheckedCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEmailConfirmationInput = {
@@ -607,6 +630,7 @@ export type UserUpdateWithoutEmailConfirmationInput = {
   Device?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEmailConfirmationInput = {
@@ -622,6 +646,7 @@ export type UserUncheckedUpdateWithoutEmailConfirmationInput = {
   Device?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUncheckedUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPasswordRecoveryInput = {
@@ -636,6 +661,7 @@ export type UserCreateWithoutPasswordRecoveryInput = {
   Device?: Prisma.DeviceCreateNestedManyWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPasswordRecoveryInput = {
@@ -651,6 +677,7 @@ export type UserUncheckedCreateWithoutPasswordRecoveryInput = {
   Device?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderUncheckedCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPasswordRecoveryInput = {
@@ -681,6 +708,7 @@ export type UserUpdateWithoutPasswordRecoveryInput = {
   Device?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPasswordRecoveryInput = {
@@ -696,6 +724,7 @@ export type UserUncheckedUpdateWithoutPasswordRecoveryInput = {
   Device?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUncheckedUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDeviceInput = {
@@ -710,6 +739,7 @@ export type UserCreateWithoutDeviceInput = {
   passwordRecovery?: Prisma.PasswordRecoveryCreateNestedOneWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDeviceInput = {
@@ -725,6 +755,7 @@ export type UserUncheckedCreateWithoutDeviceInput = {
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedCreateNestedOneWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderUncheckedCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDeviceInput = {
@@ -755,6 +786,7 @@ export type UserUpdateWithoutDeviceInput = {
   passwordRecovery?: Prisma.PasswordRecoveryUpdateOneWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDeviceInput = {
@@ -770,6 +802,7 @@ export type UserUncheckedUpdateWithoutDeviceInput = {
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedUpdateOneWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUncheckedUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPolicyAgreementsInput = {
@@ -784,6 +817,7 @@ export type UserCreateWithoutPolicyAgreementsInput = {
   passwordRecovery?: Prisma.PasswordRecoveryCreateNestedOneWithoutUserInput
   Device?: Prisma.DeviceCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPolicyAgreementsInput = {
@@ -799,6 +833,7 @@ export type UserUncheckedCreateWithoutPolicyAgreementsInput = {
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedCreateNestedOneWithoutUserInput
   Device?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   providers?: Prisma.UserProviderUncheckedCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPolicyAgreementsInput = {
@@ -829,6 +864,7 @@ export type UserUpdateWithoutPolicyAgreementsInput = {
   passwordRecovery?: Prisma.PasswordRecoveryUpdateOneWithoutUserNestedInput
   Device?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPolicyAgreementsInput = {
@@ -844,6 +880,7 @@ export type UserUncheckedUpdateWithoutPolicyAgreementsInput = {
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedUpdateOneWithoutUserNestedInput
   Device?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   providers?: Prisma.UserProviderUncheckedUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProvidersInput = {
@@ -858,6 +895,7 @@ export type UserCreateWithoutProvidersInput = {
   passwordRecovery?: Prisma.PasswordRecoveryCreateNestedOneWithoutUserInput
   Device?: Prisma.DeviceCreateNestedManyWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProvidersInput = {
@@ -873,6 +911,7 @@ export type UserUncheckedCreateWithoutProvidersInput = {
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedCreateNestedOneWithoutUserInput
   Device?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProvidersInput = {
@@ -903,6 +942,7 @@ export type UserUpdateWithoutProvidersInput = {
   passwordRecovery?: Prisma.PasswordRecoveryUpdateOneWithoutUserNestedInput
   Device?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProvidersInput = {
@@ -918,6 +958,85 @@ export type UserUncheckedUpdateWithoutProvidersInput = {
   passwordRecovery?: Prisma.PasswordRecoveryUncheckedUpdateOneWithoutUserNestedInput
   Device?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   policyAgreements?: Prisma.UserPolicyAgreementUncheckedUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPostsInput = {
+  email: string
+  username: string
+  passwordHash?: string | null
+  isConfirmed?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  emailConfirmation?: Prisma.EmailConfirmationCreateNestedOneWithoutUserInput
+  passwordRecovery?: Prisma.PasswordRecoveryCreateNestedOneWithoutUserInput
+  Device?: Prisma.DeviceCreateNestedManyWithoutUserInput
+  policyAgreements?: Prisma.UserPolicyAgreementCreateNestedManyWithoutUserInput
+  providers?: Prisma.UserProviderCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPostsInput = {
+  id?: number
+  email: string
+  username: string
+  passwordHash?: string | null
+  isConfirmed?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  emailConfirmation?: Prisma.EmailConfirmationUncheckedCreateNestedOneWithoutUserInput
+  passwordRecovery?: Prisma.PasswordRecoveryUncheckedCreateNestedOneWithoutUserInput
+  Device?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
+  policyAgreements?: Prisma.UserPolicyAgreementUncheckedCreateNestedManyWithoutUserInput
+  providers?: Prisma.UserProviderUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPostsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
+}
+
+export type UserUpsertWithoutPostsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPostsInput, Prisma.UserUncheckedUpdateWithoutPostsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPostsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPostsInput, Prisma.UserUncheckedUpdateWithoutPostsInput>
+}
+
+export type UserUpdateWithoutPostsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isConfirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailConfirmation?: Prisma.EmailConfirmationUpdateOneWithoutUserNestedInput
+  passwordRecovery?: Prisma.PasswordRecoveryUpdateOneWithoutUserNestedInput
+  Device?: Prisma.DeviceUpdateManyWithoutUserNestedInput
+  policyAgreements?: Prisma.UserPolicyAgreementUpdateManyWithoutUserNestedInput
+  providers?: Prisma.UserProviderUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPostsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isConfirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailConfirmation?: Prisma.EmailConfirmationUncheckedUpdateOneWithoutUserNestedInput
+  passwordRecovery?: Prisma.PasswordRecoveryUncheckedUpdateOneWithoutUserNestedInput
+  Device?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
+  policyAgreements?: Prisma.UserPolicyAgreementUncheckedUpdateManyWithoutUserNestedInput
+  providers?: Prisma.UserProviderUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -929,12 +1048,14 @@ export type UserCountOutputType = {
   Device: number
   policyAgreements: number
   providers: number
+  posts: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Device?: boolean | UserCountOutputTypeCountDeviceArgs
   policyAgreements?: boolean | UserCountOutputTypeCountPolicyAgreementsArgs
   providers?: boolean | UserCountOutputTypeCountProvidersArgs
+  posts?: boolean | UserCountOutputTypeCountPostsArgs
 }
 
 /**
@@ -968,6 +1089,13 @@ export type UserCountOutputTypeCountProvidersArgs<ExtArgs extends runtime.Types.
   where?: Prisma.UserProviderWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PostWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -983,6 +1111,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   Device?: boolean | Prisma.User$DeviceArgs<ExtArgs>
   policyAgreements?: boolean | Prisma.User$policyAgreementsArgs<ExtArgs>
   providers?: boolean | Prisma.User$providersArgs<ExtArgs>
+  posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1026,6 +1155,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   Device?: boolean | Prisma.User$DeviceArgs<ExtArgs>
   policyAgreements?: boolean | Prisma.User$policyAgreementsArgs<ExtArgs>
   providers?: boolean | Prisma.User$providersArgs<ExtArgs>
+  posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1039,6 +1169,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     Device: Prisma.$DevicePayload<ExtArgs>[]
     policyAgreements: Prisma.$UserPolicyAgreementPayload<ExtArgs>[]
     providers: Prisma.$UserProviderPayload<ExtArgs>[]
+    posts: Prisma.$PostPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1448,6 +1579,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   Device<T extends Prisma.User$DeviceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$DeviceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   policyAgreements<T extends Prisma.User$policyAgreementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$policyAgreementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPolicyAgreementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   providers<T extends Prisma.User$providersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$providersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserProviderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  posts<T extends Prisma.User$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1980,6 +2112,30 @@ export type User$providersArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.UserProviderScalarFieldEnum | Prisma.UserProviderScalarFieldEnum[]
+}
+
+/**
+ * User.posts
+ */
+export type User$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Post
+   */
+  select?: Prisma.PostSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Post
+   */
+  omit?: Prisma.PostOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PostInclude<ExtArgs> | null
+  where?: Prisma.PostWhereInput
+  orderBy?: Prisma.PostOrderByWithRelationInput | Prisma.PostOrderByWithRelationInput[]
+  cursor?: Prisma.PostWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PostScalarFieldEnum | Prisma.PostScalarFieldEnum[]
 }
 
 /**

@@ -16,6 +16,7 @@ import { DomainHttpExceptionsFilter } from '@libs/core/exceptions/filters/domain
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { SessionsModule } from '@modules/sessions/sessions.module';
 import { PoliciesModule } from '@modules/privacy/policies.module';
+import { PostModule } from './modules/posts/posts.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { PoliciesModule } from '@modules/privacy/policies.module';
     NotificationsModule,
     SessionsModule,
     PoliciesModule,
+    PostModule,
   ],
   controllers: [ApiController],
   providers: [
