@@ -1,14 +1,13 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { UsersRepository } from '../../../../user-accounts/infrastructure/users.repository';
-import { UuidService } from '../../services/uuid.service';
 import { EmailExamples } from '../../../../notifications/email-examples';
 import { UserRegisteredEvent } from '../../../../user-accounts/domain/events/user-registered.event';
 import { RegistrationEmailResendingInputDto } from '../../../../user-accounts/api/input-dto/registration-email-resending.input-dto';
 import { EmailConfirmationRepository } from '../../../infrastructure/email-confirmation.repository';
-import { EmailConfirmationFactory } from '../../factories/email-confirmation.factory';
 import { add } from 'date-fns/add';
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
+import { UuidService } from '@libs/utils/src/uuid/uuid.service';
 
 export class RegistrationEmailResendingCommand {
   constructor(public dto: RegistrationEmailResendingInputDto) {}
@@ -21,7 +20,6 @@ export class RegistrationEmailResendingUseCase implements ICommandHandler<Regist
     private usersRepository: UsersRepository,
     private uuidService: UuidService,
     private emailExamples: EmailExamples,
-    private emailConfirmationFactory: EmailConfirmationFactory,
     private emailConfirmationRepository: EmailConfirmationRepository,
   ) {}
 

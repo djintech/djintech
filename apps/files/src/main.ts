@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
-import { FilesModule } from './files.module';
+import { FilesAppModule } from './files-app.module';
+import { DomainRpcExceptionsFilter } from '@libs/core/exceptions/filters/domain-rpc-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    FilesModule,
+    FilesAppModule,
     {
       transport: Transport.TCP,
       options: {
@@ -13,7 +14,10 @@ async function bootstrap() {
       },
     },
   );
+
+  app.useGlobalFilters(new DomainRpcExceptionsFilter());
+  
   await app.listen();
-  console.log('Files TCP microservice listening on 4177');
+  console.log('Files TCP microservice listening on ', process.env.FILE_SERVICE_PORT);
 }
 bootstrap();

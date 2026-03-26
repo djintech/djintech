@@ -18,6 +18,10 @@ spec:
       containers:
          - name: PROJECT
            image: REGISTRY_HOSTNAME/PROJECT:TAG_VERSION
+           securityContext:
+             allowPrivilegeEscalation: false
+             runAsNonRoot: true      # опционально, но хорошая практика
+             runAsUser: 1000         # опционально
            ports:
              - containerPort: PORT_CONTAINER
            env:
@@ -26,6 +30,26 @@ spec:
                  secretKeyRef:
                    name: files-mono-production-config-secret
                    key: FILE_SERVICE_PORT
+             - name: AWS_REGION
+               valueFrom:
+                 secretKeyRef:
+                   name: files-mono-production-config-secret
+                   key: AWS_REGION
+             - name: AWS_S3_BUCKET
+               valueFrom:
+                 secretKeyRef:
+                   name: files-mono-production-config-secret
+                   key: AWS_S3_BUCKET
+             - name: AWS_ACCESS_KEY_ID
+               valueFrom:
+                 secretKeyRef:
+                   name: files-mono-production-config-secret
+                   key: AWS_ACCESS_KEY_ID
+             - name: AWS_SECRET_ACCESS_KEY
+               valueFrom:
+                 secretKeyRef:
+                   name: files-mono-production-config-secret
+                   key: AWS_SECRET_ACCESS_KEY
              - name: FILE_SERVICE_HOST
                valueFrom:
                  secretKeyRef:

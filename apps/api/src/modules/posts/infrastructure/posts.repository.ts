@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/db/prisma.service';
 import { Post, Prisma } from '@src/generated/prisma/client';
+import { UploadFileResponse } from '@libs/contracts/files/upload-file.contract';
 
 @Injectable()
 export class PostsRepository {
@@ -8,6 +9,31 @@ export class PostsRepository {
 
   async create(data: Prisma.PostCreateInput): Promise<Post> {
     return this.prisma.post.create({ data });
+  }
+
+  async createPostWithImages(
+    userId: number,
+    description: string,
+    images: UploadFileResponse[]
+  ): Promise<Post> {
+    return this.prisma.$transaction(async (tx) => {
+      const post = await tx.post.create({
+        data: {
+          userId,
+          description,
+          postImages: {
+            create: images.map(( img, index) => ({
+              key: img.key,
+              mimeType: img.mimeType,
+              size: img.size,
+              position: index,
+            })),
+          },
+        }
+      });
+
+      return post;
+    });
   }
 
   async update(id: number, data: Prisma.PostUpdateInput): Promise<Post> {

@@ -20,6 +20,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@src/*": ["apps/api/src/*"],
+      "@files/*": ["apps/files/src/*"],
       "@modules/*": ["apps/api/src/modules/*"],
       "@core/*": ["apps/api/src/core/*"],
       "@libs/*": ["libs/*"]

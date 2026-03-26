@@ -6,6 +6,7 @@ import { UserAccountsModule } from '../user-accounts/user-accounts.module';
 import { PostsController } from './api/posts.controller';
 import { PostsRepository } from './infrastructure/posts.repository';
 import { PostsQueryRepository } from './infrastructure/query/posts.query.repository';
+import { FilesConfig } from '@src/config/files/files.config';
 
 const commandHandlers = [
   CreatePostUseCase,
@@ -28,6 +29,7 @@ const queryHandlers = [
     ...queryHandlers,
     PostsRepository,
     PostsQueryRepository,
+    FilesConfig,
   ],
 })
 export class PostModule {}

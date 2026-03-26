@@ -1,7 +1,7 @@
 import { configValidationUtility } from '@libs/config/setup/config-validation.utility';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 @Injectable()
 export class GoogleOAuthConfig {

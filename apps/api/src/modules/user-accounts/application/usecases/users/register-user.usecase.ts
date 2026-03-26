@@ -2,7 +2,6 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { CreateUserDto } from '../../dto/create-user.dto';
 import { UsersRepository } from '../../../infrastructure/users.repository';
 import { UsersFactory } from '../../factories/users.factory';
-import { UuidService } from '../../services/uuid.service';
 import { EmailConfirmationFactory } from '../../factories/email-confirmation.factory';
 import { UserRegisteredEvent } from '../../../domain/events/user-registered.event';
 import { EmailConfirmationRepository } from '../../../infrastructure/email-confirmation.repository';
@@ -10,6 +9,7 @@ import { add } from 'date-fns/add';
 import { EmailExamples } from '@src/modules/notifications/email-examples';
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
+import { UuidService } from '@libs/utils/src/uuid/uuid.service';
 
 export class RegisterUserCommand {
   constructor(public dto: CreateUserDto) {}

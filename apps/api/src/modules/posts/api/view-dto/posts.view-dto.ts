@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { PostFullInfo } from "../../infrastructure/query/posts.query.repository";
 
 export class PostImageViewDto {
   @ApiProperty()
@@ -10,7 +11,7 @@ export class PostImageViewDto {
 
 class ownerViewDto {
   @ApiProperty()
-  id: string;
+  id: number;
 
   @ApiProperty()
   name: string;
@@ -40,22 +41,20 @@ export class PostViewDto {
   @ApiProperty()
   createdAt: Date;
 
-  static mapToView( post ): PostViewDto {
+  static mapToView( post: PostFullInfo, url: string ): PostViewDto {
     const dto = new PostViewDto();
 
     dto.id = post.id!.toString();
-    dto.owner = post.owner;
     dto.description = post.description;
-    dto.images = post.images;
     dto.createdAt = post.createdAt;
     dto.owner = {
-      id: post.owner.id,
-      name: post.owner.name,
+      id: post.user.id,
+      name: post.user.username,
     };
-    dto.images = post.images
+    dto.images = post.postImages
       .sort((a, b) => a.position - b.position)
       .map((img) => ({
-        url: img.url,
+        url: `${url}${img.key}`,
         position: img.position,
       }));
 
