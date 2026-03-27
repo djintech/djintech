@@ -25,9 +25,9 @@ export class GetPostByIdQueryHandler
 
     if ( !post ){
       throw new DomainException({
-        code: DomainExceptionCode.BadRequest,
-        message: 'No post found',
-        extensions: [{ message: 'No post found', field: 'post' }],
+        code: DomainExceptionCode.NotFound,
+        message: 'Post not found',
+        extensions: [{ message: 'Post not found', field: 'post' }],
       });      
     }
 

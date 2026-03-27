@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiBody, ApiConsumes, ApiOkResponse, ApiParam, ApiQuery, ApiSecurity, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiConsumes, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiQuery, ApiSecurity, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '@src/modules/user-accounts/guards/bearer/jwt-auth.guard';
 import { CreatePostInputDto } from './input-dto/posts.input-dto';
@@ -31,6 +31,7 @@ export class PostsController {
   @ApiConsumes('multipart/form-data')
   @ApiOkResponse({ type: PostViewDto, description: 'The post has been successfully created. The response body contains the post data' })
   @ApiBadRequestResponse({ description: 'The inputModel has incorrect values', type: ErrorResponseDto })
+  @ApiNotFoundResponse({ description: 'Post not found', type: ErrorResponseDto })
   @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @UseInterceptors(CustomFilesInterceptor)
   async createPost(
@@ -53,12 +54,14 @@ export class PostsController {
     return this.queryBus.execute(new GetPostsByUserIdQuery(query, id));
   }
 
-//   @Get(':id')
-//   @HttpCode(HttpStatus.OK)
-//   //@PostsSwagger.getPost()
-//   async getPost(@Param('id') id: string) {
-//     return this.queryBus.execute(new GetPostQuery(id));
-//   }
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id', type: Number, example: 1, description: 'post ID' })
+  @ApiOkResponse({ type: PostViewDto, description: 'The response body contains the post data' })
+  @ApiNotFoundResponse({ description: 'Post not found', type: ErrorResponseDto })
+  async getPost(@Param('id', ParseIntPipe) id: number) {
+    return this.queryBus.execute(new GetPostByIdQuery( id ));
+  }
 
 //   @Get()
 //   @HttpCode(HttpStatus.OK)
