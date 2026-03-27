@@ -41,7 +41,7 @@ export class PostViewDto {
   @ApiProperty()
   createdAt: Date;
 
-  static mapToView( post: PostFullInfo, url: string ): PostViewDto {
+  static mapToView( post: PostFullInfo, buildUrl: (key: string) => string ): PostViewDto {
     const dto = new PostViewDto();
 
     dto.id = post.id!.toString();
@@ -54,7 +54,7 @@ export class PostViewDto {
     dto.images = post.postImages
       .sort((a, b) => a.position - b.position)
       .map((img) => ({
-        url: `${url}${img.key}`,
+        url: buildUrl(img.key),
         position: img.position,
       }));
 

@@ -3,7 +3,7 @@ import { PostViewDto } from "../../api/view-dto/posts.view-dto";
 import { PostsQueryRepository } from "../../infrastructure/query/posts.query.repository";
 import { DomainException } from "@libs/core/exceptions/domain-exceptions";
 import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
-import { FilesConfig } from "@src/config/files/files.config";
+import { FileUrlService } from "../../infrastructure/services/file-url.service";
 
 export class GetPostByIdQuery {
   constructor(
@@ -17,7 +17,7 @@ export class GetPostByIdQueryHandler
 {
   constructor(
     private postsQueryRepository: PostsQueryRepository,
-    private readonly config: FilesConfig,
+        private readonly fileUrlService: FileUrlService
   ) {}
 
   async execute({ id }: GetPostByIdQuery) {
@@ -31,8 +31,6 @@ export class GetPostByIdQueryHandler
       });      
     }
 
-    const url = `https://${this.config.awsS3Bucket}.s3.${this.config.awsRegion}.amazonaws.com/public/`;
-
-    return PostViewDto.mapToView( post, url );
+    return PostViewDto.mapToView( post, this.fileUrlService.getPublicUrl );
 }
 }

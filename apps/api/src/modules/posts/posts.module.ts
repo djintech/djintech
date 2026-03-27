@@ -7,6 +7,8 @@ import { PostsController } from './api/posts.controller';
 import { PostsRepository } from './infrastructure/posts.repository';
 import { PostsQueryRepository } from './infrastructure/query/posts.query.repository';
 import { FilesConfig } from '@src/config/files/files.config';
+import { FileUrlService } from './infrastructure/services/file-url.service';
+import { GetPostsByUserIdQueryHandler } from './application/queries/get-posts-by-user-id.query';
 
 const commandHandlers = [
   CreatePostUseCase,
@@ -14,6 +16,7 @@ const commandHandlers = [
 
 const queryHandlers = [
   GetPostByIdQueryHandler,
+  GetPostsByUserIdQueryHandler,
 ];
 
 @Module({
@@ -30,6 +33,7 @@ const queryHandlers = [
     PostsRepository,
     PostsQueryRepository,
     FilesConfig,
+    FileUrlService,
   ],
 })
 export class PostModule {}
