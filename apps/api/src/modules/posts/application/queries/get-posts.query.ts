@@ -1,35 +1,31 @@
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
-import { BaseQueryParams, SortDirection } from "@src/core/dto/base.query-params.input-dto";
 import { PostViewDto } from "../../api/view-dto/posts.view-dto";
 import { PostsQueryRepository } from "../../infrastructure/query/posts.query.repository";
-import { DomainException } from "@libs/core/exceptions/domain-exceptions";
-import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
 import { FileUrlService } from "../../infrastructure/services/file-url.service";
+import { BaseQueryParams, SortDirection } from "@src/core/dto/base.query-params.input-dto";
 import { PaginatedViewDto } from "@src/core/dto/base.paginated.view-dto";
-import { USER_PROFILE_PAGE_SIZE } from "../../constants";
+import { MAIN_PAGE_SIZE } from "../../constants";
 
-export class GetPostsByUserIdQuery {
+export class GetPostsQuery {
   constructor(
-    public query: BaseQueryParams,
-    public id: number
+    public query: BaseQueryParams
   ) {}
 }
 
-@QueryHandler(GetPostsByUserIdQuery)
-export class GetPostsByUserIdQueryHandler
-  implements IQueryHandler<GetPostsByUserIdQuery, PaginatedViewDto<PostViewDto[]>>
+@QueryHandler(GetPostsQuery)
+export class GetPostsQueryHandler
+  implements IQueryHandler<GetPostsQuery, PaginatedViewDto<PostViewDto[]> >
 {
   constructor(
     private postsQueryRepository: PostsQueryRepository,
-    private readonly fileUrlService: FileUrlService
+        private readonly fileUrlService: FileUrlService
   ) {}
 
-  async execute({ query, id }: GetPostsByUserIdQuery) {
+  async execute({ query }: GetPostsQuery) {
     const { pageNumber, pageSize, sortDirection } = query;
-    const pageSizeValue = pageSize ?? USER_PROFILE_PAGE_SIZE;
+    const pageSizeValue = pageSize ?? MAIN_PAGE_SIZE;
     const order = sortDirection === SortDirection.Asc ? SortDirection.Asc : SortDirection.Desc;
-    const {posts, totalCount} = await this.postsQueryRepository.findPostsByUserId({ 
-      userId: id,
+    const {posts, totalCount} = await this.postsQueryRepository.getAll({ 
       order,
       skip: query.calculateSkip(),
       pageSize: pageSizeValue

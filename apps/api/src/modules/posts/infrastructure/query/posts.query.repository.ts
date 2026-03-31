@@ -40,4 +40,22 @@ export class PostsQueryRepository {
     return { posts, totalCount };
   }
 
+  async getAll(
+    { order, skip, pageSize }: {order: SortDirection, skip: number, pageSize: number}
+  ): Promise<{posts: PostFullInfo[], totalCount: number }>  {
+    const where = { deletedAt: null };
+
+    const [posts, totalCount] = await this.prisma.$transaction([
+        this.prisma.post.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { createdAt: order },
+        include: { postImages: true, user: true },
+      }),
+      this.prisma.post.count({ where }),
+    ]);
+
+    return { posts, totalCount };
+  }
 }
