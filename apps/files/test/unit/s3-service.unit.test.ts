@@ -23,10 +23,10 @@ describe('S3Service', () => {
     }));
 
     s3Service = new S3Service({
-      awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID || 'test-access-key',
-      awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'test-secret-key',
-      awsRegion: process.env.AWS_REGION || 'us-east-1',
-      awsS3Bucket: process.env.AWS_S3_BUCKET || 'test-bucket'
+      awsAccessKeyId: 'test-access-key',
+      awsSecretAccessKey: 'test-secret-key',
+      awsRegion: 'us-east-1',
+      awsS3Bucket: 'test-bucket'
     } as unknown as S3Config);  
   });
 
