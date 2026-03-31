@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiBody, ApiConsumes, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiQuery, ApiSecurity, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiConsumes, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiSecurity, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '@src/modules/user-accounts/guards/bearer/jwt-auth.guard';
 import { CreatePostInputDto } from './input-dto/posts.input-dto';
@@ -14,6 +14,7 @@ import { GetPostByIdQuery } from '../application/queries/get-post-by-id.query';
 import { BaseQueryParams } from '@src/core/dto/base.query-params.input-dto';
 import { GetPostsByUserIdQuery } from '../application/queries/get-posts-by-user-id.query';
 import { PaginatedViewDto } from '@src/core/dto/base.paginated.view-dto';
+import { GetPostsQuery } from '../application/queries/get-posts.query';
 
 @SkipThrottle()
 @Controller('posts')
@@ -46,7 +47,8 @@ export class PostsController {
   @Get('user/:id')
   @HttpCode(HttpStatus.OK)
   @ApiParam({ name: 'id', type: Number, example: 1, description: 'user ID' })
-  @ApiOkResponse({ type: [PostViewDto], description: 'success' })
+  @ApiOkResponse({ type: [PostViewDto], description: 'success' })  
+  @ApiOperation({ summary: 'Get user posts with pagination ' })
   async getPostsByUserId(
     @Param('id', ParseIntPipe) id: number, 
     @Query() query: BaseQueryParams
@@ -59,16 +61,18 @@ export class PostsController {
   @ApiParam({ name: 'id', type: Number, example: 1, description: 'post ID' })
   @ApiOkResponse({ type: PostViewDto, description: 'The response body contains the post data' })
   @ApiNotFoundResponse({ description: 'Post not found', type: ErrorResponseDto })
+  @ApiOperation({ summary: 'Get post by id' })
   async getPost(@Param('id', ParseIntPipe) id: number) {
     return this.queryBus.execute(new GetPostByIdQuery( id ));
   }
 
-//   @Get()
-//   @HttpCode(HttpStatus.OK)
-//   //@PostsSwagger.getPosts()
-//   async getPosts(@Query() query: BaseQueryParams) {
-//     return this.queryBus.execute(new GetPostsQuery(query));
-//   }
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: [PostViewDto], description: 'success' })
+  @ApiOperation({ summary: 'Get all posts with pagination' })
+  async getAll(@Query() query: BaseQueryParams): Promise<PaginatedViewDto<PostViewDto[]>> {
+    return this.queryBus.execute(new GetPostsQuery(query));
+  }
 
 //   @Put(':id')
 //   @UseGuards(JwtAuthGuard)
