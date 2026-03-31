@@ -43,7 +43,7 @@ describe('S3Service', () => {
 
     expect(sendMock).toHaveBeenCalledWith(expect.objectContaining({
       Bucket: 'test-bucket',
-      Key: 'file.png',
+      Key: 'public/file.png',
       Body: expect.any(Buffer),
       ContentType: 'image/png',
     }));
