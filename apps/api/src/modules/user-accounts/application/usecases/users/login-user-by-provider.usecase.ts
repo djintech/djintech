@@ -9,9 +9,9 @@ import { UsersRepository } from '@src/modules/user-accounts/infrastructure/users
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
 import { UsersFactory } from '../../factories/users.factory';
-import { UuidService } from '../../services/uuid.service';
 import { UserRegisteredEvent } from '@src/modules/user-accounts/domain/events/user-registered.event';
 import { EmailExamples } from '@src/modules/notifications/email-examples';
+import { UuidService } from '@libs/utils/src/uuid/uuid.service';
 
 export class LoginUserByProviderCommand {
   constructor(

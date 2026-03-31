@@ -1,13 +1,8 @@
 import { Controller, Get, Inject } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { ApiService } from './api.service';
-import { firstValueFrom } from 'rxjs'; // Use firstValueFrom with send()
 
 @Controller()
 export class ApiController {
   constructor(
-    private readonly apiService: ApiService,
-    @Inject('FILE_SERVICE') private readonly client: ClientProxy, // Inject the client
   ) {}
 
   // @Get('hello')

@@ -5,7 +5,6 @@ import {
   ACCESS_TOKEN_STRATEGY_INJECT_TOKEN,
   REFRESH_TOKEN_STRATEGY_INJECT_TOKEN,
 } from '@src/modules/user-accounts/constants/auth-tokens.inject-constants';
-import { UuidService } from '@modules/user-accounts/application/services/uuid.service';
 import { RefreshTokenPayloadType } from '@modules/user-accounts/application/dto/refresh-token-payload.type';
 import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.repository';
 import { UsersRepository } from '@src/modules/user-accounts/infrastructure/users.repository';
@@ -25,7 +24,6 @@ export class RefreshTokenUseCase implements ICommandHandler<RefreshTokenCommand>
     @Inject(REFRESH_TOKEN_STRATEGY_INJECT_TOKEN)
     private refreshTokenContext: JwtService,
     private readonly deviceRepository: DeviceRepository,
-    private readonly uuidService: UuidService,
     private readonly usersRepository: UsersRepository,
   ) {}
 

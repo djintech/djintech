@@ -2,7 +2,7 @@ import { CommandBus, EventBus } from "@nestjs/cqrs";
 import { ProviderType } from "@src/generated/prisma/enums";
 import { EmailExamples } from "@src/modules/notifications/email-examples";
 import { UsersFactory } from "@src/modules/user-accounts/application/factories/users.factory";
-import { UuidService } from "@src/modules/user-accounts/application/services/uuid.service";
+import { UuidService } from "@libs/utils/src/uuid/uuid.service";
 import { LoginUserByProviderUseCase } from "@src/modules/user-accounts/application/usecases/users/login-user-by-provider.usecase";
 import { UserProvidersRepository } from "@src/modules/user-accounts/infrastructure/user-providers.repository";
 import { UsersRepository } from "@src/modules/user-accounts/infrastructure/users.repository";

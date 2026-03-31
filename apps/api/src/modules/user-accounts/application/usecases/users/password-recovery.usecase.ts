@@ -3,12 +3,11 @@ import { PasswordRecoveryDto } from "../../dto/password-recovery.dto";
 import { DomainException } from "@libs/core/exceptions/domain-exceptions";
 import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
 import { UsersRepository } from "@src/modules/user-accounts/infrastructure/users.repository";
-import { UuidService } from "../../services/uuid.service";
 import { add } from "date-fns/add";
 import { EmailExamples } from "@src/modules/notifications/email-examples";
 import { UserRegisteredEvent } from "@src/modules/user-accounts/domain/events/user-registered.event";
 import { PasswordRecoveryRepository } from "@src/modules/user-accounts/infrastructure/password-recovery.repository";
-
+import { UuidService } from "@libs/utils/src/uuid/uuid.service";
 
 export class PasswordRecoveryCommand {
   constructor(public dto: PasswordRecoveryDto) {}

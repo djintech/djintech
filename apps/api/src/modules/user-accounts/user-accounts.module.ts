@@ -6,7 +6,6 @@ import { RegisterUserUseCase } from './application/usecases/users/register-user.
 import { NotificationsModule } from '../notifications/notifications.module';
 import { UsersRepository } from './infrastructure/users.repository';
 import { CryptoService } from './application/services/crypto.service';
-import { UuidService } from './application/services/uuid.service';
 import { EmailService } from '../notifications/email.service';
 import { EmailExamples } from '../notifications/email-examples';
 import { UsersFactory } from './application/factories/users.factory';
@@ -96,7 +95,6 @@ const queryHandlers = [
     LocalStrategy,
     GoogleStrategy,
     CryptoService,
-    UuidService,
     EmailService,
     EmailExamples,
     UsersFactory,

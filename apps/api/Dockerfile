@@ -13,12 +13,6 @@ RUN mkdir -p /home/node/dist/${SERVICE}
 
 WORKDIR /home/node/dist/${SERVICE}
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-
-
-
 COPY --chown=node package*.json ./
 
 RUN npm install
@@ -35,4 +29,4 @@ RUN npx prisma generate --schema=apps/api/prisma/schema.prisma
 
 EXPOSE ${PORT}
 
-CMD npx prisma migrate deploy --config=apps/api/prisma/prisma.config.ts && npm run 'start:api'
+CMD ["sh", "-c", "npx prisma migrate deploy --config=apps/api/prisma/prisma.config.ts && exec npm run start:api"]

@@ -1,7 +1,6 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { ApiController } from './api.controller';
 import { ApiService } from './api.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ApiCoreModule } from './core/api.core.module';
 import { CoreConfig } from './core/config/core.config';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
@@ -17,10 +16,12 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { SessionsModule } from '@modules/sessions/sessions.module';
 import { PoliciesModule } from '@modules/privacy/policies.module';
 import { PostModule } from './modules/posts/posts.module';
+import { FilesModule } from './modules/files/files.module';
+import { UuidModule } from '@libs/utils/src/uuid/uuid.module';
 
 @Module({
   imports: [
-    configModule(ServiceName.API), // 🔝 should e on top!
+    configModule(ServiceName.API), // 🔝 should be on top!
     CoreModule,
     ApiCoreModule,
     PrismaModule,
@@ -32,16 +33,8 @@ import { PostModule } from './modules/posts/posts.module';
         },
       ],
     }),
-    ClientsModule.register([
-      {
-        name: 'FILE_SERVICE',
-        transport: Transport.TCP,
-        options: {
-          host: process.env.FILE_SERVICE_HOST || 'files-mono-service',
-          port: Number(process.env.FILE_SERVICE_PORT || '4177'),
-        },
-      },
-    ]),
+    FilesModule,
+    UuidModule,
     UserAccountsModule,
     NotificationsModule,
     SessionsModule,
