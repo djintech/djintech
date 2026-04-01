@@ -1,5 +1,5 @@
 import { ApiProperty, IntersectionType } from '@nestjs/swagger';
-import { CreatePostInputDto } from './posts.input-dto';
+import { PostInputDto } from './posts.input-dto';
 
 class FilesDto {
   @ApiProperty({
@@ -10,6 +10,6 @@ class FilesDto {
 }
 
 export class CreatePostWithFilesDto extends IntersectionType(
-  CreatePostInputDto,
+  PostInputDto,
   FilesDto,
 ) {}

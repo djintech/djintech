@@ -11,10 +11,12 @@ import { FileUrlService } from './infrastructure/services/file-url.service';
 import { GetPostsByUserIdQueryHandler } from './application/queries/get-posts-by-user-id.query';
 import { GetPostsQueryHandler } from './application/queries/get-posts.query';
 import { DeletePostUseCase } from './application/usecases/delete-post.usecase';
+import { UpdatePostUseCase } from './application/usecases/update-post.usecase';
 
 const commandHandlers = [
   CreatePostUseCase,
   DeletePostUseCase,
+  UpdatePostUseCase,
 ];
 
 const queryHandlers = [

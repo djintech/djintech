@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPip
 import { ApiBadRequestResponse, ApiBody, ApiConsumes, ApiForbiddenResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiSecurity, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '@src/modules/user-accounts/guards/bearer/jwt-auth.guard';
-import { CreatePostInputDto } from './input-dto/posts.input-dto';
+import { PostInputDto } from './input-dto/posts.input-dto';
 import { ErrorResponseDto } from '@src/core/error-dto/error-response.dto';
 import { PostViewDto } from './view-dto/posts.view-dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
@@ -17,6 +17,7 @@ import { PaginatedViewDto } from '@src/core/dto/base.paginated.view-dto';
 import { GetPostsQuery } from '../application/queries/get-posts.query';
 import { DeletePostCommand } from '../application/usecases/delete-post.usecase';
 import { ApiPaginatedResponse } from '@src/core/decorators/swagger/api-paginated-response.decorator';
+import { UpdatePostCommand } from '../application/usecases/update-post.usecase';
 
 @SkipThrottle()
 @Controller('posts')
@@ -40,7 +41,7 @@ export class PostsController {
   async createPost(
     @UserId() userId: number,
     @UploadedFiles() files: Express.Multer.File[],
-    @Body() dto: CreatePostInputDto,
+    @Body() dto: PostInputDto,
   ): Promise<PostViewDto> {
     const postId = await this.commandBus.execute(new CreatePostCommand( dto, userId, files ));
     return this.queryBus.execute(new GetPostByIdQuery( postId ));
@@ -76,22 +77,24 @@ export class PostsController {
     return this.queryBus.execute(new GetPostsQuery(query));
   }
 
-//   @Put(':id')
-//   @UseGuards(JwtAuthGuard)
-//   @HttpCode(HttpStatus.NO_CONTENT)
-//   //@UseInterceptors(FilesInterceptor('images', MAX_IMAGES_COUNT))
-//  // @PostsSwagger.updatePost()
-//   async updatePost(
-//     @GetUserFromRequest() user: UserContextDto,
-//     @Param('id') id: string,
-//     @UploadedFiles()
-//     images: Express.Multer.File[],
-//     @Body() dto: UpdatePostInputDto,
-//   ) {
-//     return await this.commandBus.execute<UpdatePostCommand>(
-//       new UpdatePostCommand(user.userId, id, dto, images),
-//     );
-//   }
+  @Put(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiSecurity('JwtAuth')
+  @ApiOperation({ summary: 'Update post' })
+  @ApiBody({ type: PostInputDto })
+  @ApiNoContentResponse({ description: 'The post has been successfully updated' })
+  @ApiNotFoundResponse({ description: 'Post not found', type: ErrorResponseDto })
+  @ApiBadRequestResponse({ description: 'The inputModel has incorrect values', type: ErrorResponseDto })
+  @ApiForbiddenResponse({ description: 'Forbidden. The user is not the owner of the post.' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async updatePost(
+    @UserId() userId: number,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: PostInputDto,
+  ) {
+    return await this.commandBus.execute( new UpdatePostCommand(userId, id, dto) );
+  }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
