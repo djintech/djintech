@@ -45,4 +45,21 @@ export class PostsRepository {
       where: { id },
     });
   }
+
+  async softDelete(id: number) {
+    const now = new Date();
+
+    await this.prisma.post.update({
+      where: { id, deletedAt: null },
+      data: {
+        deletedAt: now,
+        postImages: {
+          updateMany: {
+            where: { deletedAt: null },
+            data: { deletedAt: now },
+          },
+        },
+      },
+    });
+  }
 }

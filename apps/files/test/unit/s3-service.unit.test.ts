@@ -53,7 +53,7 @@ describe('S3Service', () => {
     await s3Service.delete(['key1', 'key2']);
 
     expect(sendMock).toHaveBeenCalledTimes(2);
-    expect(sendMock).toHaveBeenCalledWith(expect.objectContaining({ Key: 'key1' }));
-    expect(sendMock).toHaveBeenCalledWith(expect.objectContaining({ Key: 'key2' }));
+    expect(sendMock).toHaveBeenCalledWith(expect.objectContaining({ Key: 'public/key1' }));
+    expect(sendMock).toHaveBeenCalledWith(expect.objectContaining({ Key: 'public/key2' }));
   });
 });

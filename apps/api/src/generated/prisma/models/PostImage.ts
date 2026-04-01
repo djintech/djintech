@@ -50,6 +50,7 @@ export type PostImageMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  isDeletedFromS3: boolean | null
 }
 
 export type PostImageMaxAggregateOutputType = {
@@ -62,6 +63,7 @@ export type PostImageMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  isDeletedFromS3: boolean | null
 }
 
 export type PostImageCountAggregateOutputType = {
@@ -74,6 +76,7 @@ export type PostImageCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   deletedAt: number
+  isDeletedFromS3: number
   _all: number
 }
 
@@ -102,6 +105,7 @@ export type PostImageMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  isDeletedFromS3?: true
 }
 
 export type PostImageMaxAggregateInputType = {
@@ -114,6 +118,7 @@ export type PostImageMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  isDeletedFromS3?: true
 }
 
 export type PostImageCountAggregateInputType = {
@@ -126,6 +131,7 @@ export type PostImageCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  isDeletedFromS3?: true
   _all?: true
 }
 
@@ -225,6 +231,7 @@ export type PostImageGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
+  isDeletedFromS3: boolean
   _count: PostImageCountAggregateOutputType | null
   _avg: PostImageAvgAggregateOutputType | null
   _sum: PostImageSumAggregateOutputType | null
@@ -260,6 +267,7 @@ export type PostImageWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"PostImage"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PostImage"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"PostImage"> | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFilter<"PostImage"> | boolean
   post?: Prisma.XOR<Prisma.PostScalarRelationFilter, Prisma.PostWhereInput>
 }
 
@@ -273,6 +281,7 @@ export type PostImageOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeletedFromS3?: Prisma.SortOrder
   post?: Prisma.PostOrderByWithRelationInput
 }
 
@@ -290,6 +299,7 @@ export type PostImageWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"PostImage"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PostImage"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"PostImage"> | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFilter<"PostImage"> | boolean
   post?: Prisma.XOR<Prisma.PostScalarRelationFilter, Prisma.PostWhereInput>
 }, "id" | "key" | "postId_position">
 
@@ -303,6 +313,7 @@ export type PostImageOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeletedFromS3?: Prisma.SortOrder
   _count?: Prisma.PostImageCountOrderByAggregateInput
   _avg?: Prisma.PostImageAvgOrderByAggregateInput
   _max?: Prisma.PostImageMaxOrderByAggregateInput
@@ -323,6 +334,7 @@ export type PostImageScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PostImage"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PostImage"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PostImage"> | Date | string | null
+  isDeletedFromS3?: Prisma.BoolWithAggregatesFilter<"PostImage"> | boolean
 }
 
 export type PostImageCreateInput = {
@@ -333,6 +345,7 @@ export type PostImageCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  isDeletedFromS3?: boolean
   post: Prisma.PostCreateNestedOneWithoutPostImagesInput
 }
 
@@ -346,6 +359,7 @@ export type PostImageUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  isDeletedFromS3?: boolean
 }
 
 export type PostImageUpdateInput = {
@@ -356,6 +370,7 @@ export type PostImageUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFieldUpdateOperationsInput | boolean
   post?: Prisma.PostUpdateOneRequiredWithoutPostImagesNestedInput
 }
 
@@ -369,6 +384,7 @@ export type PostImageUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PostImageCreateManyInput = {
@@ -381,6 +397,7 @@ export type PostImageCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  isDeletedFromS3?: boolean
 }
 
 export type PostImageUpdateManyMutationInput = {
@@ -391,6 +408,7 @@ export type PostImageUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PostImageUncheckedUpdateManyInput = {
@@ -403,6 +421,7 @@ export type PostImageUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PostImageListRelationFilter = {
@@ -430,6 +449,7 @@ export type PostImageCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  isDeletedFromS3?: Prisma.SortOrder
 }
 
 export type PostImageAvgOrderByAggregateInput = {
@@ -449,6 +469,7 @@ export type PostImageMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  isDeletedFromS3?: Prisma.SortOrder
 }
 
 export type PostImageMinOrderByAggregateInput = {
@@ -461,6 +482,7 @@ export type PostImageMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  isDeletedFromS3?: Prisma.SortOrder
 }
 
 export type PostImageSumOrderByAggregateInput = {
@@ -520,6 +542,7 @@ export type PostImageCreateWithoutPostInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  isDeletedFromS3?: boolean
 }
 
 export type PostImageUncheckedCreateWithoutPostInput = {
@@ -531,6 +554,7 @@ export type PostImageUncheckedCreateWithoutPostInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  isDeletedFromS3?: boolean
 }
 
 export type PostImageCreateOrConnectWithoutPostInput = {
@@ -572,6 +596,7 @@ export type PostImageScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"PostImage"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PostImage"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"PostImage"> | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFilter<"PostImage"> | boolean
 }
 
 export type PostImageCreateManyPostInput = {
@@ -583,6 +608,7 @@ export type PostImageCreateManyPostInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  isDeletedFromS3?: boolean
 }
 
 export type PostImageUpdateWithoutPostInput = {
@@ -593,6 +619,7 @@ export type PostImageUpdateWithoutPostInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PostImageUncheckedUpdateWithoutPostInput = {
@@ -604,6 +631,7 @@ export type PostImageUncheckedUpdateWithoutPostInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PostImageUncheckedUpdateManyWithoutPostInput = {
@@ -615,6 +643,7 @@ export type PostImageUncheckedUpdateManyWithoutPostInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeletedFromS3?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -629,6 +658,7 @@ export type PostImageSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  isDeletedFromS3?: boolean
   post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["postImage"]>
 
@@ -642,6 +672,7 @@ export type PostImageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  isDeletedFromS3?: boolean
   post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["postImage"]>
 
@@ -655,6 +686,7 @@ export type PostImageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  isDeletedFromS3?: boolean
   post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["postImage"]>
 
@@ -668,9 +700,10 @@ export type PostImageSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  isDeletedFromS3?: boolean
 }
 
-export type PostImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "postId" | "key" | "mimeType" | "size" | "position" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["postImage"]>
+export type PostImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "postId" | "key" | "mimeType" | "size" | "position" | "createdAt" | "updatedAt" | "deletedAt" | "isDeletedFromS3", ExtArgs["result"]["postImage"]>
 export type PostImageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
 }
@@ -696,6 +729,7 @@ export type $PostImagePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
+    isDeletedFromS3: boolean
   }, ExtArgs["result"]["postImage"]>
   composites: {}
 }
@@ -1129,6 +1163,7 @@ export interface PostImageFieldRefs {
   readonly createdAt: Prisma.FieldRef<"PostImage", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PostImage", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"PostImage", 'DateTime'>
+  readonly isDeletedFromS3: Prisma.FieldRef<"PostImage", 'Boolean'>
 }
     
 

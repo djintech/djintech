@@ -18,6 +18,7 @@ import { PoliciesModule } from '@modules/privacy/policies.module';
 import { PostModule } from './modules/posts/posts.module';
 import { FilesModule } from './modules/files/files.module';
 import { UuidModule } from '@libs/utils/src/uuid/uuid.module';
+import { CleanupModule } from './modules/cleanup/cleanup.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { UuidModule } from '@libs/utils/src/uuid/uuid.module';
     SessionsModule,
     PoliciesModule,
     PostModule,
+    CleanupModule,
   ],
   controllers: [ApiController],
   providers: [

@@ -37,7 +37,7 @@ export class S3Service {
         this.client.send(
           new DeleteObjectCommand({
             Bucket: this.config.awsS3Bucket,
-            Key: key,
+            Key: `public/${key}`,
           }),
         ),
       ),
