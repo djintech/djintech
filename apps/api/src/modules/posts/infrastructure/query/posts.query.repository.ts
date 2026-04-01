@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SortDirection } from '@src/core/dto/base.query-params.input-dto';
 import { PrismaService } from '@src/db/prisma.service';
-import { Post, Prisma } from '@src/generated/prisma/client';
+import { Prisma } from '@src/generated/prisma/client';
 
 export type PostFullInfo = Prisma.PostGetPayload<{
   include: {

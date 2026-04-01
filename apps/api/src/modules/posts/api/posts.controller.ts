@@ -16,6 +16,7 @@ import { GetPostsByUserIdQuery } from '../application/queries/get-posts-by-user-
 import { PaginatedViewDto } from '@src/core/dto/base.paginated.view-dto';
 import { GetPostsQuery } from '../application/queries/get-posts.query';
 import { DeletePostCommand } from '../application/usecases/delete-post.usecase';
+import { ApiPaginatedResponse } from '@src/core/decorators/swagger/api-paginated-response.decorator';
 
 @SkipThrottle()
 @Controller('posts')
@@ -48,7 +49,7 @@ export class PostsController {
   @Get('user/:id')
   @HttpCode(HttpStatus.OK)
   @ApiParam({ name: 'id', type: Number, example: 1, description: 'user ID' })
-  @ApiOkResponse({ type: [PostViewDto], description: 'success' })  
+  @ApiPaginatedResponse(PostViewDto)  
   @ApiOperation({ summary: 'Get user posts with pagination ' })
   async getPostsByUserId(
     @Param('id', ParseIntPipe) id: number, 
@@ -69,7 +70,7 @@ export class PostsController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  @ApiOkResponse({ type: [PostViewDto], description: 'success' })
+  @ApiPaginatedResponse(PostViewDto)
   @ApiOperation({ summary: 'Get all posts with pagination' })
   async getAll(@Query() query: BaseQueryParams): Promise<PaginatedViewDto<PostViewDto[]>> {
     return this.queryBus.execute(new GetPostsQuery(query));

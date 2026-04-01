@@ -32,7 +32,7 @@ export class PostViewDto {
   @ApiProperty()
   owner: ownerViewDto;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, nullable: true })
   description: string | null;
   
   @ApiProperty({ type: () => [PostImageViewDto] })
