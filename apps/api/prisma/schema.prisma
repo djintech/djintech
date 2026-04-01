@@ -137,15 +137,16 @@ model Post {
 }
 
 model PostImage {
-  id          Int @id @default(autoincrement())
-  postId      Int
-  key         String @unique
-  mimeType    String
-  size        Int
-  position    Int
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
+  id              Int @id @default(autoincrement())
+  postId          Int
+  key             String @unique
+  mimeType        String
+  size            Int
+  position        Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+  isDeletedFromS3 Boolean  @default(false)
 
   post   Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   

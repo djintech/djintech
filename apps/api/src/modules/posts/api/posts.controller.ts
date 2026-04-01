@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiBody, ApiConsumes, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiSecurity, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiConsumes, ApiForbiddenResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiSecurity, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '@src/modules/user-accounts/guards/bearer/jwt-auth.guard';
 import { CreatePostInputDto } from './input-dto/posts.input-dto';
@@ -15,6 +15,7 @@ import { BaseQueryParams } from '@src/core/dto/base.query-params.input-dto';
 import { GetPostsByUserIdQuery } from '../application/queries/get-posts-by-user-id.query';
 import { PaginatedViewDto } from '@src/core/dto/base.paginated.view-dto';
 import { GetPostsQuery } from '../application/queries/get-posts.query';
+import { DeletePostCommand } from '../application/usecases/delete-post.usecase';
 
 @SkipThrottle()
 @Controller('posts')
@@ -91,14 +92,20 @@ export class PostsController {
 //     );
 //   }
 
-//   @Delete(':id')
-//   @UseGuards(JwtAuthGuard)
-//   //@PostsSwagger.deletePost()
-//   @HttpCode(HttpStatus.NO_CONTENT)
-//   async deletePost(
-//     @Param('id') id: string,
-//     @GetUserFromRequest() user: UserContextDto,
-//   ) {
-//     return this.commandBus.execute(new DeletePostCommand(id, user.userId));
-//  }
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiParam({ name: 'id', type: Number, example: 1, description: 'post ID' })
+  @ApiSecurity('JwtAuth')
+  @ApiNoContentResponse({ description: 'The post has been successfully deleted' })
+  @ApiNotFoundResponse({ description: 'Post not found', type: ErrorResponseDto })
+  @ApiForbiddenResponse({ description: 'Forbidden. The user is not the owner of the post.' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
+  @ApiOperation({ summary: 'Delete post by ID' })
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deletePost(
+    @Param('id', ParseIntPipe) id: number,
+    @UserId() userId: number,
+  ) {
+    return this.commandBus.execute(new DeletePostCommand(id, userId));
+ }
 }

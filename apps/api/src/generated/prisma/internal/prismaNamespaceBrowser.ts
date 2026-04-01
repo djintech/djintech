@@ -188,7 +188,8 @@ export const PostImageScalarFieldEnum = {
   position: 'position',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  isDeletedFromS3: 'isDeletedFromS3'
 } as const
 
 export type PostImageScalarFieldEnum = (typeof PostImageScalarFieldEnum)[keyof typeof PostImageScalarFieldEnum]
