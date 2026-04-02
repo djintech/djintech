@@ -1,11 +1,11 @@
 import { CommandBus, EventBus } from "@nestjs/cqrs";
 import { ProviderType } from "@src/generated/prisma/enums";
 import { EmailExamples } from "@src/modules/notifications/email-examples";
-import { UsersFactory } from "@src/modules/user-accounts/application/factories/users.factory";
 import { UuidService } from "@libs/utils/src/uuid/uuid.service";
-import { LoginUserByProviderUseCase } from "@src/modules/user-accounts/application/usecases/users/login-user-by-provider.usecase";
-import { UserProvidersRepository } from "@src/modules/user-accounts/infrastructure/user-providers.repository";
-import { UsersRepository } from "@src/modules/user-accounts/infrastructure/users.repository";
+import { UserProvidersRepository } from "@src/modules/user-accounts/auth/infrastructure/user-providers.repository";
+import { UsersRepository } from "@src/modules/user-accounts/auth/infrastructure/users.repository";
+import { LoginUserByProviderUseCase } from "@src/modules/user-accounts/auth/application/usecases/users/login-user-by-provider.usecase";
+import { UsersFactory } from "@src/modules/user-accounts/auth/application/factories/users.factory";
 
 describe('LoginUserByProviderUseCase', () => {
   let useCase: LoginUserByProviderUseCase;

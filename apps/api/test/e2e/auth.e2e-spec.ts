@@ -3,13 +3,13 @@ import request from 'supertest';
 import { initSettings } from '../helpers/init-settings';
 import { deleteAllData } from '../helpers/delete-all-data';
 import { EmailService } from '@src/modules/notifications/email.service';
-import { ACCESS_TOKEN_STRATEGY_INJECT_TOKEN } from '@src/modules/user-accounts/constants/auth-tokens.inject-constants';
+import { ACCESS_TOKEN_STRATEGY_INJECT_TOKEN } from '@src/modules/user-accounts/auth/constants/auth-tokens.inject-constants';
 import { JwtService } from '@nestjs/jwt';
-import { UserAccountsConfig } from '@src/modules/user-accounts/config/user-accounts.config';
+import { UserAccountsConfig } from '@src/modules/user-accounts/auth/config/user-accounts.config';
 import { UsersTestManager } from '../helpers/users-test-manager';
-import { PasswordRecoveryInputDto } from '@src/modules/user-accounts/api/input-dto/password-recovery.input-dto';
-import { GoogleRecaptchaService } from '@src/modules/user-accounts/application/services/recaptcha.service';
-import { CreateUserInputDto } from '@src/modules/user-accounts/api/input-dto/users.input-dto';
+import { PasswordRecoveryInputDto } from '@src/modules/user-accounts/auth/api/input-dto/password-recovery.input-dto';
+import { CreateUserInputDto } from '@src/modules/user-accounts/auth/api/input-dto/users.input-dto';
+import { GoogleRecaptchaService } from '@src/modules/user-accounts/auth/application/services/recaptcha.service';
 
 describe('auth', () => {
   let app: INestApplication;

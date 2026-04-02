@@ -23,6 +23,7 @@ model User {
   policyAgreements  UserPolicyAgreement[]
   providers         UserProvider[]
   posts             Post[]
+  profile           Profile?
 
   @@map("users")
 }
@@ -153,4 +154,40 @@ model PostImage {
   @@unique([postId, position])
   @@index([postId])
   @@map("postImages")
+}
+
+model Profile {
+  id           Int @id @default(autoincrement())
+  userId       Int @unique
+  firstName    String?
+  lastName     String?
+  dateOfBirth  DateTime?
+  aboutMe      String?
+  country      String?
+  city         String?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+  
+  avatar       Avatar?
+  user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model Avatar {
+  id              Int @id @default(autoincrement())
+  profileId       Int @unique
+  key             String @unique
+  mimeType        String
+  size            Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+  isDeletedFromS3 Boolean  @default(false)
+
+  profile   Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@map("avatars")
 }

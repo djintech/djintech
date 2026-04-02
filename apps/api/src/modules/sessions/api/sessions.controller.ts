@@ -3,11 +3,11 @@ import { CommandBus } from '@nestjs/cqrs';
 import { GetUserDevicesCommand } from '@modules/sessions/application/usecases/get-devices.usecase';
 import { DeleteAllDevicesCommand } from '@modules/sessions/application/usecases/delete-other-devices.usecase';
 import { DeleteDeviceCommand } from '@modules/sessions/application/usecases/delete-device.usecase';
-import { ExtractDeviceFromRefresh } from '@modules/user-accounts/guards/decorators/param/extract-device-from-refresh.decorator';
-import { JwtAuthGuard } from '@src/modules/user-accounts/guards/bearer/jwt-auth.guard';
+import { ExtractDeviceFromRefresh } from '@src/modules/user-accounts/auth/guards/decorators/param/extract-device-from-refresh.decorator';
+import { JwtAuthGuard } from '@src/modules/user-accounts/auth/guards/bearer/jwt-auth.guard';
 import { ApiSecurity, ApiTooManyRequestsResponse } from '@nestjs/swagger';
 import { SkipThrottle } from '@nestjs/throttler';
-import { JwtRefreshTokenGuard } from '@src/modules/user-accounts/guards/refresh-token/jwt-refresh-token.guard';
+import { JwtRefreshTokenGuard } from '@src/modules/user-accounts/auth/guards/refresh-token/jwt-refresh-token.guard';
 
 @SkipThrottle()
 @UseGuards(JwtAuthGuard, JwtRefreshTokenGuard)

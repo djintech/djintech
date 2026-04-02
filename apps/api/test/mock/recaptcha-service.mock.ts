@@ -1,4 +1,4 @@
-import { GoogleRecaptchaService } from "@src/modules/user-accounts/application/services/recaptcha.service";
+import { GoogleRecaptchaService } from "@src/modules/user-accounts/auth/application/services/recaptcha.service";
 
 export class GoogleRecaptchaServiceMock extends GoogleRecaptchaService {
   //override method

@@ -59,7 +59,9 @@ export const ModelName = {
   UserPolicyAgreement: 'UserPolicyAgreement',
   UserProvider: 'UserProvider',
   Post: 'Post',
-  PostImage: 'PostImage'
+  PostImage: 'PostImage',
+  Profile: 'Profile',
+  Avatar: 'Avatar'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -193,6 +195,38 @@ export const PostImageScalarFieldEnum = {
 } as const
 
 export type PostImageScalarFieldEnum = (typeof PostImageScalarFieldEnum)[keyof typeof PostImageScalarFieldEnum]
+
+
+export const ProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  dateOfBirth: 'dateOfBirth',
+  aboutMe: 'aboutMe',
+  country: 'country',
+  city: 'city',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const AvatarScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  key: 'key',
+  mimeType: 'mimeType',
+  size: 'size',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  isDeletedFromS3: 'isDeletedFromS3'
+} as const
+
+export type AvatarScalarFieldEnum = (typeof AvatarScalarFieldEnum)[keyof typeof AvatarScalarFieldEnum]
 
 
 export const SortOrder = {

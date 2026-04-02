@@ -31,7 +31,8 @@
     "prisma:api:migrate:dev": "cross-env NODE_ENV=development dotenv -e .env.development.local -- prisma migrate dev --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:migrate:deploy:test": "cross-env NODE_ENV=testing  dotenv -e .env.testing -- prisma migrate deploy --config=apps/api/prisma/prisma.config.ts",
     "prisma:api:studio:dev": "cross-env NODE_ENV=development prisma studio --config=apps/api/prisma/prisma.config.ts",
-    "prisma:api:studio:test": "cross-env NODE_ENV=testing prisma studio --config=apps/api/prisma/prisma.config.ts"
+    "prisma:api:studio:test": "cross-env NODE_ENV=testing prisma studio --config=apps/api/prisma/prisma.config.ts",
+    "prisma:api:migrate:create": "cross-env NODE_ENV=development dotenv -e .env.development.local -- prisma migrate dev --create-only --config=apps/api/prisma/prisma.config.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1012.0",

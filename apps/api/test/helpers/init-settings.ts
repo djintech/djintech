@@ -7,8 +7,8 @@ import { initAppModule } from '@src/init-app-module';
 import { CoreConfig } from '@src/core/config/core.config';
 import { PrismaService } from '@src/db/prisma.service';
 import { UsersTestManager } from './users-test-manager';
-import { GoogleRecaptchaService } from '@src/modules/user-accounts/application/services/recaptcha.service';
 import { GoogleRecaptchaServiceMock } from '../mock/recaptcha-service.mock';
+import { GoogleRecaptchaService } from '@src/modules/user-accounts/auth/application/services/recaptcha.service';
 
 export const initSettings = async (
   addSettingsToModuleBuilder?: (moduleBuilder: TestingModuleBuilder) => void,
