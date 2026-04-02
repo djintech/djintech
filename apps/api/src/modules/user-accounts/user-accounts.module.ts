@@ -1,44 +1,44 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { HttpModule } from '@nestjs/axios';
-import { AuthController } from './api/auth.controller';
-import { RegisterUserUseCase } from './application/usecases/users/register-user.usecase';
+import { AuthController } from './auth/api/auth.controller';
 import { NotificationsModule } from '../notifications/notifications.module';
-import { UsersRepository } from './infrastructure/users.repository';
-import { CryptoService } from './application/services/crypto.service';
+import { UsersRepository } from './auth/infrastructure/users.repository';
 import { EmailService } from '../notifications/email.service';
 import { EmailExamples } from '../notifications/email-examples';
-import { UsersFactory } from './application/factories/users.factory';
-import { EmailConfirmationFactory } from './application/factories/email-confirmation.factory';
-import { EmailConfirmationRepository } from './infrastructure/email-confirmation.repository';
-import { RegistrationConfirmationUseCase } from './application/usecases/users/registration-confirmation.usecase';
-import { RegistrationEmailResendingUseCase } from './application/usecases/users/registration-email-resending.usecase';
-import { LocalStrategy } from './guards/local/local.strategy';
-import { AuthService } from './application/services/auth.service';
-import { LoginUserUseCase } from './application/usecases/users/login-user.usecase';
+import { EmailConfirmationRepository } from './auth/infrastructure/email-confirmation.repository';
+import { LocalStrategy } from './auth/guards/local/local.strategy';
 import {
   ACCESS_TOKEN_STRATEGY_INJECT_TOKEN,
   REFRESH_TOKEN_STRATEGY_INJECT_TOKEN,
-} from './constants/auth-tokens.inject-constants';
+} from './auth/constants/auth-tokens.inject-constants';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { UserAccountsConfig } from './config/user-accounts.config';
+import { UserAccountsConfig } from './auth/config/user-accounts.config';
 import type { StringValue } from 'ms';
-import { NewPasswordUseCase } from './application/usecases/users/new-password.usecase';
-import { GoogleRecaptchaService } from './application/services/recaptcha.service';
-import { PasswordRecoveryUseCase } from './application/usecases/users/password-recovery.usecase';
-import { PasswordRecoveryRepository } from './infrastructure/password-recovery.repository';
-import { LogoutDeviceUseCase } from '@modules/user-accounts/application/usecases/users/logout-user.usecase';
-import { DeviceRepository } from '@modules/user-accounts/infrastructure/device.repository';
-import { JwtStrategy } from './guards/bearer/jwt.strategy';
-import { RefreshTokenUseCase } from './application/usecases/users/refresh-token.usecase';
+import { PasswordRecoveryRepository } from './auth/infrastructure/password-recovery.repository';
+import { DeviceRepository } from '@src/modules/user-accounts/auth/infrastructure/device.repository';
+import { JwtStrategy } from './auth/guards/bearer/jwt.strategy';
 import { PoliciesModule } from '../privacy/policies.module';
-import { GetMeQueryHandler } from './application/queries/get-me.query';
-import { AuthQueryRepository } from './infrastructure/query/auth.query-repository';
-import { GoogleAuthController } from './api/google-oauth.controller';
-import { GoogleOAuthConfig } from './config/google-oauth.config';
-import { GoogleStrategy } from './guards/google/google.strategy';
-import { LoginUserByProviderUseCase } from './application/usecases/users/login-user-by-provider.usecase';
-import { UserProvidersRepository } from './infrastructure/user-providers.repository';
+import { AuthQueryRepository } from './auth/infrastructure/query/auth.query-repository';
+import { GoogleAuthController } from './auth/api/google-oauth.controller';
+import { GoogleOAuthConfig } from './auth/config/google-oauth.config';
+import { GoogleStrategy } from './auth/guards/google/google.strategy';
+import { UserProvidersRepository } from './auth/infrastructure/user-providers.repository';
+import { RegisterUserUseCase } from './auth/application/usecases/users/register-user.usecase';
+import { RegistrationConfirmationUseCase } from './auth/application/usecases/users/registration-confirmation.usecase';
+import { RegistrationEmailResendingUseCase } from './auth/application/usecases/users/registration-email-resending.usecase';
+import { LoginUserUseCase } from './auth/application/usecases/users/login-user.usecase';
+import { NewPasswordUseCase } from './auth/application/usecases/users/new-password.usecase';
+import { PasswordRecoveryUseCase } from './auth/application/usecases/users/password-recovery.usecase';
+import { LogoutDeviceUseCase } from './auth/application/usecases/users/logout-user.usecase';
+import { RefreshTokenUseCase } from './auth/application/usecases/users/refresh-token.usecase';
+import { LoginUserByProviderUseCase } from './auth/application/usecases/users/login-user-by-provider.usecase';
+import { GetMeQueryHandler } from './auth/application/queries/get-me.query';
+import { CryptoService } from './auth/application/services/crypto.service';
+import { EmailConfirmationFactory } from './auth/application/factories/email-confirmation.factory';
+import { UsersFactory } from './auth/application/factories/users.factory';
+import { AuthService } from './auth/application/services/auth.service';
+import { GoogleRecaptchaService } from './auth/application/services/recaptcha.service';
 
 const commandHandlers = [
   RegisterUserUseCase,

@@ -1,6 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { CreateUserInputDto } from '@src/modules/user-accounts/api/input-dto/users.input-dto';
+import { CreateUserInputDto } from '@src/modules/user-accounts/auth/api/input-dto/users.input-dto';
 import { PrismaService } from '@src/db/prisma.service';
 
 export class UsersTestManager {

@@ -82,3 +82,13 @@ export type Post = Prisma.PostModel
  * 
  */
 export type PostImage = Prisma.PostImageModel
+/**
+ * Model Profile
+ * 
+ */
+export type Profile = Prisma.ProfileModel
+/**
+ * Model Avatar
+ * 
+ */
+export type Avatar = Prisma.AvatarModel

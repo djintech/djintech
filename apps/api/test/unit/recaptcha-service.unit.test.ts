@@ -1,5 +1,5 @@
 import { DomainException } from "@libs/core/exceptions/domain-exceptions";
-import { GoogleRecaptchaService } from "@src/modules/user-accounts/application/services/recaptcha.service";
+import { GoogleRecaptchaService } from "@src/modules/user-accounts/auth/application/services/recaptcha.service";
 
 describe('GoogleRecaptchaService unit test', () => {
   let service: GoogleRecaptchaService;
