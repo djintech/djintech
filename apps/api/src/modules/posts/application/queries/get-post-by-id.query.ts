@@ -3,7 +3,7 @@ import { PostViewDto } from "../../api/view-dto/posts.view-dto";
 import { PostsQueryRepository } from "../../infrastructure/query/posts.query.repository";
 import { DomainException } from "@libs/core/exceptions/domain-exceptions";
 import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
-import { FileUrlService } from "../../infrastructure/services/file-url.service";
+import { FileUrlService } from "../../../../core/file/file-url.service";
 
 export class GetPostByIdQuery {
   constructor(
@@ -31,6 +31,7 @@ export class GetPostByIdQueryHandler
       });      
     }
 
-    return PostViewDto.mapToView( post, this.fileUrlService.getPublicUrl );
+    const buildUrl = this.fileUrlService.getPublicUrl.bind(this.fileUrlService);
+    return PostViewDto.mapToView( post, buildUrl );
 }
 }

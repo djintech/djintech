@@ -15,7 +15,7 @@ export class PostsQueryRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findPostById(id: number): Promise<PostFullInfo | null>   {
-    return this.prisma.post.findUnique({
+    return this.prisma.post.findFirst({
       where: { id, deletedAt: null },
       include: { postImages: true, user: true },
     });
@@ -26,7 +26,7 @@ export class PostsQueryRepository {
   ): Promise<{posts: PostFullInfo[], totalCount: number }>  {
     const where = { userId, deletedAt: null };
 
-    const [posts, totalCount] = await this.prisma.$transaction([
+    const [posts, totalCount] = await Promise.all([
         this.prisma.post.findMany({
         where,
         skip,
@@ -45,7 +45,7 @@ export class PostsQueryRepository {
   ): Promise<{posts: PostFullInfo[], totalCount: number }>  {
     const where = { deletedAt: null };
 
-    const [posts, totalCount] = await this.prisma.$transaction([
+    const [posts, totalCount] = await Promise.all([
         this.prisma.post.findMany({
         where,
         skip,

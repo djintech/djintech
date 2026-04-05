@@ -6,7 +6,7 @@ class FilesDto {
   type: 'array',
     items: { type: 'string', format: 'binary' },
   })
-  files: any[];
+  files!: any[];
 }
 
 export class CreatePostWithFilesDto extends IntersectionType(

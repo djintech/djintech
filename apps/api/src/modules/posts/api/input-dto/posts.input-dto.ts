@@ -1,12 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { descriptionConstraints } from "../../domain/value-objects/post.value-object";
-import { IsStringWithTrim } from "@src/core/decorators/validation/is-string-with-trim";
+import { IsOptional, IsString } from "class-validator";
 
 export class PostInputDto {
+  @IsOptional()
+  @IsString()
   @ApiProperty({
       maxLength: descriptionConstraints.maxLength,
-      example: 'string',
+      example: 'description',
+      nullable: true,
+      description: 'Optional post description, can be null',
     })
-    @IsStringWithTrim(0, descriptionConstraints.maxLength)
-  description:	string;
+  description:	string | null = null;
 }

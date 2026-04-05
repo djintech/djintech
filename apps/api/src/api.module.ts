@@ -19,6 +19,7 @@ import { PostModule } from './modules/posts/posts.module';
 import { FilesModule } from './modules/files/files.module';
 import { UuidModule } from '@libs/utils/src/uuid/uuid.module';
 import { CleanupModule } from './modules/cleanup/cleanup.module';
+import { FileModule } from './core/file/file.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { CleanupModule } from './modules/cleanup/cleanup.module';
     PoliciesModule,
     PostModule,
     CleanupModule,
+    FileModule,
   ],
   controllers: [ApiController],
   providers: [
