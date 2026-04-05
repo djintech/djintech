@@ -46,7 +46,7 @@ export class CreatePostUseCase
       uploadedImages = await this.filesClient.upload(payload);
       const post = await this.postsRepository.createPostWithImages( userId, dto.description, uploadedImages);
       return post.id;
-    } catch (error) {
+    } catch (error: any) {
       if (uploadedImages.length) {
         await this.filesClient.delete(uploadedImages.map((i) => i.key));
       }

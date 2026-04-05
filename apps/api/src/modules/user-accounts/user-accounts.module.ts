@@ -39,6 +39,12 @@ import { EmailConfirmationFactory } from './auth/application/factories/email-con
 import { UsersFactory } from './auth/application/factories/users.factory';
 import { AuthService } from './auth/application/services/auth.service';
 import { GoogleRecaptchaService } from './auth/application/services/recaptcha.service';
+import { AvatarsQueryRepository } from './profile/infrastructure/query/avatars.query.repository';
+import { AvatarsRepository } from './profile/infrastructure/avatars.repository';
+import { ProfilesRepository } from './profile/infrastructure/profiles.repository';
+import { CreateAvatarUseCase } from './profile/application/usecases/create-avatar.usecase';
+import { GetAvatarByIdQueryHandler } from './profile/application/queries/get-avatar-by-id.query';
+import { ProfilesController } from './profile/api/profile.controller';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -50,22 +56,23 @@ const commandHandlers = [
   LogoutDeviceUseCase,
   RefreshTokenUseCase,
   LoginUserByProviderUseCase,
+  CreateAvatarUseCase,
 ];
 
 const queryHandlers = [
-  GetMeQueryHandler
+  GetMeQueryHandler,
+  GetAvatarByIdQueryHandler,
 ];
 
 @Module({
-  imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule, PoliciesModule],
-  controllers: [AuthController, GoogleAuthController],
+  imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule, PoliciesModule,],
+  controllers: [AuthController, GoogleAuthController, ProfilesController],
   providers: [
     ...commandHandlers,
     ...queryHandlers,
     UsersRepository,
     UserProvidersRepository,
     AuthQueryRepository,
-    DeviceRepository,
     {
       provide: ACCESS_TOKEN_STRATEGY_INJECT_TOKEN,
       useFactory: (userAccountConfig: UserAccountsConfig): JwtService => {
@@ -106,6 +113,9 @@ const queryHandlers = [
     GoogleOAuthConfig,
     GoogleRecaptchaService,
     DeviceRepository,
+    AvatarsRepository,
+    AvatarsQueryRepository,
+    ProfilesRepository,
   ],
   exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository, JwtStrategy],
 })

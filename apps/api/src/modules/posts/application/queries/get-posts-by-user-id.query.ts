@@ -4,7 +4,7 @@ import { PostViewDto } from "../../api/view-dto/posts.view-dto";
 import { PostsQueryRepository } from "../../infrastructure/query/posts.query.repository";
 import { DomainException } from "@libs/core/exceptions/domain-exceptions";
 import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
-import { FileUrlService } from "../../infrastructure/services/file-url.service";
+import { FileUrlService } from "../../../../core/file/file-url.service";
 import { PaginatedViewDto } from "@src/core/dto/base.paginated.view-dto";
 import { USER_PROFILE_PAGE_SIZE } from "../../constants";
 
@@ -35,11 +35,13 @@ export class GetPostsByUserIdQueryHandler
       pageSize: pageSizeValue
     });
 
+    const buildUrl = this.fileUrlService.getPublicUrl.bind(this.fileUrlService);
+
     return PaginatedViewDto.mapToView({
       page: pageNumber,
       size: pageSizeValue,
       totalCount,
-      items: posts.map(post => PostViewDto.mapToView(post, this.fileUrlService.getPublicUrl)),
+      items: posts.map(post => PostViewDto.mapToView(post, buildUrl)),
     });
 }
 }

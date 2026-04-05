@@ -27,7 +27,7 @@ interface PostInfoInputDto {
 
 export class PostViewDto {
   @ApiProperty()
-  id:	string;
+  id:	number;
 
   @ApiProperty()
   owner: ownerViewDto;
@@ -44,7 +44,7 @@ export class PostViewDto {
   static mapToView( post: PostFullInfo, buildUrl: (key: string) => string ): PostViewDto {
     const dto = new PostViewDto();
 
-    dto.id = post.id!.toString();
+    dto.id = post.id;
     dto.description = post.description;
     dto.createdAt = post.createdAt;
     dto.owner = {
