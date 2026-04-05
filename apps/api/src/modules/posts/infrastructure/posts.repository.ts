@@ -13,7 +13,7 @@ export class PostsRepository {
 
   async createPostWithImages(
     userId: number,
-    description: string,
+    description: string | null,
     images: UploadFileResponse[]
   ): Promise<Post> {
     return this.prisma.$transaction(async (tx) => {
