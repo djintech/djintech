@@ -45,6 +45,7 @@ import { ProfilesRepository } from './profile/infrastructure/profiles.repository
 import { CreateAvatarUseCase } from './profile/application/usecases/create-avatar.usecase';
 import { GetAvatarByIdQueryHandler } from './profile/application/queries/get-avatar-by-id.query';
 import { ProfilesController } from './profile/api/profile.controller';
+import { DeleteAvatarUseCase } from './profile/application/usecases/delete-avatar.usecase';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -57,6 +58,7 @@ const commandHandlers = [
   RefreshTokenUseCase,
   LoginUserByProviderUseCase,
   CreateAvatarUseCase,
+  DeleteAvatarUseCase,
 ];
 
 const queryHandlers = [

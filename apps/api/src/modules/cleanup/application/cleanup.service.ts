@@ -1,36 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { PostImagesRepository } from '../infrastructure/post-images.repository';
-import { FilesClientService } from '@src/modules/files/infrastructure/files.client';
+import { Cron } from '@nestjs/schedule';
+import { PostImagesCleanupService } from './post-images.cleanup.service';
+import { AvatarsCleanupService } from './avatars.cleanup.service';
 
 @Injectable()
 export class CleanupService {
   constructor(
-    private postImagesRepository: PostImagesRepository,
-        private readonly filesClient: FilesClientService,
+    private postImagesCleanupService: PostImagesCleanupService,
+    private readonly avatarsCleanupService: AvatarsCleanupService,
   ) {}
 
   @Cron('*/10 * * * *')
-  async handleCleanup() {
-    const images = await this.postImagesRepository.findImagesForDelete();
-    
-    if (!images.length) {
-      //console.log('Cleanup: nothing to delete');
-      return;
-    };
-    
-    const keys = images.map(i => i.key);
-
-    try {
-      await this.filesClient.delete( keys );
-
-      await this.postImagesRepository.markAsDeleted( images.map(i => i.id) );
-
-    } catch (e) {
-      console.error('Cleanup failed', {
-        error: e,
-        keys,
-      });
-    }
+  async run() {
+    await this.postImagesCleanupService.run();
+    await this.avatarsCleanupService.run();
   }
 }

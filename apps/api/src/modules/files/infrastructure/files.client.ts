@@ -3,7 +3,7 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { UploadFileRequest, UploadFileResponse } from '../../../../../../libs/contracts/files/upload-file.contract';
 import { firstValueFrom } from 'rxjs';
-import { DeleteAclResponse } from '@nestjs/microservices/external/kafka.interface';
+import { DeletedFileResponse } from '@libs/contracts/files/delete-file.contract';
 
 @Injectable()
 export class FilesClientService /*implements OnModuleInit*/ {
@@ -21,7 +21,7 @@ export class FilesClientService /*implements OnModuleInit*/ {
     );
   }
 
-  delete(keys: string[]): Promise<DeleteAclResponse> {
+  delete(keys: string[]): Promise<DeletedFileResponse> {
     return firstValueFrom(
       this.client.send(PATTERN_DELETE_FILES, { keys }),
     );

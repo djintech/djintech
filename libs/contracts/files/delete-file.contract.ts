@@ -1,7 +1,8 @@
 export class DeleteFileRequest {
-  keys: string[]
+  keys!: string[]
 }
 
 export class DeletedFileResponse {
-  success: true;
+  success!: string[];
+  failed!: string[];
 }
