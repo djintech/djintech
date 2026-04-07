@@ -17,8 +17,7 @@ export class FilesController {
   }
 
   @MessagePattern(PATTERN_DELETE_FILES)
-  async delete(data: DeleteFileRequest): Promise<DeletedFileResponse> {
-    await this.commandBus.execute(new DeleteFilesCommand( data.keys ));
-    return { success: true };
+  delete(data: DeleteFileRequest): Promise<DeletedFileResponse> {
+    return this.commandBus.execute(new DeleteFilesCommand( data.keys ));
   }
 }

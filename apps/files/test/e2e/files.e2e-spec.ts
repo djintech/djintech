@@ -44,7 +44,10 @@ describe('Files microservice (e2e, no TCP)', () => {
       new DeleteFilesCommand(keys),
     );
 
-    expect(result).toBeUndefined();
+    expect(result).toEqual({
+      success: keys,
+      failed: [],
+    });
   });
 });
 

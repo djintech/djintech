@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { BATCH_SIZE } from '@src/core/constants';
 import { PrismaService } from '@src/db/prisma.service';
 import { PostImage } from '@src/generated/prisma/client';
-
-const BATCH_SIZE = 50;
 
 @Injectable()
 export class PostImagesRepository {
@@ -24,6 +23,8 @@ export class PostImagesRepository {
   }
 
   async markAsDeleted(ids: number[]) {
+    if (!ids.length) return;
+    
     return this.prisma.postImage.updateMany({
       where: {
         id: { in: ids },
