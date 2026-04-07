@@ -8,7 +8,7 @@ jest.mock('@aws-sdk/client-s3', () => {
       send: jest.fn(),
     })),
     PutObjectCommand: jest.fn((input) => input),
-    DeleteObjectCommand: jest.fn((input) => input),
+    DeleteObjectsCommand: jest.fn((input) => input),
   };
 });
 
@@ -17,7 +17,18 @@ describe('S3Service', () => {
   let sendMock: jest.Mock;
 
   beforeAll(() => {
-    sendMock = jest.fn();
+    sendMock = jest.fn((command) => {
+      if (command.Delete) {
+        // мок для DeleteObjectsCommand
+        return Promise.resolve({
+          Deleted: command.Delete.Objects,
+          Errors: [],
+        });
+      }
+      // мок для PutObjectCommand
+      return Promise.resolve({});
+    });
+//    sendMock = jest.fn();
     (S3Client as jest.Mock).mockImplementation(() => ({
       send: sendMock,
     }));
@@ -49,11 +60,18 @@ describe('S3Service', () => {
     }));
   });
 
-  it('should call DeleteObjectCommand', async () => {
-    await s3Service.delete(['key1', 'key2']);
+  it('should call DeleteObjectsCommand', async () => {
+    const result = await s3Service.delete(['key1', 'key2']);
 
-    expect(sendMock).toHaveBeenCalledTimes(2);
-    expect(sendMock).toHaveBeenCalledWith(expect.objectContaining({ Key: 'public/key1' }));
-    expect(sendMock).toHaveBeenCalledWith(expect.objectContaining({ Key: 'public/key2' }));
+    expect(sendMock).toHaveBeenCalledTimes(1); // DeleteObjectsCommand вызывается один раз
+    expect(sendMock).toHaveBeenCalledWith(expect.objectContaining({
+      Bucket: 'test-bucket',
+      Delete: {
+        Objects: [{ Key: 'public/key1' }, { Key: 'public/key2' }],
+      },
+    }));
+
+    expect(result.success).toEqual(['key1', 'key2']);
+    expect(result.failed).toEqual([]);
   });
 });
