@@ -3,7 +3,6 @@ import { descriptionConstraints } from "../../domain/value-objects/post.value-ob
 import { IsOptional, IsString } from "class-validator";
 
 export class PostInputDto {
-  @IsOptional()
   @IsString()
   @ApiProperty({
       maxLength: descriptionConstraints.maxLength,
