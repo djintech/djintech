@@ -5,6 +5,7 @@ import { IsString } from "class-validator";
 export class PostInputDto {
   @IsString()
   @ApiProperty({
+      type: 'string',
       maxLength: descriptionConstraints.maxLength,
       example: 'description',
       nullable: true,
