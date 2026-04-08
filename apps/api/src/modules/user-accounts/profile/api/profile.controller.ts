@@ -1,4 +1,16 @@
-import { Controller, Delete, HttpCode, HttpStatus, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '../../auth/guards/bearer/jwt-auth.guard';
@@ -10,6 +22,7 @@ import { AvatarViewDto } from './view-dto/avatar.view-dto';
 import { ApiCreateAvatarDocs } from '../swagger/create-avatar.swagger';
 import { DeleteAvatarCommand } from '../application/usecases/delete-avatar.usecase';
 import { ApiDeleteAvatarDocs } from '../swagger/delete-avatar.swagger';
+import { GetProfileDataByIdQuery } from '@modules/user-accounts/profile/application/queries/get-profile-data-by-id.query';
 
 @SkipThrottle()
 @Controller('users/profile')
@@ -18,7 +31,7 @@ export class ProfilesController {
     private commandBus: CommandBus,
     private readonly queryBus: QueryBus,
   ) {}
-  
+
   @Post('avatar')
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(JwtAuthGuard)
@@ -28,15 +41,29 @@ export class ProfilesController {
     @UserId() userId: number,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<AvatarViewDto> {
-    const avatarId = await this.commandBus.execute(new CreateAvatarCommand( userId, file ));
-    return this.queryBus.execute(new GetAvatarByIdQuery( avatarId ));
+    const avatarId = await this.commandBus.execute(
+      new CreateAvatarCommand(userId, file),
+    );
+    return this.queryBus.execute(new GetAvatarByIdQuery(avatarId));
   }
 
   @Delete('avatar')
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiDeleteAvatarDocs()
-  deleteAvatar ( @UserId() userId: number ) {
-    return this.commandBus.execute(new DeleteAvatarCommand( userId ));
+  deleteAvatar(@UserId() userId: number) {
+    return this.commandBus.execute(new DeleteAvatarCommand(userId));
+  }
+
+  @Get(':id')
+  async getProfileDataById(@Param('id', ParseIntPipe) id: number): Promise<{
+    username: string;
+    aboutMe: string | null;
+    avatar: string | null;
+    postsCount: number;
+    followersCount: number;
+    followingCount: number;
+  }> {
+    return this.queryBus.execute(new GetProfileDataByIdQuery(id));
   }
 }

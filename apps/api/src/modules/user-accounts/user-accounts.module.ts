@@ -46,6 +46,9 @@ import { CreateAvatarUseCase } from './profile/application/usecases/create-avata
 import { GetAvatarByIdQueryHandler } from './profile/application/queries/get-avatar-by-id.query';
 import { ProfilesController } from './profile/api/profile.controller';
 import { DeleteAvatarUseCase } from './profile/application/usecases/delete-avatar.usecase';
+import { GetProfileDataByIdQueryHandler } from '@modules/user-accounts/profile/application/queries/get-profile-data-by-id.query';
+import { UsersQueryRepository } from '@modules/user-accounts/auth/infrastructure/query/users.query-repository';
+import { FilesConfigModule } from '@src/config/files/files-config.module';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -64,10 +67,18 @@ const commandHandlers = [
 const queryHandlers = [
   GetMeQueryHandler,
   GetAvatarByIdQueryHandler,
+  GetProfileDataByIdQueryHandler,
 ];
 
 @Module({
-  imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule, PoliciesModule,],
+  imports: [
+    JwtModule,
+    CqrsModule,
+    NotificationsModule,
+    HttpModule,
+    PoliciesModule,
+    FilesConfigModule,
+  ],
   controllers: [AuthController, GoogleAuthController, ProfilesController],
   providers: [
     ...commandHandlers,
@@ -118,6 +129,7 @@ const queryHandlers = [
     AvatarsRepository,
     AvatarsQueryRepository,
     ProfilesRepository,
+    UsersQueryRepository,
   ],
   exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository, JwtStrategy],
 })
