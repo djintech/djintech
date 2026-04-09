@@ -47,8 +47,8 @@ import { GetAvatarByIdQueryHandler } from './profile/application/queries/get-ava
 import { ProfilesController } from './profile/api/profile.controller';
 import { DeleteAvatarUseCase } from './profile/application/usecases/delete-avatar.usecase';
 import { GetProfileDataByIdQueryHandler } from '@modules/user-accounts/profile/application/queries/get-profile-data-by-id.query';
-import { UsersQueryRepository } from '@modules/user-accounts/auth/infrastructure/query/users.query-repository';
 import { FilesConfigModule } from '@src/config/files/files-config.module';
+import { ProfilesQueryRepository } from '@modules/user-accounts/profile/infrastructure/query/profiles.query.repository';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -129,7 +129,7 @@ const queryHandlers = [
     AvatarsRepository,
     AvatarsQueryRepository,
     ProfilesRepository,
-    UsersQueryRepository,
+    ProfilesQueryRepository,
   ],
   exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository, JwtStrategy],
 })

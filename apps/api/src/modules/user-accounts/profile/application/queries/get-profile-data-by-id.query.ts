@@ -1,8 +1,10 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
-import { UsersQueryRepository } from '@modules/user-accounts/auth/infrastructure/query/users.query-repository';
-import { FilesConfig } from '@src/config/files/files.config';
+import { ProfilesQueryRepository } from '@modules/user-accounts/profile/infrastructure/query/profiles.query.repository';
+import { UserDataViewDto } from '@modules/user-accounts/profile/api/view-dto/user-data.view-dto';
+import { FileUrlService } from '@core/file/file-url.service';
+import { AvatarViewDto } from '@modules/user-accounts/profile/api/view-dto/avatar.view-dto';
 
 export class GetProfileDataByIdQuery {
   constructor(public readonly id: number) {}
@@ -11,12 +13,14 @@ export class GetProfileDataByIdQuery {
 @QueryHandler(GetProfileDataByIdQuery)
 export class GetProfileDataByIdQueryHandler implements IQueryHandler<GetProfileDataByIdQuery> {
   constructor(
-    private readonly usersQueryRepo: UsersQueryRepository,
-    private readonly fileConfig: FilesConfig,
+    private readonly profilesQueryRepository: ProfilesQueryRepository,
+    private readonly fileUrlService: FileUrlService,
   ) {}
 
   async execute({ id }: GetProfileDataByIdQuery) {
-    const user = await this.usersQueryRepo.getUserDataByIdOrNull(id);
+    const user = await this.profilesQueryRepository.getUserDataByIdOrNull(id);
+    let buildUrl;
+    let avatarLink;
 
     if (!user) {
       throw new DomainException({
@@ -26,27 +30,11 @@ export class GetProfileDataByIdQueryHandler implements IQueryHandler<GetProfileD
       });
     }
 
-    return this.mapToUserData(user);
-  }
+    if (user.avatar) {
+      buildUrl = this.fileUrlService.getPublicUrl.bind(this.fileUrlService);
+      avatarLink = AvatarViewDto.mapToView(user.avatar, buildUrl);
+    }
 
-  private mapToUserData(user: {
-    username: string;
-    profile: { aboutMe: string | null; avatar: { key: string } | null } | null;
-    _count: { posts: number };
-  }) {
-    const bucket = this.fileConfig.awsS3Bucket;
-    const region = this.fileConfig.awsRegion;
-    const key = user.profile?.avatar?.key;
-
-    return {
-      username: user.username,
-      aboutMe: user.profile?.aboutMe ?? null,
-      avatar: key
-        ? `https://${bucket}.s3.${region}.amazonaws.com/${key}`
-        : null,
-      postsCount: user._count.posts,
-      followersCount: 0,
-      followingCount: 0,
-    };
+    return UserDataViewDto.mapToView(user, avatarLink);
   }
 }

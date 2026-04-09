@@ -23,6 +23,8 @@ import { ApiCreateAvatarDocs } from '../swagger/create-avatar.swagger';
 import { DeleteAvatarCommand } from '../application/usecases/delete-avatar.usecase';
 import { ApiDeleteAvatarDocs } from '../swagger/delete-avatar.swagger';
 import { GetProfileDataByIdQuery } from '@modules/user-accounts/profile/application/queries/get-profile-data-by-id.query';
+import { UserDataViewDto } from '@modules/user-accounts/profile/api/view-dto/user-data.view-dto';
+import { ApiGetProfileDataDocs } from '@modules/user-accounts/profile/swagger/get-profile-data.swagger';
 
 @SkipThrottle()
 @Controller('users/profile')
@@ -56,14 +58,10 @@ export class ProfilesController {
   }
 
   @Get(':id')
-  async getProfileDataById(@Param('id', ParseIntPipe) id: number): Promise<{
-    username: string;
-    aboutMe: string | null;
-    avatar: string | null;
-    postsCount: number;
-    followersCount: number;
-    followingCount: number;
-  }> {
+  @ApiGetProfileDataDocs()
+  async getProfileDataById(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<UserDataViewDto> {
     return this.queryBus.execute(new GetProfileDataByIdQuery(id));
   }
 }
