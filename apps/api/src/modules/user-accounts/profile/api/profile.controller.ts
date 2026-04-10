@@ -1,4 +1,4 @@
-import { Controller, Delete, HttpCode, HttpStatus, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '../../auth/guards/bearer/jwt-auth.guard';
@@ -10,6 +10,9 @@ import { AvatarViewDto } from './view-dto/avatar.view-dto';
 import { ApiCreateAvatarDocs } from '../swagger/create-avatar.swagger';
 import { DeleteAvatarCommand } from '../application/usecases/delete-avatar.usecase';
 import { ApiDeleteAvatarDocs } from '../swagger/delete-avatar.swagger';
+import { ApiGetProfileDocs } from '../swagger/get-profile.swagger';
+import { ProfileViewDto } from './view-dto/profile.view-dto';
+import { GetProfileQuery } from '../application/queries/get-profile.query';
 
 @SkipThrottle()
 @Controller('users/profile')
@@ -39,4 +42,14 @@ export class ProfilesController {
   deleteAvatar ( @UserId() userId: number ) {
     return this.commandBus.execute(new DeleteAvatarCommand( userId ));
   }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  @ApiGetProfileDocs()
+  async getProfile(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ProfileViewDto> {
+    return this.queryBus.execute(new GetProfileQuery( id ));
+  }
+  
 }

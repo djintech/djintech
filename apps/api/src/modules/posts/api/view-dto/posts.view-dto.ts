@@ -3,18 +3,18 @@ import { PostFullInfo } from "../../infrastructure/query/posts.query.repository"
 
 export class PostImageViewDto {
   @ApiProperty()
-  url: string;
+  url!: string;
 
   @ApiProperty()
-  position: number;
+  position!: number;
 }
 
 class ownerViewDto {
   @ApiProperty()
-  id: number;
+  id!: number;
 
   @ApiProperty()
-  name: string;
+  name!: string;
 }
 
 interface PostInfoInputDto {
@@ -27,19 +27,19 @@ interface PostInfoInputDto {
 
 export class PostViewDto {
   @ApiProperty()
-  id:	number;
+  id!:	number;
 
   @ApiProperty()
-  owner: ownerViewDto;
+  owner!: ownerViewDto;
 
   @ApiProperty({ type: String, nullable: true })
-  description: string | null;
+  description!: string | null;
   
   @ApiProperty({ type: () => [PostImageViewDto] })
-  images: PostImageViewDto[];
+  images!: PostImageViewDto[];
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt!: Date;
 
   static mapToView( post: PostFullInfo, buildUrl: (key: string) => string ): PostViewDto {
     const dto = new PostViewDto();

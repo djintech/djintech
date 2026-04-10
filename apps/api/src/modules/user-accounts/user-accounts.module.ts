@@ -46,6 +46,8 @@ import { CreateAvatarUseCase } from './profile/application/usecases/create-avata
 import { GetAvatarByIdQueryHandler } from './profile/application/queries/get-avatar-by-id.query';
 import { ProfilesController } from './profile/api/profile.controller';
 import { DeleteAvatarUseCase } from './profile/application/usecases/delete-avatar.usecase';
+import { GetProfileHandler } from './profile/application/queries/get-profile.query';
+import { ProfileQueryRepository } from './profile/infrastructure/query/profile.query.repository';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -64,6 +66,7 @@ const commandHandlers = [
 const queryHandlers = [
   GetMeQueryHandler,
   GetAvatarByIdQueryHandler,
+  GetProfileHandler,
 ];
 
 @Module({
@@ -75,6 +78,7 @@ const queryHandlers = [
     UsersRepository,
     UserProvidersRepository,
     AuthQueryRepository,
+    ProfileQueryRepository,
     {
       provide: ACCESS_TOKEN_STRATEGY_INJECT_TOKEN,
       useFactory: (userAccountConfig: UserAccountsConfig): JwtService => {
