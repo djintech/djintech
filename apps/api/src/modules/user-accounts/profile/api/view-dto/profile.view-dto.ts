@@ -8,7 +8,7 @@ export class ProfileViewDto {
   firstName!: string | null;
   @ApiProperty( {type: 'string', nullable: true, example: 'Doe'} )
   lastName!: string | null;
-  @ApiProperty( {type: 'string', nullable: true, example: '2020-01-01'} )
+  @ApiProperty( {type: 'string', nullable: true, example: '1888-04-10T00:00:00.000Z'} )
   dateOfBirth!: Date | null;
   @ApiProperty( {type: 'string', nullable: true, example: 'About me'} )
   aboutMe!: string | null;

@@ -1,7 +1,7 @@
 export const usernameConstraints = {
   minLength: 6,
   maxLength: 30,
-  match: /^[a-zA-Z0-9_-]*$/,
+  match: /^[a-zA-Z0-9_-]+$/,
 };
 
 export const passwordConstraints = {

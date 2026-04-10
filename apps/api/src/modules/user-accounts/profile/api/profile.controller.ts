@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '../../auth/guards/bearer/jwt-auth.guard';
@@ -13,6 +13,9 @@ import { ApiDeleteAvatarDocs } from '../swagger/delete-avatar.swagger';
 import { ApiGetProfileDocs } from '../swagger/get-profile.swagger';
 import { ProfileViewDto } from './view-dto/profile.view-dto';
 import { GetProfileQuery } from '../application/queries/get-profile.query';
+import { ProfileInputDto } from './input-dto/profile.input-dto';
+import { UpdateProfileCommand } from '../application/usecases/update-profile.usecase';
+import { ApiUpdateProfileDocs } from '../swagger/update-profile.swagger';
 
 @SkipThrottle()
 @Controller('users/profile')
@@ -46,10 +49,20 @@ export class ProfilesController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @ApiGetProfileDocs()
-  async getProfile(
+  getProfile(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ProfileViewDto> {
     return this.queryBus.execute(new GetProfileQuery( id ));
   }
   
+  @Put()
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiUpdateProfileDocs()
+  updateProfile( 
+    @UserId() userId: number,
+    @Body() dto: ProfileInputDto
+  ){
+    return this.commandBus.execute( new UpdateProfileCommand( userId, dto ) );
+  }
 }
