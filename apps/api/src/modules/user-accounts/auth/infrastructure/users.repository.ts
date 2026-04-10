@@ -23,6 +23,13 @@ export class UsersRepository {
     return this.prisma.user.update({ where: { id }, data });
   }
 
+  updateTx(tx: Prisma.TransactionClient, id: number, data: Prisma.UserUpdateInput) {
+    return tx.user.update({
+      where: { id },
+      data,
+    });
+  }
+
   async findById(id: number): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: { id },

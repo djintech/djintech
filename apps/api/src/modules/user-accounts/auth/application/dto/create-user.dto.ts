@@ -1,6 +1,6 @@
 export class CreateUserDto {
-  username: string;
-  email: string;
+  username!: string;
+  email!: string;
   password?: string;
   isConfirmed?: boolean;
 }

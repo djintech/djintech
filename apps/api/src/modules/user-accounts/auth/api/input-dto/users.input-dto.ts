@@ -19,7 +19,7 @@ export class CreateUserInputDto {
     usernameConstraints.maxLength,
   )
   @Matches(usernameConstraints.match)
-  username: string;
+  username!: string;
 
   @ApiProperty({
     minLength: passwordConstraints.minLength,
@@ -31,7 +31,7 @@ export class CreateUserInputDto {
     passwordConstraints.minLength,
     passwordConstraints.maxLength,
   )
-  password: string;
+  password!: string;
 
   @ApiProperty({
     pattern: emailConstraints.match.toString(), // Преобразуем RegExp в строку
@@ -40,5 +40,5 @@ export class CreateUserInputDto {
   })
   @IsStringWithTrim(emailConstraints.minLength, emailConstraints.maxLength)
   @IsEmail()
-  email: string;
+  email!: string;
 }

@@ -48,6 +48,8 @@ import { ProfilesController } from './profile/api/profile.controller';
 import { DeleteAvatarUseCase } from './profile/application/usecases/delete-avatar.usecase';
 import { GetProfileHandler } from './profile/application/queries/get-profile.query';
 import { ProfileQueryRepository } from './profile/infrastructure/query/profile.query.repository';
+import { UpdateProfileUseCase } from './profile/application/usecases/update-profile.usecase';
+import { ObjectCleaner } from './profile/application/services/object-cleaner.service';
 
 const commandHandlers = [
   RegisterUserUseCase,
@@ -61,6 +63,7 @@ const commandHandlers = [
   LoginUserByProviderUseCase,
   CreateAvatarUseCase,
   DeleteAvatarUseCase,
+  UpdateProfileUseCase,
 ];
 
 const queryHandlers = [
@@ -122,6 +125,7 @@ const queryHandlers = [
     AvatarsRepository,
     AvatarsQueryRepository,
     ProfilesRepository,
+    ObjectCleaner,
   ],
   exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository, JwtStrategy],
 })
