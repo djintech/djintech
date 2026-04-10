@@ -41,9 +41,11 @@ export class LoginUserUseCase implements ICommandHandler<LoginUserCommand> {
       try {
         existingPayload = await this.refreshTokenContext.verify(dto.metadata.refreshToken);
         existingDevice = await this.deviceRepository.findByDeviceId( existingPayload.deviceId );
-      } catch (error) {
+      } catch (error:any) {
         existingDevice = null;
-        console.log("Refres Token verify some error ", error);
+        if (error?.name && error.name !== 'TokenExpiredError') {
+          console.log("Refres Token verify some error ", error);
+        }        
       }
     }
 

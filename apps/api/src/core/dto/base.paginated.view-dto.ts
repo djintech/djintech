@@ -6,16 +6,16 @@ export abstract class PaginatedViewDto<T> {
   abstract items: T;
 
   @ApiProperty()
-  totalCount: number;
+  totalCount!: number;
 
   @ApiProperty()
-  pagesCount: number;
+  pagesCount!: number;
 
   @ApiProperty()
-  page: number;
+  page!: number;
 
   @ApiProperty()
-  pageSize: number;
+  pageSize!: number;
 
   //статический метод-утилита для мапинга
   public static mapToView<T>(data: {
