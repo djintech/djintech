@@ -17,7 +17,14 @@ export class ProfileQueryRepository {
     return this.prisma.profile.findFirst(
       { 
         where: { userId, deletedAt: null },
-        include: { avatar: true, user: true }
+        include: { 
+          avatar: {
+            where: {
+             deletedAt: null,
+            },
+          }, 
+          user: true 
+        }
       },      
     )
   }
