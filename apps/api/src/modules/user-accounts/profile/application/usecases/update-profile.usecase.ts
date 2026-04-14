@@ -39,7 +39,7 @@ export class UpdateProfileUseCase
     const profileUpdate = {
       firstName: dto.firstName,
       lastName: dto.lastName,
-      dateOfBirth: dto.dateOfBirth,
+      dateOfBirth: dto.dateOfBirth ? new Date(dto.dateOfBirth) : undefined,
       aboutMe: dto.aboutMe,
       country: dto.country,
       city: dto.city,

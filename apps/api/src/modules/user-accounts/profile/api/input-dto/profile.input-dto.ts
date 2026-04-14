@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsStringWithTrim } from '@src/core/decorators/validation/is-string-with-trim';
 import { usernameConstraints } from '@src/modules/user-accounts/auth/domain/value-objects/user.value-object';
-import { IsDate, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
+import { IsDateString, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
 import { aboutMeConstraints, countryOrCityConstraints, firstOrLastNameConstraints } from '../../domain/value-objects/profile.value-objects';
 import { MinAge } from '@src/core/decorators/validation/min-age';
 import { MIN_AGE } from '../../constants';
@@ -42,11 +42,10 @@ export class ProfileInputDto {
   lastName!: string;
 
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
+  @IsDateString()
   @MinAge( MIN_AGE )
   @ApiProperty( { required: false, example: '2026-04-10T00:00:00.000Z', description: 'Birth date. For users over 12 years of age' })
-  dateOfBirth?: Date;
+  dateOfBirth?: string;
 
   @IsOptional()
   @IsString()

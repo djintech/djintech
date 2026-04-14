@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '@src/modules/user-accounts/auth/guards/bearer/jwt-auth.guard';
-import { PostInputDto } from './input-dto/posts.input-dto';
+import { PostInputDto, PostInputUpdateDto } from './input-dto/posts.input-dto';
 import { PostViewDto } from './view-dto/posts.view-dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreatePostCommand } from '../application/usecases/create-post.usecase';
@@ -74,7 +74,7 @@ export class PostsController {
   async updatePost(
     @UserId() userId: number,
     @Param('id', ParseIntPipe) id: number,
-    @Body() dto: PostInputDto,
+    @Body() dto: PostInputUpdateDto,
   ) {
     return await this.commandBus.execute( new UpdatePostCommand(userId, id, dto) );
   }

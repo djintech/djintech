@@ -2,13 +2,13 @@ import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { PostsRepository } from "../../infrastructure/posts.repository";
 import { DomainException } from "@libs/core/exceptions/domain-exceptions";
 import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
-import { CreatePostDto } from "../dto/create-post.dto";
+import { UpdatePostDto } from "../dto/update-post.dto";
 
 export class UpdatePostCommand {
   constructor(
     public userId: number,
     public postId: number,
-    public readonly dto: CreatePostDto,
+    public readonly dto: UpdatePostDto,
   ) {}
 }
 
@@ -36,8 +36,9 @@ export class UpdatePostUseCase
         message: 'Forbidden. The user is not the owner of the post.'
       });      
     }
-    
-    await this.postsRepository.update( postId, { description: dto.description });
+
+    const description = dto.description ?? null;
+    await this.postsRepository.update( postId, { description });
     return;
   }
 }
