@@ -9,6 +9,8 @@ import { PrismaService } from '@src/db/prisma.service';
 import { UsersTestManager } from './users-test-manager';
 import { GoogleRecaptchaServiceMock } from '../mock/recaptcha-service.mock';
 import { GoogleRecaptchaService } from '@src/modules/user-accounts/auth/application/services/recaptcha.service';
+import { FilesClientServiceMock } from '../mock/files-client-service.mock';
+import { FilesClientService } from '@src/modules/files/infrastructure/files.client';
 
 export const initSettings = async (
   addSettingsToModuleBuilder?: (moduleBuilder: TestingModuleBuilder) => void,
@@ -21,7 +23,9 @@ export const initSettings = async (
     .overrideProvider(EmailService)
     .useClass(EmailServiceMock)
     .overrideProvider(GoogleRecaptchaService)
-    .useClass(GoogleRecaptchaServiceMock);
+    .useClass(GoogleRecaptchaServiceMock)
+    .overrideProvider(FilesClientService)
+    .useClass(FilesClientServiceMock);
 
   if (addSettingsToModuleBuilder) {
     addSettingsToModuleBuilder(testingModuleBuilder);

@@ -51,7 +51,11 @@ export class CreateAvatarUseCase
       return avatar.id;
     } catch (error: any) {
       if ( uploadedImage.length ) {
-        await this.filesClient.delete(uploadedImage.map(i => i.key));
+        await this.filesClient
+          .delete(uploadedImage.map(i => i.key))
+          .catch((deleteError) => {
+            console.error('Failed to rollback uploaded files:', deleteError);
+          });
       }
 
       throw new DomainException({

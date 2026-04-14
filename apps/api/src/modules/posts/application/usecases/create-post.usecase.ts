@@ -44,7 +44,8 @@ export class CreatePostUseCase
 
     try {
       uploadedImages = await this.filesClient.upload(payload);
-      const post = await this.postsRepository.createPostWithImages( userId, dto.description, uploadedImages);
+      const description = dto.description ?? null;
+      const post = await this.postsRepository.createPostWithImages( userId, description, uploadedImages);
       return post.id;
     } catch (error: any) {
       if (uploadedImages.length) {

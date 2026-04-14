@@ -34,4 +34,23 @@ export class UsersTestManager {
       .send(createModel)
       .expect(HttpStatus.NO_CONTENT);
   }
+
+  async createUserAndLogin(): Promise<{ accessToken: string }>  {
+    const body: CreateUserInputDto = {
+      username: 'username1',
+      password: 'username1A',
+      email: 'email1@email.com',
+    };
+    await this.createUser(body);
+
+     const response = await request(this.app.getHttpServer())
+      .post(`/auth/login`)
+      .send({
+        email: body.email,
+        password: body.password,
+      })
+      .expect(HttpStatus.OK);
+    
+    return { accessToken: response.body.accessToken };
+  }
 }

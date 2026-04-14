@@ -12,23 +12,44 @@ export function MinAge(minAge: number, validationOptions?: ValidationOptions) {
         validate(value: Date) {
           if (!value) return true; // if optional
 
-          if (!(value instanceof Date) || isNaN(value.getTime())) {
-            return false;
-          }
+          const dob = new Date(value);
+
+          if (isNaN(dob.getTime())) return false;
 
           const today = new Date();
-          let age = today.getFullYear() - value.getFullYear();
-          const m = today.getMonth() - value.getMonth();
+          if (dob > today) return false;
 
-          if (m < 0 || (m === 0 && today.getDate() < value.getDate())) {
+          let age = today.getFullYear() - dob.getFullYear();
+          const m = today.getMonth() - dob.getMonth();
+
+          if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
             age--;
           }
 
           return age >= minAge;
+          
+          // if (!value) return true; 
+
+          // if (!(value instanceof Date) || isNaN(value.getTime())) {
+          //   return false;
+          // }
+
+          // const dob = new Date(value);
+          // const today = new Date();
+          // if (dob > today) return false;
+
+          // let age = today.getFullYear() - dob.getFullYear();
+          // const m = today.getMonth() - dob.getMonth();
+
+          // if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+          //   age--;
+          // }
+
+          // return age >= minAge;
         },
 
         defaultMessage(args: ValidationArguments) {
-          return `User must be at least ${minAge} years old`;
+          return `User must be at least ${minAge} years old. And correct data format.`;
         },
       },
     });
