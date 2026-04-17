@@ -45,6 +45,7 @@ export type ProfileMinAggregateOutputType = {
   aboutMe: string | null
   country: string | null
   city: string | null
+  accountType: $Enums.AccountType | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -59,6 +60,7 @@ export type ProfileMaxAggregateOutputType = {
   aboutMe: string | null
   country: string | null
   city: string | null
+  accountType: $Enums.AccountType | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -73,6 +75,7 @@ export type ProfileCountAggregateOutputType = {
   aboutMe: number
   country: number
   city: number
+  accountType: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -99,6 +102,7 @@ export type ProfileMinAggregateInputType = {
   aboutMe?: true
   country?: true
   city?: true
+  accountType?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -113,6 +117,7 @@ export type ProfileMaxAggregateInputType = {
   aboutMe?: true
   country?: true
   city?: true
+  accountType?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -127,6 +132,7 @@ export type ProfileCountAggregateInputType = {
   aboutMe?: true
   country?: true
   city?: true
+  accountType?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -228,6 +234,7 @@ export type ProfileGroupByOutputType = {
   aboutMe: string | null
   country: string | null
   city: string | null
+  accountType: $Enums.AccountType
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -265,6 +272,7 @@ export type ProfileWhereInput = {
   aboutMe?: Prisma.StringNullableFilter<"Profile"> | string | null
   country?: Prisma.StringNullableFilter<"Profile"> | string | null
   city?: Prisma.StringNullableFilter<"Profile"> | string | null
+  accountType?: Prisma.EnumAccountTypeFilter<"Profile"> | $Enums.AccountType
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Profile"> | Date | string | null
@@ -281,6 +289,7 @@ export type ProfileOrderByWithRelationInput = {
   aboutMe?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -300,6 +309,7 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   aboutMe?: Prisma.StringNullableFilter<"Profile"> | string | null
   country?: Prisma.StringNullableFilter<"Profile"> | string | null
   city?: Prisma.StringNullableFilter<"Profile"> | string | null
+  accountType?: Prisma.EnumAccountTypeFilter<"Profile"> | $Enums.AccountType
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Profile"> | Date | string | null
@@ -316,6 +326,7 @@ export type ProfileOrderByWithAggregationInput = {
   aboutMe?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -338,6 +349,7 @@ export type ProfileScalarWhereWithAggregatesInput = {
   aboutMe?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
   country?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
   city?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
+  accountType?: Prisma.EnumAccountTypeWithAggregatesFilter<"Profile"> | $Enums.AccountType
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Profile"> | Date | string | null
@@ -350,6 +362,7 @@ export type ProfileCreateInput = {
   aboutMe?: string | null
   country?: string | null
   city?: string | null
+  accountType?: $Enums.AccountType
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -366,6 +379,7 @@ export type ProfileUncheckedCreateInput = {
   aboutMe?: string | null
   country?: string | null
   city?: string | null
+  accountType?: $Enums.AccountType
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -379,6 +393,7 @@ export type ProfileUpdateInput = {
   aboutMe?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -395,6 +410,7 @@ export type ProfileUncheckedUpdateInput = {
   aboutMe?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -410,6 +426,7 @@ export type ProfileCreateManyInput = {
   aboutMe?: string | null
   country?: string | null
   city?: string | null
+  accountType?: $Enums.AccountType
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -422,6 +439,7 @@ export type ProfileUpdateManyMutationInput = {
   aboutMe?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -436,6 +454,7 @@ export type ProfileUncheckedUpdateManyInput = {
   aboutMe?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -455,6 +474,7 @@ export type ProfileCountOrderByAggregateInput = {
   aboutMe?: Prisma.SortOrder
   country?: Prisma.SortOrder
   city?: Prisma.SortOrder
+  accountType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -474,6 +494,7 @@ export type ProfileMaxOrderByAggregateInput = {
   aboutMe?: Prisma.SortOrder
   country?: Prisma.SortOrder
   city?: Prisma.SortOrder
+  accountType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -488,6 +509,7 @@ export type ProfileMinOrderByAggregateInput = {
   aboutMe?: Prisma.SortOrder
   country?: Prisma.SortOrder
   city?: Prisma.SortOrder
+  accountType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -535,6 +557,10 @@ export type ProfileUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutUserInput, Prisma.ProfileUpdateWithoutUserInput>, Prisma.ProfileUncheckedUpdateWithoutUserInput>
 }
 
+export type EnumAccountTypeFieldUpdateOperationsInput = {
+  set?: $Enums.AccountType
+}
+
 export type ProfileCreateNestedOneWithoutAvatarInput = {
   create?: Prisma.XOR<Prisma.ProfileCreateWithoutAvatarInput, Prisma.ProfileUncheckedCreateWithoutAvatarInput>
   connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutAvatarInput
@@ -556,6 +582,7 @@ export type ProfileCreateWithoutUserInput = {
   aboutMe?: string | null
   country?: string | null
   city?: string | null
+  accountType?: $Enums.AccountType
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -570,6 +597,7 @@ export type ProfileUncheckedCreateWithoutUserInput = {
   aboutMe?: string | null
   country?: string | null
   city?: string | null
+  accountType?: $Enums.AccountType
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -599,6 +627,7 @@ export type ProfileUpdateWithoutUserInput = {
   aboutMe?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -613,6 +642,7 @@ export type ProfileUncheckedUpdateWithoutUserInput = {
   aboutMe?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -626,6 +656,7 @@ export type ProfileCreateWithoutAvatarInput = {
   aboutMe?: string | null
   country?: string | null
   city?: string | null
+  accountType?: $Enums.AccountType
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -641,6 +672,7 @@ export type ProfileUncheckedCreateWithoutAvatarInput = {
   aboutMe?: string | null
   country?: string | null
   city?: string | null
+  accountType?: $Enums.AccountType
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -669,6 +701,7 @@ export type ProfileUpdateWithoutAvatarInput = {
   aboutMe?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -684,6 +717,7 @@ export type ProfileUncheckedUpdateWithoutAvatarInput = {
   aboutMe?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -700,6 +734,7 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   aboutMe?: boolean
   country?: boolean
   city?: boolean
+  accountType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -716,6 +751,7 @@ export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   aboutMe?: boolean
   country?: boolean
   city?: boolean
+  accountType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -731,6 +767,7 @@ export type ProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   aboutMe?: boolean
   country?: boolean
   city?: boolean
+  accountType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -746,12 +783,13 @@ export type ProfileSelectScalar = {
   aboutMe?: boolean
   country?: boolean
   city?: boolean
+  accountType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "firstName" | "lastName" | "dateOfBirth" | "aboutMe" | "country" | "city" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["profile"]>
+export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "firstName" | "lastName" | "dateOfBirth" | "aboutMe" | "country" | "city" | "accountType" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["profile"]>
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   avatar?: boolean | Prisma.Profile$avatarArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -778,6 +816,7 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     aboutMe: string | null
     country: string | null
     city: string | null
+    accountType: $Enums.AccountType
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1214,6 +1253,7 @@ export interface ProfileFieldRefs {
   readonly aboutMe: Prisma.FieldRef<"Profile", 'String'>
   readonly country: Prisma.FieldRef<"Profile", 'String'>
   readonly city: Prisma.FieldRef<"Profile", 'String'>
+  readonly accountType: Prisma.FieldRef<"Profile", 'AccountType'>
   readonly createdAt: Prisma.FieldRef<"Profile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Profile", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Profile", 'DateTime'>

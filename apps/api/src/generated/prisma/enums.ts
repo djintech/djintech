@@ -23,3 +23,11 @@ export const ProviderType = {
 } as const
 
 export type ProviderType = (typeof ProviderType)[keyof typeof ProviderType]
+
+
+export const AccountType = {
+  Personal: 'Personal',
+  Business: 'Business'
+} as const
+
+export type AccountType = (typeof AccountType)[keyof typeof AccountType]

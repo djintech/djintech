@@ -156,6 +156,11 @@ model PostImage {
   @@map("postImages")
 }
 
+enum AccountType {
+  Personal
+  Business
+}
+
 model Profile {
   id           Int @id @default(autoincrement())
   userId       Int @unique
@@ -165,6 +170,7 @@ model Profile {
   aboutMe      String?
   country      String?
   city         String?
+  accountType  AccountType @default(Personal)
 
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt

@@ -206,6 +206,7 @@ export const ProfileScalarFieldEnum = {
   aboutMe: 'aboutMe',
   country: 'country',
   city: 'city',
+  accountType: 'accountType',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
