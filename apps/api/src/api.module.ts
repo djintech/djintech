@@ -21,6 +21,7 @@ import { UuidModule } from '@libs/utils/src/uuid/uuid.module';
 import { CleanupModule } from './modules/cleanup/cleanup.module';
 import { FileModule } from './core/file/file.module';
 import { PaymentsModule } from './modules/payments/payments.module';
+import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { PaymentsModule } from './modules/payments/payments.module';
     PostModule,
     CleanupModule,
     FileModule,
+    SubscriptionsModule,
   ],
   controllers: [ApiController],
   providers: [
