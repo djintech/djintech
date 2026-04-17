@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SubscriptionStatus {
+  CANCELED
+  PENDING
+  ACTIVE
+  EXPIRED
+}
+
+model Subscription {
+  id                Int @id @default(autoincrement())
+  userId            Int
+  planId            Int
+  autoRenewal       Boolean @default(false)
+  status            SubscriptionStatus @default(PENDING)
+  externalId        String?
+
+  startAt           DateTime?
+  expireAt          DateTime
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+  
+  plan   Plan  @relation(fields: [planId], references: [id], onDelete: Restrict)
+
+  payments Payment[]
+
+  @@index([userId, status])
+  @@map("subscriptions")
+}
+
+enum SubscriptionType {
+  MONTHLY
+  DAY
+  WEEKLY
+}
+
+model Plan {
+  id                Int @id @default(autoincrement())
+  subscriptionType  SubscriptionType
+  price             Int
+  currency          String
+
+  subscription      Subscription[]
+
+  @@map("plans")
+}
+
+enum PaymentType {
+  Stripe
+  PayPal
+}
+
+enum PaymentStatus {
+  SUCCESS
+  FAILED
+}
+
+model Payment {
+  id              Int @id @default(autoincrement())
+  userId          Int
+  subscriptionId  Int
+
+  amount          Int
+  currency        String
+
+  paymentType     PaymentType
+  status          PaymentStatus
+
+  externalId      String?
+
+  createdAt       DateTime @default(now())
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([subscriptionId])
+
+  @@map("payments")
+}

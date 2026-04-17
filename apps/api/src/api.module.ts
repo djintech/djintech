@@ -20,6 +20,7 @@ import { FilesModule } from './modules/files/files.module';
 import { UuidModule } from '@libs/utils/src/uuid/uuid.module';
 import { CleanupModule } from './modules/cleanup/cleanup.module';
 import { FileModule } from './core/file/file.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { FileModule } from './core/file/file.module';
       ],
     }),
     FilesModule,
+    PaymentsModule,
     UuidModule,
     UserAccountsModule,
     NotificationsModule,
