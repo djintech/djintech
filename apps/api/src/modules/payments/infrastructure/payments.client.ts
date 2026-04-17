@@ -1,6 +1,7 @@
-import { PAYMENTS_SERVICE} from '@libs/constants';
+import { PATTERN_CREATE_SUBSCRIPTION, PAYMENTS_SERVICE} from '@libs/constants';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class PaymentsClientService {
@@ -8,15 +9,11 @@ export class PaymentsClientService {
     @Inject(PAYMENTS_SERVICE) private readonly client: ClientProxy,
   ) {}
 
-  // async onModuleInit() {
-  //   await this.client.connect();
-  // }
-
-  // async upload(files: UploadFileRequest[] ): Promise<UploadFileResponse[]> {
-  //   return firstValueFrom(
-  //     this.client.send( PATTERN_UPLOAD_FILES, files )
-  //   );
-  // }
+  async create() {
+    return firstValueFrom(
+      this.client.send( PATTERN_CREATE_SUBSCRIPTION, {} )
+    );
+  }
 
   // delete(keys: string[]): Promise<DeletedFileResponse> {
   //   return firstValueFrom(
