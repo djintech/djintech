@@ -1,7 +1,10 @@
-import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { PaymentsClientService } from '@src/modules/payments/infrastructure/payments.client';
+import { PlansViewDto } from './view-dto/plans.view-dto';
+import { GetPlansQuery } from '../application/queries/get-plans.query';
+import { ApiGetPlansDocs } from '../swagger/get-plans.swagger';
+import { JwtAuthGuard } from '@src/modules/user-accounts/auth/guards/bearer/jwt-auth.guard';
 
 @SkipThrottle()
 @Controller('subscriptions')
@@ -9,13 +12,13 @@ export class SubscriptionsController {
   constructor(
     private commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-    private readonly paymentsClientService: PaymentsClientService,
   ) {}
   
-  @Get('test')
+  @Get('plans')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
-  async testGet() {
-    return this.paymentsClientService.create();
+  @ApiGetPlansDocs()
+  async getPlans(): Promise<PlansViewDto> {
+    return this.queryBus.execute(new GetPlansQuery());
   }
-
 }

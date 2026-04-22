@@ -55,8 +55,8 @@ model Plan {
 }
 
 enum PaymentType {
-  Stripe
-  PayPal
+  STRIPE
+  PAYPAL
 }
 
 enum PaymentStatus {

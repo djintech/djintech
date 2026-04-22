@@ -2,11 +2,13 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UserAccountsModule } from '../user-accounts/user-accounts.module';
 import { SubscriptionsController } from './api/subscriptions.controller';
+import { GetPlansHandler } from './application/queries/get-plans.query';
 
 const commandHandlers = [
 ];
 
 const queryHandlers = [
+  GetPlansHandler
 ];
 
 @Module({
