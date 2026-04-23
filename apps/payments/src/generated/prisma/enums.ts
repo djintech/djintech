@@ -29,8 +29,8 @@ export type SubscriptionType = (typeof SubscriptionType)[keyof typeof Subscripti
 
 
 export const PaymentType = {
-  Stripe: 'Stripe',
-  PayPal: 'PayPal'
+  STRIPE: 'STRIPE',
+  PAYPAL: 'PAYPAL'
 } as const
 
 export type PaymentType = (typeof PaymentType)[keyof typeof PaymentType]
