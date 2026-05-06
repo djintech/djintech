@@ -18,12 +18,19 @@ export class CoreConfig extends BaseCoreConfig {
       'Set Env variable STRIPE_WEBHOOK_SECRET. example: whsec_test...',
   })
   stripeWebhookSecret: string;
+
+  @IsString({
+    message:
+      'Set Env variable FRONTEND_URL. example: https://djintech.org',
+  })
+  frontendUrl:string;
   
   constructor(configService: ConfigService<any, true>) {
     super(configService);
 
     this.stripeSecretKey = configService.get('STRIPE_SECRET_KEY');
     this.stripeWebhookSecret = configService.get('STRIPE_WEBHOOK_SECRET');
+    this.frontendUrl = configService.get('FRONTEND_URL');
 
     configValidationUtility.validateConfig(this);
   }

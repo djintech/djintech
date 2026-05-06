@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CoreConfig } from 'apps/payments/src/core/config/core.config';
 import Stripe from 'stripe';
 import { PaymentProvider } from '../domain/payment-provider.interface';
+import { buildPaymentUrl, PAYMENT_STATUS } from '../constants/payment-redirect';
 
 @Injectable()
 export class StripeAdapter  implements PaymentProvider {
@@ -28,8 +29,8 @@ export class StripeAdapter  implements PaymentProvider {
           quantity: 1,
         },
       ],
-      success_url: 'success',
-      cancel_url: 'cancel',
+      success_url: buildPaymentUrl( this.coreConfig.frontendUrl, PAYMENT_STATUS.SUCCESS),
+      cancel_url: buildPaymentUrl( this.coreConfig.frontendUrl, PAYMENT_STATUS.CANCEL),
     });
 
     return {

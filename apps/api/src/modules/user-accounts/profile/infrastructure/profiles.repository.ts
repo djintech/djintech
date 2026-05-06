@@ -19,4 +19,13 @@ export class ProfilesRepository {
       }
     });
   }
+
+  async update( userId: number, data: Prisma.ProfileUpdateInput ) {
+    return this.prisma.profile.update({
+      where: { userId },
+      data: { ...data,
+        deletedAt: null,
+      }
+    });
+  }
 }
