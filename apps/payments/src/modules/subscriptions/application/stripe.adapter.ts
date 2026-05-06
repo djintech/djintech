@@ -8,10 +8,11 @@ export class StripeAdapter  implements PaymentProvider {
   private stripe;
 
   constructor(private readonly coreConfig: CoreConfig) {
-    this.stripe = new Stripe(
-      this.coreConfig.stripeSecretKey,
-      { apiVersion: '2026-03-25.dahlia' },
-    );
+    // this.stripe = new Stripe(
+    //   this.coreConfig.stripeSecretKey,
+    //   { apiVersion: '2026-04-22.dahlia' },
+    // );
+    this.stripe = new Stripe(this.coreConfig.stripeSecretKey);
   }
 
   async createSession(params: {
