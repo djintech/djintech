@@ -52,8 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Subscription: 'Subscription',
-  Plan: 'Plan',
-  Payment: 'Payment'
+  Plan: 'Plan'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -79,6 +78,7 @@ export const SubscriptionScalarFieldEnum = {
   autoRenewal: 'autoRenewal',
   status: 'status',
   externalId: 'externalId',
+  paymentType: 'paymentType',
   startAt: 'startAt',
   expireAt: 'expireAt',
   createdAt: 'createdAt',
@@ -97,21 +97,6 @@ export const PlanScalarFieldEnum = {
 } as const
 
 export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
-
-
-export const PaymentScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  subscriptionId: 'subscriptionId',
-  amount: 'amount',
-  currency: 'currency',
-  paymentType: 'paymentType',
-  status: 'status',
-  externalId: 'externalId',
-  createdAt: 'createdAt'
-} as const
-
-export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SortOrder = {

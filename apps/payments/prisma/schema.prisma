@@ -14,6 +14,11 @@ enum SubscriptionStatus {
   EXPIRED
 }
 
+enum PaymentType {
+  STRIPE
+  PAYPAL
+}
+
 model Subscription {
   id                Int @id @default(autoincrement())
   userId            Int
@@ -21,17 +26,16 @@ model Subscription {
   autoRenewal       Boolean @default(false)
   status            SubscriptionStatus @default(PENDING)
   externalId        String?
+  paymentType       PaymentType
 
   startAt           DateTime?
-  expireAt          DateTime
+  expireAt          DateTime?
   
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
   
   plan   Plan  @relation(fields: [planId], references: [id], onDelete: Restrict)
-
-  payments Payment[]
 
   @@index([userId, status])
   @@map("subscriptions")
@@ -52,37 +56,4 @@ model Plan {
   subscription      Subscription[]
 
   @@map("plans")
-}
-
-enum PaymentType {
-  STRIPE
-  PAYPAL
-}
-
-enum PaymentStatus {
-  SUCCESS
-  FAILED
-}
-
-model Payment {
-  id              Int @id @default(autoincrement())
-  userId          Int
-  subscriptionId  Int
-
-  amount          Int
-  currency        String
-
-  paymentType     PaymentType
-  status          PaymentStatus
-
-  externalId      String?
-
-  createdAt       DateTime @default(now())
-
-  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([subscriptionId])
-
-  @@map("payments")
 }

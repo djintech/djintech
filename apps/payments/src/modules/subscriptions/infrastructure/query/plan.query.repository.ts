@@ -9,4 +9,8 @@ export class PlanQueryRepository {
   async getAll(): Promise<Plan[]> {
     return this.prisma.plan.findMany();
   }
+
+  async getById( id: number ): Promise<Plan | null> {
+    return this.prisma.plan.findUnique({ where: { id }});
+  }
 }

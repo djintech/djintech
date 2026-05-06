@@ -3,8 +3,16 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { SubscriptionsController } from './api/subscriptions.controller';
 import { PlanQueryRepository } from './infrastructure/query/plan.query.repository';
 import { GetPlansHandler } from './application/queries/get-plan.query';
+import { CreateSubscriptionUseCase } from './application/usecases/create-subscription.usecase';
+import { StripeWebhookUseCase } from './application/usecases/stripe-webhook.use-case';
+import { PaymentFactory } from './infrastructure/payment.factory';
+import { SubscriptionsRepository } from './infrastructure/subscriptions.repository';
+import { StripeAdapter } from './application/stripe.adapter';
+import { PayPalAdapter } from './application/paypal.adapter';
 
 const commandHandlers = [
+  CreateSubscriptionUseCase,
+  StripeWebhookUseCase,
 ];
 
 const queryHandlers = [
@@ -22,7 +30,10 @@ const queryHandlers = [
     ...commandHandlers,
     ...queryHandlers,
     PlanQueryRepository,
- //   SubscriptionsRepository,
+    PaymentFactory,
+    StripeAdapter,
+    PayPalAdapter,
+    SubscriptionsRepository,
  //   SubscriptionsQueryRepository,
   ],
 })
