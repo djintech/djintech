@@ -4,11 +4,13 @@ import { configModule } from '@libs/config/config-dynamic-module';
 import { ServiceName } from '@libs/config/configuration';
 import { PrismaModule } from './db/prisma.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
+import { PaymentCoreModule } from './core/payment.core.module';
 
 @Module({
   imports: [
     configModule(ServiceName.PAYMENTS),
     CoreModule, // 🔝 всегда первым!
+    PaymentCoreModule,
     PrismaModule,
     SubscriptionsModule,
   ],

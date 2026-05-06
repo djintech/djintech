@@ -19,15 +19,6 @@ export const SubscriptionStatus = {
 export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
 
 
-export const SubscriptionType = {
-  MONTHLY: 'MONTHLY',
-  DAY: 'DAY',
-  WEEKLY: 'WEEKLY'
-} as const
-
-export type SubscriptionType = (typeof SubscriptionType)[keyof typeof SubscriptionType]
-
-
 export const PaymentType = {
   STRIPE: 'STRIPE',
   PAYPAL: 'PAYPAL'
@@ -36,9 +27,10 @@ export const PaymentType = {
 export type PaymentType = (typeof PaymentType)[keyof typeof PaymentType]
 
 
-export const PaymentStatus = {
-  SUCCESS: 'SUCCESS',
-  FAILED: 'FAILED'
+export const SubscriptionType = {
+  MONTHLY: 'MONTHLY',
+  DAY: 'DAY',
+  WEEKLY: 'WEEKLY'
 } as const
 
-export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+export type SubscriptionType = (typeof SubscriptionType)[keyof typeof SubscriptionType]

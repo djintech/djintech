@@ -20,19 +20,21 @@ pipeline {
                 checkout scm
             }
         }
-        // stage('Unit tests') {
-        //     steps {
-        //         script {
-        //             sh '''
-        //                export NVM_DIR="$HOME/.nvm"
-        //                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-        //                nvm use --lts
-        //                yarn install
-        //                yarn test
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Unit tests') {
+            steps {
+                script {
+                    sh '''
+                       export NVM_DIR="$HOME/.nvm"
+                       [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                       nvm install --lts
+                       nvm use --lts
+                       yarn install --frozen-lockfile
+                       npx dotenv -e .env.testing -- yarn test:payments:unit
+                    '''
+                }
+            }
+        }
+
         // stage('e2e tests') {
         //     steps {
         //         script {
