@@ -3,6 +3,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsNumber } from "class-validator";
 
 export class SubscriptionInputDto {
+   @ApiProperty({
+      description: 'Plan id',
+    })
   @IsNumber()
   planId!: number;
 
