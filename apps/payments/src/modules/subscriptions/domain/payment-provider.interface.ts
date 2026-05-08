@@ -6,4 +6,8 @@ export interface PaymentProvider {
     id: string;
     url: string;
   }>;
+
+  createCustomer(email: string): Promise<{
+    id: string;
+  }>;
 }

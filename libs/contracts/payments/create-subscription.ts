@@ -1,5 +1,5 @@
 import { PaymentType } from "apps/payments/src/generated/prisma/client";
-import { IsEnum, IsNotEmpty, IsNumber } from "class-validator";
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateSubscriptionRequest {
   @IsNumber()
@@ -8,7 +8,11 @@ export class CreateSubscriptionRequest {
 
   @IsNumber()
   @IsNotEmpty()
-  customerId!: number;
+  userId!: number;
+
+  @IsString()
+  @IsNotEmpty()
+  email!: string;
 
   @IsEnum(PaymentType)
   paymentType!: PaymentType;

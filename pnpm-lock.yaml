@@ -68,6 +68,9 @@ importers:
       bcryptjs:
         specifier: ^3.0.3
         version: 3.0.3
+      body-parser:
+        specifier: ^2.2.2
+        version: 2.2.2
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -153,6 +156,9 @@ importers:
       '@types/bcryptjs':
         specifier: ^3.0.0
         version: 3.0.0
+      '@types/body-parser':
+        specifier: ^1.19.6
+        version: 1.19.6
       '@types/cookie-parser':
         specifier: ^1.4.10
         version: 1.4.10(@types/express@5.0.6)

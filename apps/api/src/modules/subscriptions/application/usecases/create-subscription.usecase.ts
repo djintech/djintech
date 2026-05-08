@@ -24,7 +24,7 @@ export class CreateSubscriptionUseCase
   ) {}
 
   async execute({ userId, dto }: CreateSubscriptionCommand): Promise<CreateSubscriptionResponse> {
-    const profile = await this.profilesRepository.findeByUserId( userId );
+    const profile = await this.profilesRepository.findeByUserIdWithEmail( userId );
 
     if ( !profile ) {
       throw new DomainException({
@@ -37,7 +37,8 @@ export class CreateSubscriptionUseCase
     try {
       const payload = {
         planId: dto.planId,
-        customerId: userId,
+        userId,
+        email: profile.user.email,
         paymentType: dto.paymentType
       }
       const subscriptionUrl = await this.paymentsClient.create(payload);
@@ -49,7 +50,7 @@ export class CreateSubscriptionUseCase
       throw new DomainException({
         code: DomainExceptionCode.BadRequest,
         message: `Suscription not created. ${error.message}`,
-        extensions: [{ message: `Suscription not created. ${error.message}`, field: 'files'}],
+        extensions: [{ message: `Suscription not created. ${error.message}`, field: 'Suscription'}],
       })
     }
   }

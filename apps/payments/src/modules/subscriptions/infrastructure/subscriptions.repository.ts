@@ -22,6 +22,14 @@ export class SubscriptionsRepository {
     return this.prisma.subscription.findFirst({ where: { externalId }});
   }
 
+  async findByProviderSubscriptionId(providerSubscriptionId: string): Promise<Subscription | null> {
+    return this.prisma.subscription.findFirst({ where: { providerSubscriptionId }});
+  }
+
+  async findByCustomerId(customerId: string): Promise<Subscription | null> {
+    return this.prisma.subscription.findFirst({ where: { customerId } });
+  }
+
   async findActiveOrPendingByUserId(userId: number) {
     return this.prisma.subscription.findFirst({
       where: {

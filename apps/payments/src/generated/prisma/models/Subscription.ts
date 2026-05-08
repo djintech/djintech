@@ -41,6 +41,8 @@ export type SubscriptionSumAggregateOutputType = {
 export type SubscriptionMinAggregateOutputType = {
   id: number | null
   userId: number | null
+  customerId: string | null
+  providerSubscriptionId: string | null
   planId: number | null
   autoRenewal: boolean | null
   status: $Enums.SubscriptionStatus | null
@@ -56,6 +58,8 @@ export type SubscriptionMinAggregateOutputType = {
 export type SubscriptionMaxAggregateOutputType = {
   id: number | null
   userId: number | null
+  customerId: string | null
+  providerSubscriptionId: string | null
   planId: number | null
   autoRenewal: boolean | null
   status: $Enums.SubscriptionStatus | null
@@ -71,6 +75,8 @@ export type SubscriptionMaxAggregateOutputType = {
 export type SubscriptionCountAggregateOutputType = {
   id: number
   userId: number
+  customerId: number
+  providerSubscriptionId: number
   planId: number
   autoRenewal: number
   status: number
@@ -100,6 +106,8 @@ export type SubscriptionSumAggregateInputType = {
 export type SubscriptionMinAggregateInputType = {
   id?: true
   userId?: true
+  customerId?: true
+  providerSubscriptionId?: true
   planId?: true
   autoRenewal?: true
   status?: true
@@ -115,6 +123,8 @@ export type SubscriptionMinAggregateInputType = {
 export type SubscriptionMaxAggregateInputType = {
   id?: true
   userId?: true
+  customerId?: true
+  providerSubscriptionId?: true
   planId?: true
   autoRenewal?: true
   status?: true
@@ -130,6 +140,8 @@ export type SubscriptionMaxAggregateInputType = {
 export type SubscriptionCountAggregateInputType = {
   id?: true
   userId?: true
+  customerId?: true
+  providerSubscriptionId?: true
   planId?: true
   autoRenewal?: true
   status?: true
@@ -232,6 +244,8 @@ export type SubscriptionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type SubscriptionGroupByOutputType = {
   id: number
   userId: number
+  customerId: string | null
+  providerSubscriptionId: string | null
   planId: number
   autoRenewal: boolean
   status: $Enums.SubscriptionStatus
@@ -270,6 +284,8 @@ export type SubscriptionWhereInput = {
   NOT?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
   id?: Prisma.IntFilter<"Subscription"> | number
   userId?: Prisma.IntFilter<"Subscription"> | number
+  customerId?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  providerSubscriptionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   planId?: Prisma.IntFilter<"Subscription"> | number
   autoRenewal?: Prisma.BoolFilter<"Subscription"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
@@ -286,6 +302,8 @@ export type SubscriptionWhereInput = {
 export type SubscriptionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  customerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  providerSubscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   planId?: Prisma.SortOrder
   autoRenewal?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -305,6 +323,8 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SubscriptionWhereInput[]
   NOT?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
   userId?: Prisma.IntFilter<"Subscription"> | number
+  customerId?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  providerSubscriptionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   planId?: Prisma.IntFilter<"Subscription"> | number
   autoRenewal?: Prisma.BoolFilter<"Subscription"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
@@ -321,6 +341,8 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
 export type SubscriptionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  customerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  providerSubscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   planId?: Prisma.SortOrder
   autoRenewal?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -344,6 +366,8 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SubscriptionScalarWhereWithAggregatesInput | Prisma.SubscriptionScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Subscription"> | number
   userId?: Prisma.IntWithAggregatesFilter<"Subscription"> | number
+  customerId?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
+  providerSubscriptionId?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
   planId?: Prisma.IntWithAggregatesFilter<"Subscription"> | number
   autoRenewal?: Prisma.BoolWithAggregatesFilter<"Subscription"> | boolean
   status?: Prisma.EnumSubscriptionStatusWithAggregatesFilter<"Subscription"> | $Enums.SubscriptionStatus
@@ -358,6 +382,8 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
 
 export type SubscriptionCreateInput = {
   userId: number
+  customerId?: string | null
+  providerSubscriptionId?: string | null
   autoRenewal?: boolean
   status?: $Enums.SubscriptionStatus
   externalId?: string | null
@@ -373,6 +399,8 @@ export type SubscriptionCreateInput = {
 export type SubscriptionUncheckedCreateInput = {
   id?: number
   userId: number
+  customerId?: string | null
+  providerSubscriptionId?: string | null
   planId: number
   autoRenewal?: boolean
   status?: $Enums.SubscriptionStatus
@@ -387,6 +415,8 @@ export type SubscriptionUncheckedCreateInput = {
 
 export type SubscriptionUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   autoRenewal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -402,6 +432,8 @@ export type SubscriptionUpdateInput = {
 export type SubscriptionUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
   autoRenewal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
@@ -417,6 +449,8 @@ export type SubscriptionUncheckedUpdateInput = {
 export type SubscriptionCreateManyInput = {
   id?: number
   userId: number
+  customerId?: string | null
+  providerSubscriptionId?: string | null
   planId: number
   autoRenewal?: boolean
   status?: $Enums.SubscriptionStatus
@@ -431,6 +465,8 @@ export type SubscriptionCreateManyInput = {
 
 export type SubscriptionUpdateManyMutationInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   autoRenewal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -445,6 +481,8 @@ export type SubscriptionUpdateManyMutationInput = {
 export type SubscriptionUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
   autoRenewal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
@@ -460,6 +498,8 @@ export type SubscriptionUncheckedUpdateManyInput = {
 export type SubscriptionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  customerId?: Prisma.SortOrder
+  providerSubscriptionId?: Prisma.SortOrder
   planId?: Prisma.SortOrder
   autoRenewal?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -481,6 +521,8 @@ export type SubscriptionAvgOrderByAggregateInput = {
 export type SubscriptionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  customerId?: Prisma.SortOrder
+  providerSubscriptionId?: Prisma.SortOrder
   planId?: Prisma.SortOrder
   autoRenewal?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -496,6 +538,8 @@ export type SubscriptionMaxOrderByAggregateInput = {
 export type SubscriptionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  customerId?: Prisma.SortOrder
+  providerSubscriptionId?: Prisma.SortOrder
   planId?: Prisma.SortOrder
   autoRenewal?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -532,16 +576,16 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
 export type EnumSubscriptionStatusFieldUpdateOperationsInput = {
   set?: $Enums.SubscriptionStatus
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type EnumPaymentTypeFieldUpdateOperationsInput = {
@@ -600,6 +644,8 @@ export type SubscriptionUncheckedUpdateManyWithoutPlanNestedInput = {
 
 export type SubscriptionCreateWithoutPlanInput = {
   userId: number
+  customerId?: string | null
+  providerSubscriptionId?: string | null
   autoRenewal?: boolean
   status?: $Enums.SubscriptionStatus
   externalId?: string | null
@@ -614,6 +660,8 @@ export type SubscriptionCreateWithoutPlanInput = {
 export type SubscriptionUncheckedCreateWithoutPlanInput = {
   id?: number
   userId: number
+  customerId?: string | null
+  providerSubscriptionId?: string | null
   autoRenewal?: boolean
   status?: $Enums.SubscriptionStatus
   externalId?: string | null
@@ -657,6 +705,8 @@ export type SubscriptionScalarWhereInput = {
   NOT?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
   id?: Prisma.IntFilter<"Subscription"> | number
   userId?: Prisma.IntFilter<"Subscription"> | number
+  customerId?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  providerSubscriptionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   planId?: Prisma.IntFilter<"Subscription"> | number
   autoRenewal?: Prisma.BoolFilter<"Subscription"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
@@ -672,6 +722,8 @@ export type SubscriptionScalarWhereInput = {
 export type SubscriptionCreateManyPlanInput = {
   id?: number
   userId: number
+  customerId?: string | null
+  providerSubscriptionId?: string | null
   autoRenewal?: boolean
   status?: $Enums.SubscriptionStatus
   externalId?: string | null
@@ -685,6 +737,8 @@ export type SubscriptionCreateManyPlanInput = {
 
 export type SubscriptionUpdateWithoutPlanInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   autoRenewal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -699,6 +753,8 @@ export type SubscriptionUpdateWithoutPlanInput = {
 export type SubscriptionUncheckedUpdateWithoutPlanInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   autoRenewal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -713,6 +769,8 @@ export type SubscriptionUncheckedUpdateWithoutPlanInput = {
 export type SubscriptionUncheckedUpdateManyWithoutPlanInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   autoRenewal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -729,6 +787,8 @@ export type SubscriptionUncheckedUpdateManyWithoutPlanInput = {
 export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  customerId?: boolean
+  providerSubscriptionId?: boolean
   planId?: boolean
   autoRenewal?: boolean
   status?: boolean
@@ -745,6 +805,8 @@ export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.Internal
 export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  customerId?: boolean
+  providerSubscriptionId?: boolean
   planId?: boolean
   autoRenewal?: boolean
   status?: boolean
@@ -761,6 +823,8 @@ export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  customerId?: boolean
+  providerSubscriptionId?: boolean
   planId?: boolean
   autoRenewal?: boolean
   status?: boolean
@@ -777,6 +841,8 @@ export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type SubscriptionSelectScalar = {
   id?: boolean
   userId?: boolean
+  customerId?: boolean
+  providerSubscriptionId?: boolean
   planId?: boolean
   autoRenewal?: boolean
   status?: boolean
@@ -789,7 +855,7 @@ export type SubscriptionSelectScalar = {
   deletedAt?: boolean
 }
 
-export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "planId" | "autoRenewal" | "status" | "externalId" | "paymentType" | "startAt" | "expireAt" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["subscription"]>
+export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "customerId" | "providerSubscriptionId" | "planId" | "autoRenewal" | "status" | "externalId" | "paymentType" | "startAt" | "expireAt" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["subscription"]>
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
 }
@@ -808,6 +874,8 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     userId: number
+    customerId: string | null
+    providerSubscriptionId: string | null
     planId: number
     autoRenewal: boolean
     status: $Enums.SubscriptionStatus
@@ -1244,6 +1312,8 @@ export interface Prisma__SubscriptionClient<T, Null = never, ExtArgs extends run
 export interface SubscriptionFieldRefs {
   readonly id: Prisma.FieldRef<"Subscription", 'Int'>
   readonly userId: Prisma.FieldRef<"Subscription", 'Int'>
+  readonly customerId: Prisma.FieldRef<"Subscription", 'String'>
+  readonly providerSubscriptionId: Prisma.FieldRef<"Subscription", 'String'>
   readonly planId: Prisma.FieldRef<"Subscription", 'Int'>
   readonly autoRenewal: Prisma.FieldRef<"Subscription", 'Boolean'>
   readonly status: Prisma.FieldRef<"Subscription", 'SubscriptionStatus'>

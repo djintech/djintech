@@ -19,4 +19,7 @@ export class PayPalAdapter implements PaymentProvider {
       url: fakeOrder.approveUrl,
     };
   }
+  async createCustomer(email: string): Promise<{ id: string; }> {
+    return { id: 'fake_id'}
+  };
 }
