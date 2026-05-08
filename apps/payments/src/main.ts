@@ -10,9 +10,7 @@ async function bootstrap() {
     rawBody: true, // важно для Stripe signature validation
   });
 
-  app.setGlobalPrefix('api/v1');
-
-  // 2. Global pipes (если используешь DTO validation)
+   // 2. Global pipes (если используешь DTO validation)
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
