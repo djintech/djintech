@@ -10,6 +10,8 @@ async function bootstrap() {
     rawBody: true, // важно для Stripe signature validation
   });
 
+  app.setGlobalPrefix('api/v1');
+
   // 2. Global pipes (если используешь DTO validation)
   app.useGlobalPipes(
     new ValidationPipe({
@@ -33,7 +35,7 @@ async function bootstrap() {
   // 6. Start microservices + HTTP server
   await app.startAllMicroservices();
 
-  const port = Number(process.env.PAYMENTS_HTTP_PORT || 3001);
+  const port = Number(process.env.PAYMENTS_HTTP_PORT || 4288)//3001);
 
   await app.listen(port);
 
