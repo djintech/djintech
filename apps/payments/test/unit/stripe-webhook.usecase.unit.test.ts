@@ -30,6 +30,12 @@ describe('StripeWebhookUseCase', () => {
         id: 1,
         externalId: 'cs_test_123',
       }),
+
+      findByProviderSubscriptionId: jest.fn().mockResolvedValue({
+        id: 1,
+        providerSubscriptionId: 'sub_test_123',
+      }),
+
       update: jest.fn(),
     };
 
@@ -58,6 +64,7 @@ describe('StripeWebhookUseCase', () => {
     expect(subscriptionsRepository.findByExternalId).toHaveBeenCalledWith('cs_test_123');
     expect(subscriptionsRepository.update).toHaveBeenCalledWith(1, {
       status: SubscriptionStatus.ACTIVE,
+      "providerSubscriptionId": "sub_test_123",
       startAt: new Date(1000 * 1000),
       expireAt: new Date(2000 * 1000),
     });
@@ -78,8 +85,7 @@ describe('StripeWebhookUseCase', () => {
       rawBody: Buffer.from('{}'),
     });
 
-    expect(stripeAdapter.findCheckoutSessionBySubscriptionId).toHaveBeenCalledWith('sub_test_123');
-    expect(subscriptionsRepository.findByExternalId).toHaveBeenCalledWith('cs_test_123');
+    expect(subscriptionsRepository.findByProviderSubscriptionId,).toHaveBeenCalledWith('sub_test_123');
     expect(subscriptionsRepository.update).toHaveBeenCalledWith(1, {
       status: SubscriptionStatus.ACTIVE,
     });
@@ -100,7 +106,7 @@ describe('StripeWebhookUseCase', () => {
       rawBody: Buffer.from('{}'),
     });
 
-    expect(stripeAdapter.findCheckoutSessionBySubscriptionId).toHaveBeenCalledWith('sub_test_123');
+    expect( subscriptionsRepository.findByProviderSubscriptionId).toHaveBeenCalledWith('sub_test_123');
     expect(subscriptionsRepository.update).toHaveBeenCalledWith(1, {
       status: SubscriptionStatus.CANCELED,
       autoRenewal: false,
