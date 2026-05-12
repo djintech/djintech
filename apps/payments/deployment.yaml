@@ -45,6 +45,11 @@ spec:
                  secretKeyRef:
                    name: payments-mono-production-config-secret
                    key: FRONTEND_URL
+             - name: PAYMENTS_HTTP_PORT
+               valueFrom:
+                 secretKeyRef:
+                   name: payments-mono-production-config-secret
+                   key: PAYMENTS_HTTP_PORT
              - name: PAYMENTS_SERVICE_PORT
                valueFrom:
                  secretKeyRef:

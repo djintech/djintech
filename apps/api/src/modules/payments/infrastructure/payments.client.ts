@@ -2,7 +2,7 @@ import { PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_PLANS, PAYMENTS_SERVICE} from 
 import { CreateSubscriptionRequest, CreateSubscriptionResponse } from '@libs/contracts/payments/create-subscription';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, timeout } from 'rxjs';
 
 @Injectable()
 export class PaymentsClientService {
@@ -12,7 +12,7 @@ export class PaymentsClientService {
 
   async create( payload: CreateSubscriptionRequest): Promise<CreateSubscriptionResponse> {
     return firstValueFrom(
-      this.client.send( PATTERN_CREATE_SUBSCRIPTION, payload )
+      this.client.send( PATTERN_CREATE_SUBSCRIPTION, payload ).pipe(timeout(5000))
     );
   }
 
