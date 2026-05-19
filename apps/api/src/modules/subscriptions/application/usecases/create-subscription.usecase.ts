@@ -20,7 +20,7 @@ export class CreateSubscriptionUseCase
 {
   constructor( 
     private readonly paymentsClient: PaymentsClientService,
-        private profilesRepository: ProfilesRepository,
+    private profilesRepository: ProfilesRepository,
   ) {}
 
   async execute({ userId, dto }: CreateSubscriptionCommand): Promise<CreateSubscriptionResponse> {

@@ -69,4 +69,47 @@ describe('subscriptions', () => {
       })
       .expect(HttpStatus.BAD_REQUEST);
   });
+
+  it(`should cancel auto renewal`, async () => {
+    const token = await userTestManager.createUserAndLogin();
+
+    jest
+      .spyOn(paymentsClient, 'cancelAutoRenewal')
+      .mockResolvedValue({
+        success: true,
+      });
+
+    const response = await request(app.getHttpServer())
+      .post(`/subscriptions/canceled-auto-renewal`)
+      .auth(token.accessToken, { type: 'bearer' })
+      .expect(HttpStatus.NO_CONTENT);
+  });
+
+  it(`should return 401 for cancel auto renewal without auth`, async () => {
+    await request(app.getHttpServer())
+      .post(`/subscriptions/canceled-auto-renewal`)
+      .expect(HttpStatus.UNAUTHORIZED);
+  });
+
+  it(`should renew auto renewal`, async () => {
+    const token = await userTestManager.createUserAndLogin();
+
+    jest
+      .spyOn(paymentsClient, 'renewAutoRenewal')
+      .mockResolvedValue({
+        success: true,
+      });
+
+    const response = await request(app.getHttpServer())
+      .post(`/subscriptions/renew-auto-renewal`)
+      .auth(token.accessToken, { type: 'bearer' })
+      .expect(HttpStatus.NO_CONTENT);
+  });
+
+  it(`should return 401 for renew auto renewal without auth`, async () => {
+    await request(app.getHttpServer())
+      .post(`/subscriptions/renew-auto-renewal`)
+      .expect(HttpStatus.UNAUTHORIZED);
+  });
+
 });
