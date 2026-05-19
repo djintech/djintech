@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CoreConfig } from 'apps/payments/src/core/config/core.config';
 import Stripe from 'stripe';
 import { PaymentProvider } from '../domain/payment-provider.interface';
@@ -7,6 +7,7 @@ import { buildPaymentUrl, PAYMENT_STATUS } from '../constants/payment-redirect';
 @Injectable()
 export class StripeAdapter  implements PaymentProvider {
   private stripe;
+  private readonly logger = new Logger(StripeAdapter.name);
 
   constructor(private readonly coreConfig: CoreConfig) {
     // this.stripe = new Stripe(
@@ -57,9 +58,19 @@ export class StripeAdapter  implements PaymentProvider {
   }
 
   async cancelAutoRenewal(subscriptionId: string) {
-    return this.stripe.subscriptions.update(subscriptionId, {
+    console.log('cancelAutoRenewal!!!!!!!!!!!');
+    try {
+      return await this.stripe.subscriptions.update(subscriptionId, {
       cancel_at_period_end: true,
-    });
+    })
+    } catch (e) {
+      this.logger.error('cancelAutoRenewal failed', e);
+      throw e;
+    }
+    
+    // return this.stripe.subscriptions.update(subscriptionId, {
+    //   cancel_at_period_end: true,
+    // });
   }
 
   async renewAutoRenewal(subscriptionId: string) {
