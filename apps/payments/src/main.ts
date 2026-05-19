@@ -30,6 +30,12 @@ async function bootstrap() {
     },
   });
 
+  
+  app.use((req, res, next) => {
+    console.log('HTTP HIT:', req.method, req.url);
+    next();
+  });
+
   // 6. Start microservices + HTTP server
   await app.startAllMicroservices();
 
