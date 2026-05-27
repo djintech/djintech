@@ -7,13 +7,11 @@ import { CreateSubscriptionUseCase } from './application/usecases/create-subscri
 import { CancelAutoRenewalUseCase } from './application/usecases/cancel-auto-renewal.usecase';
 import { RenewAutoRenewalUseCase } from './application/usecases/renew-auto-renewal.usecase';
 import { StripeWebhooksController } from './api/webhooks.controller';
-import { StripeWebhookUseCase } from './application/usecases/stripe-webhook.use-case';
 
 const commandHandlers = [
   CreateSubscriptionUseCase,
   CancelAutoRenewalUseCase,
   RenewAutoRenewalUseCase,
-  StripeWebhookUseCase,
 ];
 
 const queryHandlers = [
