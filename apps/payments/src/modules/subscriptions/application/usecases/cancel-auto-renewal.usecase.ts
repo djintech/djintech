@@ -23,7 +23,7 @@ export class CancelAutoRenewalUseCase
 
   async execute({ userId }: CancelAutoRenewalCommand) {
     const subscription = await this.subscriptionsRepository.findActiveOrPendingByUserId( userId );
-
+    console.log('Found subscription for userId:', userId, subscription);
     if (!subscription) {
       throw new NotFoundException('Subscription not found');
     }
@@ -37,13 +37,13 @@ export class CancelAutoRenewalUseCase
     }
 
     const provider = this.paymentFactory.get( subscription.paymentType );
-
+    console.log('Canceling auto-renewal for subscription with providerSubscriptionId:', subscription.providerSubscriptionId);
     await provider.cancelAutoRenewal( subscription.providerSubscriptionId );
-
+    console.log('Auto-renewal canceled for subscription with providerSubscriptionId:', subscription.providerSubscriptionId);
     await this.subscriptionsRepository.update(subscription.id, {
       autoRenewal: false,
     });
-
+    console.log('Subscription updated to set autoRenewal to false for subscription id:', subscription.id);
     return {
       success: true,
     };

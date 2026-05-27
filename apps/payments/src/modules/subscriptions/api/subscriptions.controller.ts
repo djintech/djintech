@@ -32,6 +32,7 @@ export class SubscriptionsController {
 
   @MessagePattern(PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION)
   async cancelAutoRenewal( payload: CancelAutoRenewalRequest ): Promise<CancelAutoRenewalResponse> {
+    console.log('CancelAutoRenewalCommand received for userId:', payload.userId);
     return this.commandBus.execute( new CancelAutoRenewalCommand(payload.userId) );
   }
 
