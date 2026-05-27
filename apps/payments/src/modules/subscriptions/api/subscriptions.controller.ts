@@ -1,5 +1,5 @@
-import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION } from "@libs/constants";
-import { Controller, Post, Req, Headers, Res, BadRequestException } from "@nestjs/common";
+import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK } from "@libs/constants";
+import { Controller, Post, Req, Headers, BadRequestException } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { MessagePattern } from "@nestjs/microservices";
 import { GetPlansQuery } from "../application/queries/get-plan.query";
@@ -12,10 +12,7 @@ import { CancelAutoRenewalRequest, CancelAutoRenewalResponse } from "@libs/contr
 import { CancelAutoRenewalCommand } from "../application/usecases/cancel-auto-renewal.usecase";
 import { RenewAutoRenewalRequest, RenewAutoRenewalResponse } from "@libs/contracts/payments/renew-auto-renewal";
 import { RenewAutoRenewalCommand } from "../application/usecases/renew-auto-renewal.usecase";
-
-export interface RawBodyRequest extends Request {
-  rawBody: Buffer;
-}
+import { StripeWebhookRequest, StripeWebhookResponse } from "@libs/contracts/payments/stripe-webhook";
 
 @Controller()
 export class SubscriptionsController {
@@ -32,7 +29,6 @@ export class SubscriptionsController {
 
   @MessagePattern(PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION)
   async cancelAutoRenewal( payload: CancelAutoRenewalRequest ): Promise<CancelAutoRenewalResponse> {
-    console.log('CancelAutoRenewalCommand received for userId:', payload.userId);
     return this.commandBus.execute( new CancelAutoRenewalCommand(payload.userId) );
   }
 
@@ -46,34 +42,14 @@ export class SubscriptionsController {
     return this.queryBus.execute(new GetPlansQuery());
   }
 
-  @Post('webhooks/stripe')
-  stripeWebhook( @Req() req: Request, @Headers('stripe-signature') signature: string ) {
-    const rawBody = (req as any).rawBody;
-  
-    // Верификация — синхронно, ДО return
-    try {
-      this.stripeAdapter.constructWebhookEvent(rawBody, signature);
-    } catch {
-      throw new BadRequestException('Invalid signature');
-    }
-    
+  @MessagePattern(PATTERN_STRIPE_WEBHOOK)
+  async stripeWebhook( payload: StripeWebhookRequest): Promise<StripeWebhookResponse> {
+    const { signature, rawBody } = payload;
+    const buffer = Buffer.from(rawBody, 'base64');
+
+    this.stripeAdapter.constructWebhookEvent(buffer, signature);
     // Обработка — асинхронно, в фоне
-    void this.commandBus.execute(new StripeWebhookCommand(signature, rawBody as Buffer));
-    
+    void this.commandBus.execute(new StripeWebhookCommand(signature, buffer));
     return { received: true };
-    
-    // try {
-    //   const rawBody = (req as any).rawBody;
-    //   void this.commandBus
-    //     .execute( new StripeWebhookCommand(signature, rawBody as Buffer) )
-    //     .catch((err) => {
-    //       console.error('Stripe webhook async error:', err);
-    //     });
-
-    //   return { received: true };
-
-    // } catch (err) {
-    //   console.error('❌ Stripe webhook signature verification failed:', (err as any).message);
-    // }
   }
 }

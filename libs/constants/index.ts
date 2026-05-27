@@ -15,3 +15,4 @@ export const PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION = 'subscription.renew.auto.
 export const PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION = 'subscription.get.my.payments';
 export const PATTERN_GET_PLANS = 'subscription.get.plans';
 export const PATTERN_GET_CURRENT_PAYMENT_SUBSCRIPTION = 'subscription.get.current.payment';
+export const PATTERN_STRIPE_WEBHOOK = 'stripe.webhook';
