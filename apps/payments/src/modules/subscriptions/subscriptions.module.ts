@@ -9,9 +9,13 @@ import { PaymentFactory } from './infrastructure/payment.factory';
 import { SubscriptionsRepository } from './infrastructure/subscriptions.repository';
 import { StripeAdapter } from './application/stripe.adapter';
 import { PayPalAdapter } from './application/paypal.adapter';
+import { CancelAutoRenewalUseCase } from './application/usecases/cancel-auto-renewal.usecase';
+import { RenewAutoRenewalUseCase } from './application/usecases/renew-auto-renewal.usecase';
 
 const commandHandlers = [
   CreateSubscriptionUseCase,
+  CancelAutoRenewalUseCase,
+  RenewAutoRenewalUseCase,
   StripeWebhookUseCase,
 ];
 

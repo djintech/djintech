@@ -30,33 +30,47 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
 
       switch (event.type) {
         case StripeEventType.CHECKOUT_SESSION_COMPLETED: {
-          const session = event.data.object;
-          const subscriptionId = session.subscription as string;
-          if (!subscriptionId) return;
+          const session = event.data.object;          
+          const externalId = session.id;
+          const subscriptionId = session.subscription as string | undefined;
 
-          const subscription = await this.subscriptionsRepository.findByExternalId(session.id);
+          let subscription = await this.subscriptionsRepository.findByExternalId(externalId);
+
+          if (!subscription && session.customer) {
+            subscription =
+              await this.subscriptionsRepository.findByCustomerId(
+                session.customer as string,
+              );
+          }
+
           if (!subscription) return;
 
-          const stripeSubscription = await this.stripeAdapter.getSubscription(subscriptionId);
-          
-          const item = stripeSubscription.items?.data?.[0];
-          if (!item) return;
-
-          await this.subscriptionsRepository.update(subscription.id, {
+          const updateData: any = {
             status: SubscriptionStatus.ACTIVE,
-            startAt: new Date(item.current_period_start * 1000),
-            expireAt: new Date(item.current_period_end * 1000),
-          });
+          };
 
+          if (subscriptionId) {
+            updateData.providerSubscriptionId = subscriptionId;
+            const stripeSubscription = await this.stripeAdapter.getSubscription(subscriptionId);
+          
+            const item = stripeSubscription.items?.data?.[0];
+            if (item) {
+              updateData.startAt = new Date(item.current_period_start * 1000);
+              updateData.expireAt = new Date(item.current_period_end * 1000);
+            }
+          }
+
+          await this.subscriptionsRepository.update(subscription.id, updateData);
           break;
         }
 
         case StripeEventType.INVOICE_PAID: {
           const invoice = event.data.object;
+
           const subscriptionId = this.getInvoiceSubscriptionId(invoice);
           if (!subscriptionId) return;
 
-          const subscription = await this.findByStripeSubscriptionId(subscriptionId);
+          const subscription = await this.findByProviderSubscriptionId(subscriptionId);
           if (!subscription) return;
 
           await this.subscriptionsRepository.update(subscription.id, {
@@ -68,7 +82,7 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
 
         case StripeEventType.CUSTOMER_SUBSCRIPTION_DELETED: {
           const stripeSubscription = event.data.object;
-          const subscription = await this.findByStripeSubscriptionId(stripeSubscription.id);
+          const subscription = await this.findByProviderSubscriptionId(stripeSubscription.id);
           if (!subscription) return;
 
           await this.subscriptionsRepository.update(subscription.id, {
@@ -86,11 +100,8 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
     }
   }
 
-  private async findByStripeSubscriptionId(subscriptionId: string) {
-    const session = await this.stripeAdapter.findCheckoutSessionBySubscriptionId(subscriptionId);
-    if (!session) return null;
-
-    return this.subscriptionsRepository.findByExternalId(session.id);
+  private async findByProviderSubscriptionId(subscriptionId: string) {
+    return this.subscriptionsRepository.findByProviderSubscriptionId(subscriptionId);
   }
 
   private getInvoiceSubscriptionId(invoice: any): string | null {

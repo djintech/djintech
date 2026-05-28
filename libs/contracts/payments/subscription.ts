@@ -4,6 +4,11 @@ export enum SubscriptionType {
   MONTHLY = 'MONTHLY',
 }
 
+export enum PaymentType {
+  STRIPE = 'STRIPE',
+  PAYPAL = 'PAYPAL',
+}
+
 export const STRIPE_PRICE_MAP = {
   MONTHLY: 'price_1TPrFvEDDgrGHqntCn1PTVWZ',
   WEEKLY: 'price_1TPrGaEDDgrGHqntSazUmAS1',

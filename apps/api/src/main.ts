@@ -6,7 +6,7 @@ import { initAppModule } from './init-app-module';
 
 async function bootstrap() {
   const DynamicAppModule = await initAppModule();
-  const app = await NestFactory.create(DynamicAppModule);
+  const app = await NestFactory.create(DynamicAppModule, { rawBody: true });
   const coreConfig = app.get<CoreConfig>(CoreConfig);
 
   app.setGlobalPrefix('api/v1');

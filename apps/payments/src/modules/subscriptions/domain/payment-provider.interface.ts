@@ -6,4 +6,12 @@ export interface PaymentProvider {
     id: string;
     url: string;
   }>;
+
+  createCustomer(email: string): Promise<{
+    id: string;
+  }>;
+
+  cancelAutoRenewal(subscriptionId: string): Promise<any>;
+
+  renewAutoRenewal(subscriptionId: string): Promise<any>;
 }

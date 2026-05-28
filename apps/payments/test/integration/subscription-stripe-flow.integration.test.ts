@@ -59,6 +59,10 @@ describe('CreateSubscriptionUseCase + StripeWebhookUseCase integration', () => {
     };
 
     stripeAdapter = {
+      createCustomer: jest.fn().mockResolvedValue({
+        id: 'cus_test_123',
+      }),
+
       createSession: jest.fn().mockResolvedValue({
         id: 'cs_test_123',
         url: 'https://checkout.stripe.com/test',
@@ -123,7 +127,8 @@ describe('CreateSubscriptionUseCase + StripeWebhookUseCase integration', () => {
   it('should create checkout session and activate subscription from webhook', async () => {
     const result = await createSubscriptionUseCase.execute({
       dto: {
-        customerId: 10,
+        userId: 10,
+        email: 'email@mail.com',
         planId: 1,
         paymentType: 'STRIPE',
       },

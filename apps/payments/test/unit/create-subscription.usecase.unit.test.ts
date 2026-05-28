@@ -10,6 +10,10 @@ describe('CreateSubscriptionUseCase', () => {
 
   beforeEach(() => {
     paymentProvider = {
+      createCustomer: jest.fn().mockResolvedValue({
+        id: 'cus_test_123',
+      }),
+
       createSession: jest.fn().mockResolvedValue({
         id: 'cs_test_123',
         url: 'https://checkout.stripe.com/test',
@@ -43,7 +47,8 @@ describe('CreateSubscriptionUseCase', () => {
   it('should create subscription with PENDING status', async () => {
     await useCase.execute({
       dto: {
-        customerId: 10,
+        userId: 10,
+        email: 'email@mail.com',
         planId: 1,
         paymentType: 'STRIPE',
       },
@@ -63,7 +68,8 @@ describe('CreateSubscriptionUseCase', () => {
   it('should return checkout session URL', async () => {
     const result = await useCase.execute({
       dto: {
-        customerId: 10,
+        userId: 10,
+        email: 'email@mail.com',
         planId: 1,
         paymentType: 'STRIPE',
       },
@@ -81,7 +87,8 @@ describe('CreateSubscriptionUseCase', () => {
 
     await useCase.execute({
       dto: {
-        customerId: 10,
+        userId: 10,
+        email: 'email@mail.com',
         planId: 1,
         paymentType: 'STRIPE',
       },
@@ -102,7 +109,8 @@ describe('CreateSubscriptionUseCase', () => {
 
     await useCase.execute({
       dto: {
-        customerId: 10,
+        userId: 10,
+        email: 'email@mail.com',
         planId: 1,
         paymentType: 'STRIPE',
       },

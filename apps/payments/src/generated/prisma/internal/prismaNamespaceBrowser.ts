@@ -74,6 +74,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const SubscriptionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  customerId: 'customerId',
+  providerSubscriptionId: 'providerSubscriptionId',
   planId: 'planId',
   autoRenewal: 'autoRenewal',
   status: 'status',

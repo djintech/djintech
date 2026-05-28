@@ -3,6 +3,9 @@ import { ApiProperty } from "@nestjs/swagger";
 
 class PlanInfoDto {
   @ApiProperty()
+  id!: number;
+
+  @ApiProperty()
   amount!: number;
 
   @ApiProperty()
@@ -20,6 +23,7 @@ export class PlansViewDto {
     const dto = new PlansViewDto();
 
     dto.data = plan.map( p  => ({
+      id: p.id,
       amount: p.price,
       subscriptionType: p.subscriptionType,
       currency: p.currency

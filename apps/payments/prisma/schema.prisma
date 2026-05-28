@@ -20,13 +20,15 @@ enum PaymentType {
 }
 
 model Subscription {
-  id                Int @id @default(autoincrement())
-  userId            Int
-  planId            Int
-  autoRenewal       Boolean @default(false)
-  status            SubscriptionStatus @default(PENDING)
-  externalId        String?
-  paymentType       PaymentType
+  id                      Int @id @default(autoincrement())
+  userId                  Int
+  customerId              String?
+  providerSubscriptionId  String?
+  planId                  Int
+  autoRenewal             Boolean @default(false)
+  status                  SubscriptionStatus @default(PENDING)
+  externalId              String?
+  paymentType             PaymentType
 
   startAt           DateTime?
   expireAt          DateTime?

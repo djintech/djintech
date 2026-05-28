@@ -25,12 +25,12 @@ export class CreateSubscriptionUseCase
   ) {}
 
   async execute({ dto }: CreateSubscriptionCommand): Promise<CreateSubscriptionResponse> {
-    const { customerId, planId, paymentType } = dto;
+    const { userId, email, planId, paymentType } = dto;
 
     const plan = await this.planQueryRepository.getById( planId );
     if ( !plan ) throw new RpcException('Plan not found');
     
-    const existing = await this.subscriptionsRepository.findActiveOrPendingByUserId( customerId );
+    const existing = await this.subscriptionsRepository.findActiveOrPendingByUserId( userId );
 
     const provider = this.paymentFactory.get(paymentType);
     const priceId = paymentType === 'STRIPE' 
@@ -39,7 +39,13 @@ export class CreateSubscriptionUseCase
 
     if (!priceId) throw new RpcException('PriceId not found for subscription type');
 
-    const session = await provider.createSession({ customerId: String(customerId), priceId });
+    let customerId = existing?.customerId;
+    if (!customerId) {
+      const customer = await provider.createCustomer( email );
+      customerId = customer.id;
+    }
+
+    const session = await provider.createSession({ customerId: customerId, priceId });
 
     if (existing && existing.status === SubscriptionStatus.PENDING) {
       await this.subscriptionsRepository.update(existing.id, {
@@ -53,12 +59,14 @@ export class CreateSubscriptionUseCase
         await this.subscriptionsRepository.update(existing.id, { autoRenewal: false });
       }
       await this.subscriptionsRepository.create({
-        userId: customerId,
+        userId,
+        customerId,
         plan: { connect: { id: dto.planId } },
         status: SubscriptionStatus.PENDING,
         autoRenewal: true,
         externalId: session.id,
         paymentType: paymentType,
+        providerSubscriptionId: null,
       });
     }
 
