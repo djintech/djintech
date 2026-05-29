@@ -7,6 +7,7 @@ import { CreateSubscriptionUseCase } from './application/usecases/create-subscri
 import { CancelAutoRenewalUseCase } from './application/usecases/cancel-auto-renewal.usecase';
 import { RenewAutoRenewalUseCase } from './application/usecases/renew-auto-renewal.usecase';
 import { StripeWebhooksController } from './api/webhooks.controller';
+import { GetMyPaymentsHandler } from './application/queries/get-my-payments.query';
 
 const commandHandlers = [
   CreateSubscriptionUseCase,
@@ -15,7 +16,8 @@ const commandHandlers = [
 ];
 
 const queryHandlers = [
-  GetPlansHandler
+  GetPlansHandler,
+  GetMyPaymentsHandler,
 ];
 
 @Module({

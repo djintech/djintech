@@ -11,6 +11,8 @@ import { StripeAdapter } from './application/stripe.adapter';
 import { PayPalAdapter } from './application/paypal.adapter';
 import { CancelAutoRenewalUseCase } from './application/usecases/cancel-auto-renewal.usecase';
 import { RenewAutoRenewalUseCase } from './application/usecases/renew-auto-renewal.usecase';
+import { GetMyPaymentsHandler } from './application/queries/get-my-payments.query';
+import { SubscriptionQueryRepository } from './infrastructure/query/subscription.query.repository';
 
 const commandHandlers = [
   CreateSubscriptionUseCase,
@@ -21,6 +23,7 @@ const commandHandlers = [
 
 const queryHandlers = [
   GetPlansHandler,
+  GetMyPaymentsHandler,
 ];
 
 @Module({
@@ -38,6 +41,7 @@ const queryHandlers = [
     StripeAdapter,
     PayPalAdapter,
     SubscriptionsRepository,
+    SubscriptionQueryRepository,
  //   SubscriptionsQueryRepository,
   ],
 })

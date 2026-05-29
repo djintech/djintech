@@ -1,4 +1,4 @@
-import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK } from "@libs/constants";
+import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK } from "@libs/constants";
 import { Controller, Post, Req, Headers, BadRequestException } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { MessagePattern } from "@nestjs/microservices";
@@ -13,6 +13,8 @@ import { CancelAutoRenewalCommand } from "../application/usecases/cancel-auto-re
 import { RenewAutoRenewalRequest, RenewAutoRenewalResponse } from "@libs/contracts/payments/renew-auto-renewal";
 import { RenewAutoRenewalCommand } from "../application/usecases/renew-auto-renewal.usecase";
 import { StripeWebhookRequest, StripeWebhookResponse } from "@libs/contracts/payments/stripe-webhook";
+import { GetMyPaymentsRequest, PaymentsWithPaginationViewModel } from "@libs/contracts/payments/get-my-payments";
+import { GetMyPaymentsQuery } from "../application/queries/get-my-payments.query";
 
 @Controller()
 export class SubscriptionsController {
@@ -40,6 +42,11 @@ export class SubscriptionsController {
   @MessagePattern(PATTERN_GET_PLANS)
   getPlan(): Promise<Plan[]> {
     return this.queryBus.execute(new GetPlansQuery());
+  }
+
+  @MessagePattern(PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION)
+  getMyPayments(payload: GetMyPaymentsRequest): Promise<PaymentsWithPaginationViewModel> {
+    return this.queryBus.execute(new GetMyPaymentsQuery(payload));
   }
 
   @MessagePattern(PATTERN_STRIPE_WEBHOOK)
