@@ -203,7 +203,7 @@ export type EmailConfirmationGroupByOutputType = {
   _max: EmailConfirmationMaxAggregateOutputType | null
 }
 
-type GetEmailConfirmationGroupByPayload<T extends EmailConfirmationGroupByArgs> = Prisma.PrismaPromise<
+export type GetEmailConfirmationGroupByPayload<T extends EmailConfirmationGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<EmailConfirmationGroupByOutputType, T['by']> &
       {
@@ -1149,6 +1149,11 @@ export type EmailConfirmationFindManyArgs<ExtArgs extends runtime.Types.Extensio
    * Skip the first `n` EmailConfirmations.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of EmailConfirmations.
+   */
   distinct?: Prisma.EmailConfirmationScalarFieldEnum | Prisma.EmailConfirmationScalarFieldEnum[]
 }
 

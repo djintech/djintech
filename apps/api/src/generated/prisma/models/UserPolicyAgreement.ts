@@ -193,7 +193,7 @@ export type UserPolicyAgreementGroupByOutputType = {
   _max: UserPolicyAgreementMaxAggregateOutputType | null
 }
 
-type GetUserPolicyAgreementGroupByPayload<T extends UserPolicyAgreementGroupByArgs> = Prisma.PrismaPromise<
+export type GetUserPolicyAgreementGroupByPayload<T extends UserPolicyAgreementGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<UserPolicyAgreementGroupByOutputType, T['by']> &
       {
@@ -1256,6 +1256,11 @@ export type UserPolicyAgreementFindManyArgs<ExtArgs extends runtime.Types.Extens
    * Skip the first `n` UserPolicyAgreements.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of UserPolicyAgreements.
+   */
   distinct?: Prisma.UserPolicyAgreementScalarFieldEnum | Prisma.UserPolicyAgreementScalarFieldEnum[]
 }
 

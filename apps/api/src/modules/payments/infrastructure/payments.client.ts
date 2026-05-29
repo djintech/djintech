@@ -1,6 +1,7 @@
-import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK, PAYMENTS_SERVICE} from '@libs/constants';
+import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK, PAYMENTS_SERVICE} from '@libs/constants';
 import { CancelAutoRenewalRequest, CancelAutoRenewalResponse } from '@libs/contracts/payments/cancel-auto-renewal';
 import { CreateSubscriptionRequest, CreateSubscriptionResponse } from '@libs/contracts/payments/create-subscription';
+import { GetMyPaymentsRequest, PaymentsWithPaginationViewModel } from '@libs/contracts/payments/get-my-payments';
 import { RenewAutoRenewalRequest, RenewAutoRenewalResponse } from '@libs/contracts/payments/renew-auto-renewal';
 import { StripeWebhookRequest, StripeWebhookResponse } from '@libs/contracts/payments/stripe-webhook';
 import { Inject, Injectable } from '@nestjs/common';
@@ -44,6 +45,14 @@ export class PaymentsClientService {
   async getPlans() {
     return firstValueFrom(
       this.client.send( PATTERN_GET_PLANS, {} )
+    );
+  }
+
+  async getMyPayments(payload: GetMyPaymentsRequest): Promise<PaymentsWithPaginationViewModel> {
+    return firstValueFrom(
+      this.client
+        .send(PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, payload )
+        .pipe(timeout(5000)),
     );
   }
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Query, UseGuards } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { PlansViewDto } from './view-dto/plans.view-dto';
@@ -14,6 +14,10 @@ import { CancelAutoRenewalCommand } from '../application/usecases/cancel-auto-re
 import { ApiCancelAutoRenewalDocs } from '../swagger/cancel-auto-renewal.swagger';
 import { ApiRenewAutoRenewalDocs } from '../swagger/renew-auto-renewal.swagger';
 import { RenewAutoRenewalCommand } from '../application/usecases/renew-auto-renewal.usecase';
+import { ApiGetMyPaymentsDocs } from '../swagger/get-my-payments.swagger';
+import { GetMyPaymentsQueryParams } from './input-dto/get-my-payments.input-dto';
+import { GetMyPaymentsQuery } from '../application/queries/get-my-payments.query';
+import { PaymentsWithPaginationViewModel } from './view-dto/payments.view-dto';
 
 @SkipThrottle()
 @Controller('subscriptions')
@@ -48,6 +52,17 @@ export class SubscriptionsController {
   @ApiRenewAutoRenewalDocs()
   async renewAutoRenewal( @UserId() userId: number ): Promise<void> {
     return this.commandBus.execute( new RenewAutoRenewalCommand(userId) );
+  }
+
+  @Get('my-payments')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @ApiGetMyPaymentsDocs()
+  async getMyPayments(
+    @UserId() userId: number,
+    @Query() query: GetMyPaymentsQueryParams,
+  ): Promise<PaymentsWithPaginationViewModel> {
+    return this.queryBus.execute(new GetMyPaymentsQuery(userId, query));
   }
 
   @Get('plans')
