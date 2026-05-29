@@ -1,7 +1,7 @@
 import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK } from "@libs/constants";
 import { Controller, Post, Req, Headers, BadRequestException } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
-import { MessagePattern } from "@nestjs/microservices";
+import { MessagePattern, Payload } from "@nestjs/microservices";
 import { GetPlansQuery } from "../application/queries/get-plan.query";
 import { Plan } from "apps/payments/src/generated/prisma/client";
 import { CreateSubscriptionCommand } from "../application/usecases/create-subscription.usecase";
@@ -45,7 +45,7 @@ export class SubscriptionsController {
   }
 
   @MessagePattern(PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION)
-  getMyPayments(payload: GetMyPaymentsRequest): Promise<PaymentsWithPaginationViewModel> {
+  getMyPayments(@Payload() payload: GetMyPaymentsRequest): Promise<PaymentsWithPaginationViewModel> {
     return this.queryBus.execute(new GetMyPaymentsQuery(payload));
   }
 

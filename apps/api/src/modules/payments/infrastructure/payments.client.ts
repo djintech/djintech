@@ -51,7 +51,7 @@ export class PaymentsClientService {
   async getMyPayments(payload: GetMyPaymentsRequest): Promise<PaymentsWithPaginationViewModel> {
     return firstValueFrom(
       this.client
-        .send(PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, payload)
+        .send(PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, payload )
         .pipe(timeout(5000)),
     );
   }

@@ -17,8 +17,8 @@ import type * as Prisma from "./prismaNamespace"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.4.0",
-  "engineVersion": "ab56fe763f921d033a6c195e7ddeb3e255bdbb57",
+  "clientVersion": "7.8.0",
+  "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
   "activeProvider": "postgresql",
   "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id           Int       @id @default(autoincrement())\n  email        String    @unique\n  username     String    @unique\n  passwordHash String?\n  isConfirmed  Boolean   @default(false)\n  createdAt    DateTime  @default(now())\n  updatedAt    DateTime  @updatedAt\n  deletedAt    DateTime?\n\n  emailConfirmation EmailConfirmation?\n  passwordRecovery  PasswordRecovery?\n  Device            Device[]\n  policyAgreements  UserPolicyAgreement[]\n  providers         UserProvider[]\n  posts             Post[]\n  profile           Profile?\n\n  @@map(\"users\")\n}\n\nmodel EmailConfirmation {\n  id               Int       @id @default(autoincrement())\n  confirmationCode String\n  expirationDate   DateTime?\n  createdAt        DateTime  @default(now())\n  updatedAt        DateTime  @updatedAt\n  userId           Int       @unique\n  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@map(\"emailConfirmations\")\n}\n\nmodel PasswordRecovery {\n  id                     Int      @id @default(autoincrement())\n  recoveryCode           String\n  recoveryCodeExpireDate DateTime\n  alreadyChangePassword  Boolean  @default(false)\n  createdAt              DateTime @default(now())\n  updatedAt              DateTime @updatedAt\n  userId                 Int      @unique\n  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@map(\"passwordRecoveries\")\n}\n\nmodel Device {\n  id           Int       @id @default(autoincrement())\n  userId       Int\n  deviceName   String\n  deviceId     String    @unique\n  ip           String\n  lastActiveAt DateTime\n  expiresAt    DateTime\n  createdAt    DateTime  @default(now())\n  updatedAt    DateTime  @updatedAt\n  deletedAt    DateTime?\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([userId])\n  @@map(\"devices\")\n}\n\nenum PolicyType {\n  tos\n  privacy\n}\n\nmodel Policies {\n  id        Int        @id @default(autoincrement())\n  type      PolicyType\n  content   String\n  version   Int\n  updatedAt DateTime   @updatedAt\n  createdAt DateTime   @default(now())\n\n  policyAgreements UserPolicyAgreement[]\n\n  @@map(\"policies\")\n}\n\nmodel UserPolicyAgreement {\n  id         Int      @id @default(autoincrement())\n  userId     Int\n  policyId   Int\n  acceptedAt DateTime @default(now())\n\n  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  policy Policies @relation(fields: [policyId], references: [id], onDelete: Cascade)\n\n  @@unique([userId, policyId])\n  @@map(\"userPolicyAgreements\")\n}\n\nenum ProviderType {\n  google\n  github\n}\n\nmodel UserProvider {\n  id            Int          @id @default(autoincrement())\n  userId        Int\n  provider      ProviderType\n  providerId    String\n  providerEmail String?\n  createdAt     DateTime     @default(now())\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([provider, providerId])\n  @@index([userId])\n  @@map(\"userProviders\")\n}\n\nmodel Post {\n  id          Int       @id @default(autoincrement())\n  userId      Int\n  description String?\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n  deletedAt   DateTime?\n\n  postImages PostImage[]\n  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([userId])\n  @@map(\"posts\")\n}\n\nmodel PostImage {\n  id              Int       @id @default(autoincrement())\n  postId          Int\n  key             String    @unique\n  mimeType        String\n  size            Int\n  position        Int\n  createdAt       DateTime  @default(now())\n  updatedAt       DateTime  @updatedAt\n  deletedAt       DateTime?\n  isDeletedFromS3 Boolean   @default(false)\n\n  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  @@unique([postId, position])\n  @@index([postId])\n  @@map(\"postImages\")\n}\n\nenum AccountType {\n  Personal\n  Business\n}\n\nmodel Profile {\n  id          Int         @id @default(autoincrement())\n  userId      Int         @unique\n  firstName   String?\n  lastName    String?\n  dateOfBirth DateTime?\n  aboutMe     String?\n  country     String?\n  city        String?\n  accountType AccountType @default(Personal)\n\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime?\n\n  avatar Avatar?\n  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@map(\"profiles\")\n}\n\nmodel Avatar {\n  id              Int       @id @default(autoincrement())\n  profileId       Int       @unique\n  key             String    @unique\n  mimeType        String\n  size            Int\n  createdAt       DateTime  @default(now())\n  updatedAt       DateTime  @updatedAt\n  deletedAt       DateTime?\n  isDeletedFromS3 Boolean   @default(false)\n\n  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)\n\n  @@map(\"avatars\")\n}\n",
   "runtimeDataModel": {
@@ -67,7 +67,9 @@ export interface PrismaClientConstructor {
    * Type-safe database client for TypeScript
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Users
    * const users = await prisma.user.findMany()
    * ```
@@ -89,7 +91,9 @@ export interface PrismaClientConstructor {
  * Type-safe database client for TypeScript
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Users
  * const users = await prisma.user.findMany()
  * ```
@@ -174,9 +178,9 @@ export interface PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => runtime.Types.Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<R>
 

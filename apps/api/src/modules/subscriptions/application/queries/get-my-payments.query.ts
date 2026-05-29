@@ -44,15 +44,23 @@ export class GetMyPaymentsHandler
       });
     }
 
-    return this.paymentsClient.getMyPayments({
-      userId,
-      pageNumber: query.pageNumber,
-      pageSize: query.pageSize,
-      sortBy: (query.sortBy ?? PaymentsSortBy.createdAt) as ContractPaymentsSortBy,
-      sortDirection:
-        query.sortDirection === SortDirection.Asc
-          ? PaymentsSortDirection.Asc
-          : PaymentsSortDirection.Desc,
-    });
+    try {
+      const payload = {
+        userId,
+        pageNumber: query.pageNumber,
+        pageSize: query.pageSize,
+        sortBy: query.sortBy ?? PaymentsSortBy.createdAt,
+        sortDirection:
+          query.sortDirection === SortDirection.Asc
+            ? PaymentsSortDirection.Asc
+            : PaymentsSortDirection.Desc,
+      };
+      
+      return this.paymentsClient.getMyPayments( payload );
+      
+    } catch (error) {
+      console.error('Payments service error:', error);
+      throw new Error('Failed to fetch my subscriptions');
+    }
   }
 }

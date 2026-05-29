@@ -7,6 +7,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { PaymentsWithPaginationViewModel } from '../api/view-dto/payments.view-dto';
+import { ErrorResponseDto } from '@src/core/error-dto/error-response.dto';
 
 export function ApiGetMyPaymentsDocs() {
   return applyDecorators(
@@ -16,7 +17,10 @@ export function ApiGetMyPaymentsDocs() {
       type: PaymentsWithPaginationViewModel,
       description: 'Paginated subscription payments history',
     }),
-    ApiBadRequestResponse({ description: 'Invalid query params' }),
+    ApiBadRequestResponse({
+          description: 'The inputModel has incorrect values',
+          type: ErrorResponseDto,
+        }),
     ApiUnauthorizedResponse({ description: 'Unauthorized' }),
   );
 }

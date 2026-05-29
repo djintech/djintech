@@ -210,7 +210,7 @@ export type PasswordRecoveryGroupByOutputType = {
   _max: PasswordRecoveryMaxAggregateOutputType | null
 }
 
-type GetPasswordRecoveryGroupByPayload<T extends PasswordRecoveryGroupByArgs> = Prisma.PrismaPromise<
+export type GetPasswordRecoveryGroupByPayload<T extends PasswordRecoveryGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PasswordRecoveryGroupByOutputType, T['by']> &
       {
@@ -1181,6 +1181,11 @@ export type PasswordRecoveryFindManyArgs<ExtArgs extends runtime.Types.Extension
    * Skip the first `n` PasswordRecoveries.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of PasswordRecoveries.
+   */
   distinct?: Prisma.PasswordRecoveryScalarFieldEnum | Prisma.PasswordRecoveryScalarFieldEnum[]
 }
 
