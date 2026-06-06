@@ -1,4 +1,4 @@
-import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK } from "@libs/constants";
+import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK, PATTERN_GET_CURRENT_PAYMENT_SUBSCRIPTION } from "@libs/constants";
 import { Controller, Post, Req, Headers, BadRequestException } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { MessagePattern, Payload } from "@nestjs/microservices";
@@ -14,7 +14,9 @@ import { RenewAutoRenewalRequest, RenewAutoRenewalResponse } from "@libs/contrac
 import { RenewAutoRenewalCommand } from "../application/usecases/renew-auto-renewal.usecase";
 import { StripeWebhookRequest, StripeWebhookResponse } from "@libs/contracts/payments/stripe-webhook";
 import { GetMyPaymentsRequest, PaymentsWithPaginationViewModel } from "@libs/contracts/payments/get-my-payments";
+import { GetCurrentPaymentSubscriptionRequest, GetCurrentPaymentSubscriptionResponse } from '@libs/contracts/payments/get-current-payment-subscription';
 import { GetMyPaymentsQuery } from "../application/queries/get-my-payments.query";
+import { GetCurrentPaymentSubscriptionQuery } from '../application/queries/get-current-payment-subscription.query';
 
 @Controller()
 export class SubscriptionsController {
@@ -47,6 +49,11 @@ export class SubscriptionsController {
   @MessagePattern(PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION)
   getMyPayments(@Payload() payload: GetMyPaymentsRequest): Promise<PaymentsWithPaginationViewModel> {
     return this.queryBus.execute(new GetMyPaymentsQuery(payload));
+  }
+
+  @MessagePattern(PATTERN_GET_CURRENT_PAYMENT_SUBSCRIPTION)
+  getCurrentPaymentSubscription(@Payload() payload: GetCurrentPaymentSubscriptionRequest): Promise<GetCurrentPaymentSubscriptionResponse | null> {
+    return this.queryBus.execute(new GetCurrentPaymentSubscriptionQuery(payload.userId));
   }
 
   @MessagePattern(PATTERN_STRIPE_WEBHOOK)

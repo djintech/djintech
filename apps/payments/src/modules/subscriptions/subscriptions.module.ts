@@ -12,6 +12,7 @@ import { PayPalAdapter } from './application/paypal.adapter';
 import { CancelAutoRenewalUseCase } from './application/usecases/cancel-auto-renewal.usecase';
 import { RenewAutoRenewalUseCase } from './application/usecases/renew-auto-renewal.usecase';
 import { GetMyPaymentsHandler } from './application/queries/get-my-payments.query';
+import { GetCurrentPaymentSubscriptionHandler } from './application/queries/get-current-payment-subscription.query';
 import { SubscriptionQueryRepository } from './infrastructure/query/subscription.query.repository';
 
 const commandHandlers = [
@@ -24,6 +25,7 @@ const commandHandlers = [
 const queryHandlers = [
   GetPlansHandler,
   GetMyPaymentsHandler,
+  GetCurrentPaymentSubscriptionHandler,
 ];
 
 @Module({
