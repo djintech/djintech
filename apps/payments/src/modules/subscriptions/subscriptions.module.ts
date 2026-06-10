@@ -14,6 +14,7 @@ import { RenewAutoRenewalUseCase } from './application/usecases/renew-auto-renew
 import { GetMyPaymentsHandler } from './application/queries/get-my-payments.query';
 import { GetCurrentPaymentSubscriptionHandler } from './application/queries/get-current-payment-subscription.query';
 import { SubscriptionQueryRepository } from './infrastructure/query/subscription.query.repository';
+import { RabbitMQModule } from './infrastructure/rabbitmq/rabbitmq.module';
 
 const commandHandlers = [
   CreateSubscriptionUseCase,
@@ -31,6 +32,7 @@ const queryHandlers = [
 @Module({
   imports: [
     CqrsModule,
+    RabbitMQModule,
   ],
   controllers: [
     SubscriptionsController,

@@ -42,8 +42,7 @@ export class CreateSubscriptionUseCase
         paymentType: dto.paymentType
       }
       const subscriptionUrl = await this.paymentsClient.create(payload);
-      await this.profilesRepository.update( userId, { accountType: AccountType.Business })
-
+      
       return subscriptionUrl;
 
     } catch (error: any) {

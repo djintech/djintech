@@ -3,6 +3,7 @@ import { StripeAdapter } from '../stripe.adapter';
 import { SubscriptionsRepository } from '../../infrastructure/subscriptions.repository';
 import { StripeEventType } from '../../constants/stripe.constants';
 import { SubscriptionStatus } from 'apps/payments/src/generated/prisma/enums';
+import { SubscriptionEventsPublisher } from '../../infrastructure/rabbitmq/subscription-events.publisher';
 
 export class StripeWebhookCommand {
   constructor(
@@ -18,6 +19,7 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
   constructor(
     private readonly stripeAdapter: StripeAdapter,
     private readonly subscriptionsRepository: SubscriptionsRepository,
+    private readonly subscriptionEventsPublisher: SubscriptionEventsPublisher,
   ) {}
 
   async execute({ signature, rawBody }: StripeWebhookCommand) {
@@ -47,6 +49,7 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
 
           const updateData: any = {
             status: SubscriptionStatus.ACTIVE,
+            autoRenewal: true,
           };
 
           if (subscriptionId) {
@@ -61,6 +64,13 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
           }
 
           await this.subscriptionsRepository.update(subscription.id, updateData);
+
+          this.subscriptionEventsPublisher.publishSubscriptionActivated({
+            userId: subscription.userId,
+            subscriptionId: subscription.id,
+            expireAt: updateData.expireAt?.toISOString() ?? null,
+          });
+
           break;
         }
 
@@ -77,6 +87,12 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
             status: SubscriptionStatus.ACTIVE,
           });
 
+          this.subscriptionEventsPublisher.publishSubscriptionActivated({
+            userId: subscription.userId,
+            subscriptionId: subscription.id,
+            expireAt: subscription.expireAt?.toISOString() ?? null,
+          });
+
           break;
         }
 
@@ -90,6 +106,11 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
             autoRenewal: false,
           });
 
+          this.subscriptionEventsPublisher.publishSubscriptionExpired({
+            userId: subscription.userId,
+            subscriptionId: subscription.id,
+          });
+ 
           break;
         }
       }

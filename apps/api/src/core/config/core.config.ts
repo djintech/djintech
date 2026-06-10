@@ -34,6 +34,12 @@ export class CoreConfig extends BaseCoreConfig {
   })
   includeTestingModule: boolean;
 
+  @IsString({
+    message:
+      'Set Env variable RABBITMQ_URL. example: amqp://...',
+  })
+  rabbitmqUrl: string;
+
   constructor(configService: ConfigService<any, true>) {
     super(configService);
 
@@ -48,6 +54,8 @@ export class CoreConfig extends BaseCoreConfig {
     this.includeTestingModule = configValidationUtility.convertToBoolean(
       this.configService.get('INCLUDE_TESTING_MODULE'),
     ) as boolean;
+    
+    this.rabbitmqUrl = this.configService.get('RABBITMQ_URL');
 
     configValidationUtility.validateConfig(this);
   }

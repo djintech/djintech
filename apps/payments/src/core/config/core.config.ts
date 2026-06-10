@@ -24,12 +24,20 @@ export class CoreConfig {
       'Set Env variable FRONTEND_URL. example: https://djintech.org',
   })
   frontendUrl:string;
+
+  @IsString({
+    message:
+      'Set Env variable RABBITMQ_URL. example: amqp://...',
+  })
+  rabbitmqUrl: string;
+  
   
   constructor(private configService: ConfigService<any, true>) {
 
     this.stripeSecretKey = this.configService.get('STRIPE_SECRET_KEY');
     this.stripeWebhookSecret = this.configService.get('STRIPE_WEBHOOK_SECRET');
     this.frontendUrl = this.configService.get('FRONTEND_URL');
+    this.rabbitmqUrl = this.configService.get('RABBITMQ_URL');
 
     configValidationUtility.validateConfig(this);
   }
