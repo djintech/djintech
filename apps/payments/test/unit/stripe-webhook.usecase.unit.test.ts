@@ -26,6 +26,16 @@ describe('StripeWebhookUseCase', () => {
       }),
     };
 
+    stripeAdapter.constructWebhookEvent.mockReturnValue({
+      type: StripeEventType.CHECKOUT_SESSION_COMPLETED,
+      data: {
+        object: {
+          id: 'cs_test_123',
+          subscription: 'sub_test_123',
+        },
+      },
+    });
+
     subscriptionsRepository = {
       findByExternalId: jest.fn().mockResolvedValue({
         id: 1,
@@ -38,6 +48,10 @@ describe('StripeWebhookUseCase', () => {
         userId: 10,
         providerSubscriptionId: 'sub_test_123',
       }),
+    
+      findCurrentActiveByUserId: jest.fn().mockResolvedValue(null),
+
+      findFirstPendingByUserId: jest.fn().mockResolvedValue(null),
 
       update: jest.fn(),
     };

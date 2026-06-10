@@ -19,7 +19,10 @@ export class SubscriptionQueryRepository {
 
   async getMyCurrent(userId: number): Promise< Subscription | null> { 
     return this.prisma.subscription.findFirst({
-      where: { userId, status: SubscriptionStatus.ACTIVE, deletedAt: null }
+      where: { userId, status: SubscriptionStatus.ACTIVE, deletedAt: null }, 
+      orderBy: {
+        expireAt: 'desc',
+      }
     });
   }
   

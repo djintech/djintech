@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "apps/payments/src/db/prisma.service";
-import { Prisma, Subscription } from "apps/payments/src/generated/prisma/client";
+import { Prisma, Subscription, SubscriptionStatus } from "apps/payments/src/generated/prisma/client";
 
 @Injectable()
 export class SubscriptionsRepository {
@@ -40,6 +40,32 @@ export class SubscriptionsRepository {
       },
       orderBy: {
         createdAt: 'desc',
+      },
+    });
+  }
+
+  async findCurrentActiveByUserId(userId: number) {
+    return this.prisma.subscription.findFirst({
+      where: {
+        userId,
+        status: SubscriptionStatus.ACTIVE,
+        deletedAt: null,
+      },
+      orderBy: {
+        expireAt: 'desc',
+      },
+    });
+  }
+
+  async findFirstPendingByUserId(userId: number) {
+    return this.prisma.subscription.findFirst({
+      where: {
+        userId,
+        status: SubscriptionStatus.PENDING,
+        deletedAt: null,
+      },
+      orderBy: {
+        startAt: 'asc',
       },
     });
   }

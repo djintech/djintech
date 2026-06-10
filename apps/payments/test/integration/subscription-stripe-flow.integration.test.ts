@@ -57,6 +57,8 @@ describe('CreateSubscriptionUseCase + StripeWebhookUseCase integration', () => {
           && [SubscriptionStatus.ACTIVE, SubscriptionStatus.PENDING].includes(item.status)
         )) ?? null;
       }),
+      findCurrentActiveByUserId: jest.fn().mockResolvedValue(null),
+      findFirstPendingByUserId: jest.fn().mockResolvedValue(null),
     };
 
     stripeAdapter = {
