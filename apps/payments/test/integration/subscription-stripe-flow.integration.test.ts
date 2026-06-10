@@ -8,6 +8,7 @@ import { StripeAdapter } from '../../src/modules/subscriptions/application/strip
 import { PayPalAdapter } from '../../src/modules/subscriptions/application/paypal.adapter';
 import { StripeEventType } from '../../src/modules/subscriptions/constants/stripe.constants';
 import { SubscriptionStatus } from '../../src/generated/prisma/enums';
+import { SubscriptionEventsPublisher } from 'apps/payments/src/modules/subscriptions/infrastructure/rabbitmq/subscription-events.publisher';
 
 describe('CreateSubscriptionUseCase + StripeWebhookUseCase integration', () => {
   let createSubscriptionUseCase: CreateSubscriptionUseCase;
@@ -110,6 +111,14 @@ describe('CreateSubscriptionUseCase + StripeWebhookUseCase integration', () => {
         {
           provide: StripeAdapter,
           useValue: stripeAdapter,
+        },
+        {
+          provide: SubscriptionEventsPublisher,
+          useValue: {
+            publishSubscriptionActivated: jest.fn(),
+            publishSubscriptionCanceled: jest.fn(),
+            publishSubscriptionRenewed: jest.fn(),
+          },
         },
         {
           provide: PayPalAdapter,

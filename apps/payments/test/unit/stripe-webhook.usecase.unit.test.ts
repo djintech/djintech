@@ -6,6 +6,7 @@ describe('StripeWebhookUseCase', () => {
   let useCase: StripeWebhookUseCase;
   let stripeAdapter: any;
   let subscriptionsRepository: any;
+  let subscriptionEventsPublisher: any;
 
   beforeEach(() => {
     stripeAdapter = {
@@ -28,20 +29,29 @@ describe('StripeWebhookUseCase', () => {
     subscriptionsRepository = {
       findByExternalId: jest.fn().mockResolvedValue({
         id: 1,
+        userId: 10,
         externalId: 'cs_test_123',
       }),
 
       findByProviderSubscriptionId: jest.fn().mockResolvedValue({
         id: 1,
+        userId: 10,
         providerSubscriptionId: 'sub_test_123',
       }),
 
       update: jest.fn(),
     };
 
+    subscriptionEventsPublisher = {
+      publishSubscriptionActivated: jest.fn(),
+      publishSubscriptionExpired: jest.fn(),
+      publishSubscriptionRenewed: jest.fn(),
+    };
+
     useCase = new StripeWebhookUseCase(
       stripeAdapter,
       subscriptionsRepository,
+      subscriptionEventsPublisher
     );
   });
 

@@ -49,7 +49,6 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
 
           const updateData: any = {
             status: SubscriptionStatus.ACTIVE,
-            autoRenewal: true,
           };
 
           if (subscriptionId) {
