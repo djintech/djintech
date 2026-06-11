@@ -118,14 +118,27 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
           const subscription = await this.findByProviderSubscriptionId(subscriptionId);
           if (!subscription) return;
 
+          const isRenewal = subscription.status === SubscriptionStatus.ACTIVE
+            && subscription.expireAt
+            && subscription.expireAt < new Date();
+
+          if (!isRenewal) return;
+
+          const stripeSubscription = await this.stripeAdapter.getSubscription(subscriptionId);
+          const item = stripeSubscription.items?.data?.[0];
+
           await this.subscriptionsRepository.update(subscription.id, {
             status: SubscriptionStatus.ACTIVE,
+            startAt: item ? new Date(item.current_period_start * 1000) : undefined,
+            expireAt: item ? new Date(item.current_period_end * 1000) : undefined,
           });
 
           this.subscriptionEventsPublisher.publishSubscriptionActivated({
             userId: subscription.userId,
             subscriptionId: subscription.id,
-            expireAt: subscription.expireAt?.toISOString() ?? null,
+            expireAt: item
+              ? new Date(item.current_period_end * 1000).toISOString()
+              : subscription.expireAt?.toISOString() ?? null,
           });
 
           break;
@@ -157,13 +170,12 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
               expireAt:
                 nextSubscription.expireAt?.toISOString() ?? null,
             });
+          } else {
+            this.subscriptionEventsPublisher.publishSubscriptionExpired({
+              userId: subscription.userId,
+              subscriptionId: subscription.id,
+            });
           }
-
-          this.subscriptionEventsPublisher.publishSubscriptionExpired({
-            userId: subscription.userId,
-            subscriptionId: subscription.id,
-          });
- 
           break;
         }
       }

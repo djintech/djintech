@@ -104,6 +104,15 @@ describe('StripeWebhookUseCase', () => {
       },
     });
 
+    // симулируем подписку у которой период уже закончился (renewal)
+  subscriptionsRepository.findByProviderSubscriptionId.mockResolvedValue({
+    id: 1,
+    userId: 10,
+    providerSubscriptionId: 'sub_test_123',
+    status: SubscriptionStatus.ACTIVE,
+    expireAt: new Date(Date.now() - 1000), // уже истекла → это renewal
+  });
+
     await useCase.execute({
       signature: 'valid_signature',
       rawBody: Buffer.from('{}'),
@@ -112,6 +121,8 @@ describe('StripeWebhookUseCase', () => {
     expect(subscriptionsRepository.findByProviderSubscriptionId,).toHaveBeenCalledWith('sub_test_123');
     expect(subscriptionsRepository.update).toHaveBeenCalledWith(1, {
       status: SubscriptionStatus.ACTIVE,
+      startAt: new Date(1000 * 1000),
+      expireAt: new Date(2000 * 1000),
     });
   });
 
@@ -138,6 +149,8 @@ describe('StripeWebhookUseCase', () => {
   });
 
   it('invalid signature should throw "Invalid Stripe signature"', async () => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    
     stripeAdapter.constructWebhookEvent.mockImplementation(() => {
       throw new Error('signature verification failed');
     });

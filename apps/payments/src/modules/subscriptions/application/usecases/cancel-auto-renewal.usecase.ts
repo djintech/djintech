@@ -23,7 +23,7 @@ export class CancelAutoRenewalUseCase
 
   async execute({ userId }: CancelAutoRenewalCommand) {
     const subscription = await this.subscriptionsRepository.findActiveOrPendingByUserId( userId );
-    console.log('Found subscription for userId:', userId, subscription);
+
     if (!subscription) {
       throw new NotFoundException('Subscription not found');
     }

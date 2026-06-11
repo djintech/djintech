@@ -3,7 +3,6 @@ import configuration, { ServiceName } from './configuration';
 import { Environments } from './base-core.config';
 import { getEnvFilePath } from './env-file-paths';
 
-//console.log('Loading env files from:', envFilePaths);
 // must import this const in the head of your app.module.ts
 export const configModule = (serviceName: ServiceName) =>
   ConfigModule.forRoot({
