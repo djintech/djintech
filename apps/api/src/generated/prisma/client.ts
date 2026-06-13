@@ -94,3 +94,8 @@ export type Profile = Prisma.ProfileModel
  * 
  */
 export type Avatar = Prisma.AvatarModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

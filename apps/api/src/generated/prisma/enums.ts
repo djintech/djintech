@@ -31,3 +31,13 @@ export const AccountType = {
 } as const
 
 export type AccountType = (typeof AccountType)[keyof typeof AccountType]
+
+
+export const NotificationType = {
+  SUBSCRIPTION_ACTIVATED: 'SUBSCRIPTION_ACTIVATED',
+  PAYMENT_REMINDER: 'PAYMENT_REMINDER',
+  SUBSCRIPTION_EXPIRES_7_DAYS: 'SUBSCRIPTION_EXPIRES_7_DAYS',
+  SUBSCRIPTION_EXPIRES_1_DAY: 'SUBSCRIPTION_EXPIRES_1_DAY'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

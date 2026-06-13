@@ -24,6 +24,7 @@ model User {
   providers         UserProvider[]
   posts             Post[]
   profile           Profile?
+  notification      Notification[]
 
   @@map("users")
 }
@@ -196,4 +197,35 @@ model Avatar {
   profile   Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   @@map("avatars")
+}
+
+enum NotificationType {
+  SUBSCRIPTION_ACTIVATED
+  PAYMENT_REMINDER
+  SUBSCRIPTION_EXPIRES_7_DAYS
+  SUBSCRIPTION_EXPIRES_1_DAY
+}
+
+model Notification {
+  id         Int              @id @default(autoincrement())
+
+  userId     Int
+  user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type       NotificationType
+  message    String           @db.VarChar(500)
+
+  isRead     Boolean          @default(false)
+
+  notifyAt   DateTime
+
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  deletedAt  DateTime?
+
+  @@index([userId, notifyAt])
+  @@index([userId, isRead])
+  @@index([deletedAt])
+
+  @@map("notifications")
 }
