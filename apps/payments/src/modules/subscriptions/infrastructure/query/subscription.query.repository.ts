@@ -11,12 +11,21 @@ import {
 } from '@libs/contracts/payments/subscription';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'apps/payments/src/db/prisma.service';
-import { Prisma } from 'apps/payments/src/generated/prisma/client';
+import { Prisma, Subscription, SubscriptionStatus } from 'apps/payments/src/generated/prisma/client';
 
 @Injectable()
 export class SubscriptionQueryRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  async getMyCurrent(userId: number): Promise< Subscription | null> { 
+    return this.prisma.subscription.findFirst({
+      where: { userId, status: SubscriptionStatus.ACTIVE, deletedAt: null }, 
+      orderBy: {
+        expireAt: 'desc',
+      }
+    });
+  }
+  
   async getMyPayments(
     payload: GetMyPaymentsRequest,
   ): Promise<PaymentsWithPaginationViewModel> {

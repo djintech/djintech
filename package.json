@@ -39,7 +39,7 @@
     "prisma:payments:migrate:dev": "cross-env NODE_ENV=development dotenv -e .env.development.local -- prisma migrate dev --config=apps/payments/prisma/prisma.config.ts",
     "prisma:payments:generate:dev": "cross-env NODE_ENV=development dotenv -e .env.development.local -- prisma generate --config=apps/payments/prisma/prisma.config.ts",
     "prisma:payments:migrate:deploy:test": "cross-env NODE_ENV=testing dotenv -e .env.testing -- prisma migrate deploy --config=apps/payments/prisma/prisma.config.ts",
-    "prisma:payments:migrate:create": "cross-env NODE_ENV=development dotenv -e .env.development.local -- prisma migrate dev --create-only --config=apps/payments/prisma/prisma.config.ts"    
+    "prisma:payments:migrate:create": "cross-env NODE_ENV=development dotenv -e .env.development.local -- prisma migrate dev --create-only --config=apps/payments/prisma/prisma.config.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1012.0",
@@ -60,6 +60,8 @@
     "@prisma/adapter-pg": "^7.4.0",
     "@prisma/client": "^7.3.0",
     "@types/stripe": "^8.0.417",
+    "amqp-connection-manager": "^5.0.0",
+    "amqplib": "^2.0.1",
     "axios": "^1.13.5",
     "bcryptjs": "^3.0.3",
     "body-parser": "^2.2.2",
@@ -67,7 +69,7 @@
     "class-validator": "^0.14.3",
     "cookie-parser": "^1.4.7",
     "cron": "^4.4.0",
-    "date-fns": "^4.1.0",
+    "date-fns": "^4.2.1",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "ms": "^2.1.3",
@@ -92,6 +94,7 @@
     "@nestjs/testing": "^11.0.1",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.10.7",
+    "@types/amqplib": "^0.10.8",
     "@types/bcryptjs": "^3.0.0",
     "@types/body-parser": "^1.19.6",
     "@types/cookie-parser": "^1.4.10",

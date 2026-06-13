@@ -1,3 +1,5 @@
+export * from './rabbitmq';
+
 export const FILES_SERVICE = 'FILES_SERVICE';
 export const PAYMENTS_SERVICE = 'PAYMENTS_SERVICE'
 

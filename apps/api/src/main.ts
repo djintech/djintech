@@ -3,12 +3,38 @@ import { CoreConfig } from './core/config/core.config';
 import { appSetup } from './setup/api.setup';
 import cookieParser from 'cookie-parser';
 import { initAppModule } from './init-app-module';
+import { Transport } from '@nestjs/microservices';
+import { RABBITMQ_EXCHANGE, RABBITMQ_QUEUE_SUBSCRIPTION_ACTIVATED, RABBITMQ_QUEUE_SUBSCRIPTION_EXPIRED } from '@libs/constants/rabbitmq';
 
 async function bootstrap() {
   const DynamicAppModule = await initAppModule();
   const app = await NestFactory.create(DynamicAppModule, { rawBody: true });
   const coreConfig = app.get<CoreConfig>(CoreConfig);
 
+   app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: [coreConfig.rabbitmqUrl],
+      exchange: RABBITMQ_EXCHANGE,
+      exchangeType: 'topic',
+      queue: RABBITMQ_QUEUE_SUBSCRIPTION_ACTIVATED,
+      queueOptions: { durable: true },
+    },
+  });
+
+  app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: [coreConfig.rabbitmqUrl],
+      exchange: RABBITMQ_EXCHANGE,
+      exchangeType: 'topic',
+      queue: RABBITMQ_QUEUE_SUBSCRIPTION_EXPIRED,
+      queueOptions: { durable: true },
+    },
+  });
+
+  await app.startAllMicroservices();
+  
   app.setGlobalPrefix('api/v1');
   appSetup(app, coreConfig.isSwaggerEnabled); //global settings
 

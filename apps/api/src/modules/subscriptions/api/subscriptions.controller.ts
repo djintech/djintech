@@ -18,6 +18,9 @@ import { ApiGetMyPaymentsDocs } from '../swagger/get-my-payments.swagger';
 import { GetMyPaymentsQueryParams } from './input-dto/get-my-payments.input-dto';
 import { GetMyPaymentsQuery } from '../application/queries/get-my-payments.query';
 import { PaymentsWithPaginationViewModel } from './view-dto/payments.view-dto';
+import { ApiGetCurrentPaymentSubscriptionDocs } from '../swagger/get-current-payment-subscription.swagger';
+import { GetCurrentPaymentSubscriptionQuery } from '../application/queries/get-current-payment-subscription.query';
+import { CurrentPaymentSubscriptionViewDto } from './view-dto/current-payment-subscription.view-dto';
 
 @SkipThrottle()
 @Controller('subscriptions')
@@ -63,6 +66,16 @@ export class SubscriptionsController {
     @Query() query: GetMyPaymentsQueryParams,
   ): Promise<PaymentsWithPaginationViewModel> {
     return this.queryBus.execute(new GetMyPaymentsQuery(userId, query));
+  }
+
+  @Get('current-payment-subscriptions')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @ApiGetCurrentPaymentSubscriptionDocs()
+  async getCurrentPaymentSubscription(
+    @UserId() userId: number,
+  ): Promise<CurrentPaymentSubscriptionViewDto | null> {
+    return this.queryBus.execute(new GetCurrentPaymentSubscriptionQuery(userId));
   }
 
   @Get('plans')

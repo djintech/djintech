@@ -3,6 +3,7 @@ import { StripeAdapter } from '../stripe.adapter';
 import { SubscriptionsRepository } from '../../infrastructure/subscriptions.repository';
 import { StripeEventType } from '../../constants/stripe.constants';
 import { SubscriptionStatus } from 'apps/payments/src/generated/prisma/enums';
+import { SubscriptionEventsPublisher } from '../../infrastructure/rabbitmq/subscription-events.publisher';
 
 export class StripeWebhookCommand {
   constructor(
@@ -18,6 +19,7 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
   constructor(
     private readonly stripeAdapter: StripeAdapter,
     private readonly subscriptionsRepository: SubscriptionsRepository,
+    private readonly subscriptionEventsPublisher: SubscriptionEventsPublisher,
   ) {}
 
   async execute({ signature, rawBody }: StripeWebhookCommand) {
@@ -26,7 +28,13 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
         throw new Error('Missing Stripe signature');
       }
 
-      const event = this.stripeAdapter.constructWebhookEvent(rawBody, signature);
+      let event;
+
+      try {
+        event = this.stripeAdapter.constructWebhookEvent(rawBody, signature);
+      } catch (e) {
+        throw new Error('Invalid Stripe signature');
+      }
 
       switch (event.type) {
         case StripeEventType.CHECKOUT_SESSION_COMPLETED: {
@@ -45,9 +53,13 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
 
           if (!subscription) return;
 
-          const updateData: any = {
-            status: SubscriptionStatus.ACTIVE,
-          };
+          const currentActive =
+            await this.subscriptionsRepository.findCurrentActiveByUserId(
+              subscription.userId,
+            );
+
+          const updateData: any = {};
+//            status: SubscriptionStatus.ACTIVE,};
 
           if (subscriptionId) {
             updateData.providerSubscriptionId = subscriptionId;
@@ -55,12 +67,45 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
           
             const item = stripeSubscription.items?.data?.[0];
             if (item) {
-              updateData.startAt = new Date(item.current_period_start * 1000);
-              updateData.expireAt = new Date(item.current_period_end * 1000);
+              const stripeStartAt = new Date(item.current_period_start * 1000);
+              const stripeExpireAt = new Date(item.current_period_end * 1000);
+
+              //updateData.startAt = new Date(item.current_period_start * 1000);
+              //updateData.expireAt = new Date(item.current_period_end * 1000);
+             if (
+                currentActive &&
+                currentActive.id !== subscription.id
+                && currentActive.expireAt
+              ) {
+                updateData.status = SubscriptionStatus.PENDING;
+
+                updateData.startAt = currentActive.expireAt;
+
+                const durationMs =
+                  stripeExpireAt.getTime() - stripeStartAt.getTime();
+
+                updateData.expireAt = new Date(
+                  currentActive.expireAt.getTime() + durationMs,
+                );
+              } else {
+                updateData.status = SubscriptionStatus.ACTIVE;
+
+                updateData.startAt = stripeStartAt;
+                updateData.expireAt = stripeExpireAt;
+              }
             }
           }
 
           await this.subscriptionsRepository.update(subscription.id, updateData);
+
+          if (updateData.status === SubscriptionStatus.ACTIVE) {
+            this.subscriptionEventsPublisher.publishSubscriptionActivated({
+              userId: subscription.userId,
+              subscriptionId: subscription.id,
+              expireAt: updateData.expireAt?.toISOString() ?? null,
+            });
+          }
+
           break;
         }
 
@@ -73,8 +118,27 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
           const subscription = await this.findByProviderSubscriptionId(subscriptionId);
           if (!subscription) return;
 
+          const isRenewal = subscription.status === SubscriptionStatus.ACTIVE
+            && subscription.expireAt
+            && subscription.expireAt < new Date();
+
+          if (!isRenewal) return;
+
+          const stripeSubscription = await this.stripeAdapter.getSubscription(subscriptionId);
+          const item = stripeSubscription.items?.data?.[0];
+
           await this.subscriptionsRepository.update(subscription.id, {
             status: SubscriptionStatus.ACTIVE,
+            startAt: item ? new Date(item.current_period_start * 1000) : undefined,
+            expireAt: item ? new Date(item.current_period_end * 1000) : undefined,
+          });
+
+          this.subscriptionEventsPublisher.publishSubscriptionActivated({
+            userId: subscription.userId,
+            subscriptionId: subscription.id,
+            expireAt: item
+              ? new Date(item.current_period_end * 1000).toISOString()
+              : subscription.expireAt?.toISOString() ?? null,
           });
 
           break;
@@ -90,12 +154,35 @@ export class StripeWebhookUseCase implements ICommandHandler<StripeWebhookComman
             autoRenewal: false,
           });
 
+          const nextSubscription = await this.subscriptionsRepository.findFirstPendingByUserId(subscription.userId);
+
+          if (nextSubscription) {
+            await this.subscriptionsRepository.update(
+              nextSubscription.id,
+              {
+                status: SubscriptionStatus.ACTIVE,
+              },
+            );
+
+            this.subscriptionEventsPublisher.publishSubscriptionActivated({
+              userId: nextSubscription.userId,
+              subscriptionId: nextSubscription.id,
+              expireAt:
+                nextSubscription.expireAt?.toISOString() ?? null,
+            });
+          } else {
+            this.subscriptionEventsPublisher.publishSubscriptionExpired({
+              userId: subscription.userId,
+              subscriptionId: subscription.id,
+            });
+          }
           break;
         }
       }
 
       return { received: true };
     } catch (err) {
+      console.error(err);
       throw new Error('Invalid Stripe signature');
     }
   }

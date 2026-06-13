@@ -286,4 +286,59 @@ describe('subscriptions', () => {
       .expect(HttpStatus.BAD_REQUEST);
   });
 
+  describe('GET /subscriptions/current-payment-subscriptions', () => {
+    it('should return 401 without auth', async () => {
+      await request(app.getHttpServer())
+        .get(`/subscriptions/current-payment-subscriptions`)
+        .expect(HttpStatus.UNAUTHORIZED);
+    });
+
+    it('should return 200 null when no active subscription', async () => {
+      const token = await userTestManager.createUserAndLogin();
+
+      jest.spyOn(paymentsClient, 'getCurrentPaymentSubscription').mockResolvedValue(null);
+
+      const response = await request(app.getHttpServer())
+        .get(`/subscriptions/current-payment-subscriptions`)
+        .auth(token.accessToken, { type: 'bearer' })
+        .expect(HttpStatus.OK);
+
+      expect(response.body).toEqual({});
+    });
+
+  //   it('should return current payment subscription when exists', async () => {
+  //     const token = await userTestManager.createUserAndLogin();
+  //     const prisma = app.get('PrismaService');
+
+  //     const user = await prisma.user.findUnique({ where: { email: 'email1@email.com' } });
+  //     expect(user).toBeDefined();
+
+  //     // seed profile
+  //     await prisma.profile.create({ data: { userId: user.id, accountType: 'Business' } });
+
+  //     const seededId = 555;
+
+  //     jest.spyOn(paymentsClient, 'getCurrentPaymentSubscription').mockResolvedValue({
+  //       subscriptionId: seededId,
+  //       expireAt: '2026-01-01T00:00:00.000Z',
+  //       autoRenewal: true,
+  //       planId: 2,
+  //     });
+
+  //     const response = await request(app.getHttpServer())
+  //       .get(`/subscriptions/current-payment-subscriptions`)
+  //       .auth(token.accessToken, { type: 'bearer' })
+  //       .expect(HttpStatus.OK);
+
+  //     expect(response.body).toEqual({
+  //       subscriptionId: seededId,
+  //       accountType: 'Business',
+  //       expireAt: '2026-01-01T00:00:00.000Z',
+  //       nextPaymentDate: '2026-01-01T00:00:00.000Z',
+  //       autoRenewal: true,
+  //       planId: 2,
+  //     });
+  //   });
+   });
+
 });

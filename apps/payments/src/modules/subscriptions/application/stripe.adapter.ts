@@ -10,10 +10,6 @@ export class StripeAdapter  implements PaymentProvider {
   private readonly logger = new Logger(StripeAdapter.name);
 
   constructor(private readonly coreConfig: CoreConfig) {
-    // this.stripe = new Stripe(
-    //   this.coreConfig.stripeSecretKey,
-    //   { apiVersion: '2026-04-22.dahlia' },
-    // );
     this.stripe = new Stripe(this.coreConfig.stripeSecretKey);
   }
 
@@ -58,7 +54,6 @@ export class StripeAdapter  implements PaymentProvider {
   }
 
   async cancelAutoRenewal(subscriptionId: string) {
-    console.log('cancelAutoRenewal!!!!!!!!!!!');
     try {
       return await this.stripe.subscriptions.update(subscriptionId, {
       cancel_at_period_end: true,
@@ -67,10 +62,6 @@ export class StripeAdapter  implements PaymentProvider {
       this.logger.error('cancelAutoRenewal failed', e);
       throw e;
     }
-    
-    // return this.stripe.subscriptions.update(subscriptionId, {
-    //   cancel_at_period_end: true,
-    // });
   }
 
   async renewAutoRenewal(subscriptionId: string) {
