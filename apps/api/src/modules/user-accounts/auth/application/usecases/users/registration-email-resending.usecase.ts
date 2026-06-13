@@ -6,7 +6,7 @@ import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-code
 import { UuidService } from '@libs/utils/src/uuid/uuid.service';
 import { RegistrationEmailResendingInputDto } from '../../../api/input-dto/registration-email-resending.input-dto';
 import { UsersRepository } from '../../../infrastructure/users.repository';
-import { EmailExamples } from '@src/modules/notifications/email-examples';
+import { EmailExamples } from '@src/modules/emails/email-examples';
 import { UserRegisteredEvent } from '../../../domain/events/user-registered.event';
 
 export class RegistrationEmailResendingCommand {

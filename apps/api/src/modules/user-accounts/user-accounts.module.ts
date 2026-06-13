@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { HttpModule } from '@nestjs/axios';
 import { AuthController } from './auth/api/auth.controller';
-import { NotificationsModule } from '../notifications/notifications.module';
+import { EmailsModule } from '../emails/emails.module';
 import { UsersRepository } from './auth/infrastructure/users.repository';
-import { EmailService } from '../notifications/email.service';
-import { EmailExamples } from '../notifications/email-examples';
+import { EmailService } from '../emails/email.service';
+import { EmailExamples } from '../emails/email-examples';
 import { EmailConfirmationRepository } from './auth/infrastructure/email-confirmation.repository';
 import { LocalStrategy } from './auth/guards/local/local.strategy';
 import {
@@ -73,7 +73,7 @@ const queryHandlers = [
 ];
 
 @Module({
-  imports: [JwtModule, CqrsModule, NotificationsModule, HttpModule, PoliciesModule,],
+  imports: [JwtModule, CqrsModule, EmailsModule, HttpModule, PoliciesModule,],
   controllers: [AuthController, GoogleAuthController, ProfilesController],
   providers: [
     ...commandHandlers,

@@ -10,7 +10,7 @@ import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
 import { UsersFactory } from '../../factories/users.factory';
 import { UserRegisteredEvent } from '@src/modules/user-accounts/auth/domain/events/user-registered.event';
-import { EmailExamples } from '@src/modules/notifications/email-examples';
+import { EmailExamples } from '@src/modules/emails/email-examples';
 import { UuidService } from '@libs/utils/src/uuid/uuid.service';
 
 export class LoginUserByProviderCommand {

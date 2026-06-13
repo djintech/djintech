@@ -1,6 +1,6 @@
 import { CommandBus, EventBus } from "@nestjs/cqrs";
 import { ProviderType } from "@src/generated/prisma/enums";
-import { EmailExamples } from "@src/modules/notifications/email-examples";
+import { EmailExamples } from "@src/modules/emails/email-examples";
 import { UuidService } from "@libs/utils/src/uuid/uuid.service";
 import { UserProvidersRepository } from "@src/modules/user-accounts/auth/infrastructure/user-providers.repository";
 import { UsersRepository } from "@src/modules/user-accounts/auth/infrastructure/users.repository";
