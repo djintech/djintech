@@ -6,7 +6,7 @@ import { CoreConfig } from './core/config/core.config';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { PrismaModule } from './db/prisma.module';
 import { UserAccountsModule } from './modules/user-accounts/user-accounts.module';
-import { NotificationsModule } from './modules/notifications/notifications.module';
+import { EmailsModule } from './modules/emails/emails.module';
 import { TestingModule } from './modules/testing/testing.modules';
 import { configModule } from '@libs/config/config-dynamic-module';
 import { ServiceName } from '@libs/config/configuration';
@@ -22,6 +22,7 @@ import { CleanupModule } from './modules/cleanup/cleanup.module';
 import { FileModule } from './core/file/file.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -41,13 +42,14 @@ import { SubscriptionsModule } from './modules/subscriptions/subscriptions.modul
     PaymentsModule,
     UuidModule,
     UserAccountsModule,
-    NotificationsModule,
+    EmailsModule,
     SessionsModule,
     PoliciesModule,
     PostModule,
     CleanupModule,
     FileModule,
     SubscriptionsModule,
+    NotificationsModule,
   ],
   controllers: [ApiController],
   providers: [

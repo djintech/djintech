@@ -4,7 +4,7 @@ import { DomainException } from "@libs/core/exceptions/domain-exceptions";
 import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
 import { UsersRepository } from "@src/modules/user-accounts/auth/infrastructure/users.repository";
 import { add } from "date-fns/add";
-import { EmailExamples } from "@src/modules/notifications/email-examples";
+import { EmailExamples } from "@src/modules/emails/email-examples";
 import { UserRegisteredEvent } from "@src/modules/user-accounts/auth/domain/events/user-registered.event";
 import { PasswordRecoveryRepository } from "@src/modules/user-accounts/auth/infrastructure/password-recovery.repository";
 import { UuidService } from "@libs/utils/src/uuid/uuid.service";

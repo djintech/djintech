@@ -6,7 +6,7 @@ import { EmailConfirmationFactory } from '../../factories/email-confirmation.fac
 import { UserRegisteredEvent } from '../../../domain/events/user-registered.event';
 import { EmailConfirmationRepository } from '../../../infrastructure/email-confirmation.repository';
 import { add } from 'date-fns/add';
-import { EmailExamples } from '@src/modules/notifications/email-examples';
+import { EmailExamples } from '@src/modules/emails/email-examples';
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
 import { UuidService } from '@libs/utils/src/uuid/uuid.service';
