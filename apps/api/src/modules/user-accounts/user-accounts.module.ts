@@ -127,6 +127,6 @@ const queryHandlers = [
     ProfilesRepository,
     ObjectCleaner,
   ],
-  exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository, JwtStrategy, ProfilesRepository],
+  exports: [REFRESH_TOKEN_STRATEGY_INJECT_TOKEN, ACCESS_TOKEN_STRATEGY_INJECT_TOKEN, DeviceRepository, JwtStrategy, ProfilesRepository],
 })
 export class UserAccountsModule {}
