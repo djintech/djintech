@@ -11,6 +11,6 @@ export enum PaymentType {
 
 export const STRIPE_PRICE_MAP = {
   MONTHLY: 'price_1TPrFvEDDgrGHqntCn1PTVWZ',
-  WEEKLY: 'price_1TPrGaEDDgrGHqntSazUmAS1',
-  DAY: 'price_1TPrGqEDDgrGHqntjSCGEG2g',
+  WEEKLY: 'price_1Tk4MJEDDgrGHqntENCLM2K5',
+  DAY: 'price_1Tk4L4EDDgrGHqnt86q5gTHc',
 };
