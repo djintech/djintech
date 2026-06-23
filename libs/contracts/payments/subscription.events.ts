@@ -8,3 +8,9 @@ export class SubscriptionExpiredEvent {
   userId!: number;
   subscriptionId!: number;
 }
+
+export class SubscriptionReminderEvent { 
+  userId!: number; 
+  expireAt!: string; 
+  nextPaymentAt?: string; 
+}

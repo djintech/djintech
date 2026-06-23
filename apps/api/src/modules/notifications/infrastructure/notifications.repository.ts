@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SortDirection } from '@src/core/dto/base.query-params.input-dto';
 import { PrismaService } from '@src/db/prisma.service';
-import { Prisma } from '@src/generated/prisma/client';
+import { Prisma, NotificationType } from '@src/generated/prisma/client';
 
 @Injectable()
 export class NotificationsRepository {
@@ -83,6 +83,37 @@ export class NotificationsRepository {
       where: { id },
       data: {
         deletedAt: new Date(),
+      },
+    });
+  }
+
+  async existsByTypeAndPeriod(
+    userId: number,
+    type: NotificationType,
+    from: Date,
+    to: Date,
+  ): Promise<boolean> {
+    const count = await this.prisma.notification.count({
+      where: {
+        userId,
+        type,
+        createdAt: {
+          gte: from,
+          lte: to,
+        },
+        deletedAt: null,
+      },
+    });
+
+    return count > 0;
+  }
+
+  async deleteOlderThan(date: Date) {
+    return this.prisma.notification.deleteMany({
+      where: {
+        createdAt: {
+          lt: date,
+        },
       },
     });
   }
