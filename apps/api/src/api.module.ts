@@ -23,6 +23,7 @@ import { FileModule } from './core/file/file.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { GraphqlModule } from './modules/graphql/graphql.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
         },
       ],
     }),
+    GraphqlModule,
     FilesModule,
     PaymentsModule,
     UuidModule,
