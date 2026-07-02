@@ -24,6 +24,7 @@ import { PaymentsModule } from './modules/payments/payments.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { GraphqlModule } from './modules/graphql/graphql.module';
+import { GqlThrottlerGuard } from './modules/graphql/guards/gql-throttler.guards';
 
 @Module({
   imports: [
@@ -60,9 +61,13 @@ import { GraphqlModule } from './modules/graphql/graphql.module';
       provide: APP_FILTER,
       useClass: DomainHttpExceptionsFilter,
     },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: ThrottlerGuard,
+    // },
     {
       provide: APP_GUARD,
-      useClass: ThrottlerGuard,
+      useClass: GqlThrottlerGuard,
     },
   ],
   exports: [],
