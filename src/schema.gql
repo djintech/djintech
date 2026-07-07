@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type LoginPayload {
+  accessToken: String!
+}
+
 type Query {
   health: String!
+}
+
+type Mutation {
+  login(input: LoginInput!): LoginPayload!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
