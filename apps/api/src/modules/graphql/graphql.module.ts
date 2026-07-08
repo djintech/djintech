@@ -5,9 +5,14 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { GraphQLContext } from './context/graphql-context';
 import { HealthResolver } from './health.resolver';
+import { AdminAuthService } from './application/services/admin-auth.service';
+import { GqlAuthGuard } from './guards/gql-super-admin.guard';
+import { AdminAuthResolver } from './resolvers/admin-auth.resolver';
+import { UserAccountsModule } from '../user-accounts/user-accounts.module';
 
 @Module({
   imports: [
+    UserAccountsModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       useGlobalPrefix: true,
@@ -19,6 +24,11 @@ import { HealthResolver } from './health.resolver';
       }),
     }),
   ],
-  providers: [HealthResolver],
+  providers: [
+    HealthResolver,
+    AdminAuthResolver,
+    AdminAuthService,
+    GqlAuthGuard,
+  ],
 })
 export class GraphqlModule {}
