@@ -9,8 +9,6 @@ import { AdminAuthService } from './application/services/admin-auth.service';
 import { GqlAuthGuard } from './guards/gql-super-admin.guard';
 import { AdminAuthResolver } from './resolvers/admin-auth.resolver';
 import { UserAccountsModule } from '../user-accounts/user-accounts.module';
-import { APP_FILTER } from '@nestjs/core';
-import { DomainGraphqlExceptionsFilter } from '@libs/core/exceptions/filters/domain-graphql-exceptions.filter';
 
 @Module({
   imports: [
@@ -28,10 +26,6 @@ import { DomainGraphqlExceptionsFilter } from '@libs/core/exceptions/filters/dom
   ],
   providers: [
     HealthResolver,
-    {
-      provide: APP_FILTER,
-      useClass: DomainGraphqlExceptionsFilter,
-    },
     AdminAuthResolver,
     AdminAuthService,
     GqlAuthGuard,

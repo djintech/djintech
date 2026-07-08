@@ -3,8 +3,11 @@ import { AdminAuthService } from "../application/services/admin-auth.service";
 import { LoginPayload } from "../dto/login.payload";
 import { LoginInput } from "../dto/login.input";
 import { SkipThrottle } from "@nestjs/throttler";
+import { UseFilters } from "@nestjs/common";
+import { DomainGraphqlExceptionsFilter } from "@libs/core/exceptions/filters/domain-graphql-exceptions.filter";
 
 @Resolver()
+@UseFilters(DomainGraphqlExceptionsFilter)
 export class AdminAuthResolver {
   constructor(
     private adminAuthService: AdminAuthService,
