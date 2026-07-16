@@ -13,6 +13,11 @@ model User {
   username     String    @unique
   passwordHash String? 
   isConfirmed  Boolean   @default(false)
+
+  isBanned     Boolean   @default(false)
+  banReason    String?
+  banDate      DateTime?
+  
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   deletedAt    DateTime?

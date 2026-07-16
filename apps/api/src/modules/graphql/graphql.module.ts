@@ -18,6 +18,7 @@ import { UserAccountsModule } from '../user-accounts/user-accounts.module';
       useGlobalPrefix: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: true,
+      introspection: true,
       context: ({ req, res }): GraphQLContext => ({
         req,
         res,
