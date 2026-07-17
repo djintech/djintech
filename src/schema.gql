@@ -6,8 +6,56 @@ type LoginPayload {
   accessToken: String!
 }
 
+type UserView {
+  id: Int!
+  username: String!
+  email: String!
+  createdAt: DateTime!
+  isBanned: Boolean!
+  profileId: Int
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UsersPaginatedView {
+  items: [UserView!]!
+  totalCount: Int!
+  pagesCount: Int!
+  page: Int!
+  pageSize: Int!
+}
+
 type Query {
   health: String!
+  getUsers(input: GetUsersInput): UsersPaginatedView!
+}
+
+input GetUsersInput {
+  pageNumber: Int! = 1
+  pageSize: Int! = 8
+  searchTerm: String
+  sortBy: UserSortBy! = CREATED_AT
+  sortDirection: SortDirection! = Desc
+  statusFilter: UserStatusFilter! = ALL
+}
+
+enum UserSortBy {
+  USERNAME
+  CREATED_AT
+}
+
+enum SortDirection {
+  Asc
+  Desc
+}
+
+enum UserStatusFilter {
+  ALL
+  BLOCKED
+  UNBLOCKED
 }
 
 type Mutation {

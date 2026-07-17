@@ -3,15 +3,24 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLContext } from './context/graphql-context';
 import { HealthResolver } from './health.resolver';
 import { AdminAuthService } from './application/services/admin-auth.service';
 import { GqlAuthGuard } from './guards/gql-super-admin.guard';
 import { AdminAuthResolver } from './resolvers/admin-auth.resolver';
+import { AdminUsersResolver } from './resolvers/admin-users.resolver';
 import { UserAccountsModule } from '../user-accounts/user-accounts.module';
+import { GetUsersQueryHandler } from './application/queries/get-users.query';
+import { UsersQueryRepository } from './infrastructure/queries/users.query.repository';
+
+const queryHandlers = [
+  GetUsersQueryHandler,
+];
 
 @Module({
   imports: [
+    CqrsModule,
     UserAccountsModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -28,8 +37,11 @@ import { UserAccountsModule } from '../user-accounts/user-accounts.module';
   providers: [
     HealthResolver,
     AdminAuthResolver,
+    AdminUsersResolver,
     AdminAuthService,
     GqlAuthGuard,
+    ...queryHandlers,
+    UsersQueryRepository,
   ],
 })
 export class GraphqlModule {}
