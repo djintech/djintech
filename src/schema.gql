@@ -49,6 +49,7 @@ type UsersPaginatedView {
 type Query {
   health: String!
   getUsers(input: GetUsersInput): UsersPaginatedView!
+  getUser(userId: Int!): UserView!
 }
 
 input GetUsersInput {

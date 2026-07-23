@@ -9,6 +9,40 @@ export class GetUsersQuery {
   constructor(public input: GetUsersInput) {}
 }
 
+export function mapUserToView(
+  user: UserWithProfile,
+  fileUrlService: FileUrlService,
+): UserView {
+  const profile = user.profile;
+  const buildUrl = fileUrlService.getPublicUrl.bind(fileUrlService);
+
+  return {
+    id: user.id,
+    userName: user.username,
+    email: user.email,
+    createdAt: user.createdAt,
+    profile: {
+      id: profile!.id,
+      userName: user.username,
+      firstName: profile!.firstName,
+      lastName: profile!.lastName,
+      city: profile!.city,
+      country: profile!.country,
+      dateOfBirth: profile!.dateOfBirth,
+      aboutMe: profile!.aboutMe,
+      createdAt: profile!.createdAt,
+      avatar: profile!.avatar?.key ? buildUrl(profile!.avatar.key) : null,
+    },
+    userBan:
+      user.isBanned && user.banReason && user.banDate
+        ? {
+            reason: user.banReason,
+            createdAt: user.banDate,
+          }
+        : null,
+  };
+}
+
 @QueryHandler(GetUsersQuery)
 export class GetUsersQueryHandler
   implements IQueryHandler<GetUsersQuery, UsersPaginatedView>
@@ -34,7 +68,7 @@ export class GetUsersQueryHandler
     const pagesCount = totalCount === 0 ? 0 : Math.ceil(totalCount / pageSize);
 
     return {
-      items: users.map((user) => this.mapToUserView(user)),
+      items: users.map((user) => mapUserToView(user, this.fileUrlService)),
       totalCount,
       pagesCount,
       page: pageNumber,
@@ -42,34 +76,4 @@ export class GetUsersQueryHandler
     };
   }
 
-  private mapToUserView(user: UserWithProfile): UserView {
-    const profile = user.profile;
-    const buildUrl = this.fileUrlService.getPublicUrl.bind(this.fileUrlService);
-
-    return {
-      id: user.id,
-      userName: user.username,
-      email: user.email,
-      createdAt: user.createdAt,
-      profile: {
-        id: profile!.id,
-        userName: user.username,
-        firstName: profile!.firstName,
-        lastName: profile!.lastName,
-        city: profile!.city,
-        country: profile!.country,
-        dateOfBirth: profile!.dateOfBirth,
-        aboutMe: profile!.aboutMe,
-        createdAt: profile!.createdAt,
-        avatar: profile!.avatar?.key ? buildUrl(profile!.avatar.key) : null,
-      },
-      userBan:
-        user.isBanned && user.banReason && user.banDate
-          ? {
-              reason: user.banReason,
-              createdAt: user.banDate,
-            }
-          : null,
-    };
-  }
 }

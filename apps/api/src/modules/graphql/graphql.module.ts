@@ -12,10 +12,12 @@ import { AdminAuthResolver } from './resolvers/admin-auth.resolver';
 import { AdminUsersResolver } from './resolvers/admin-users.resolver';
 import { UserAccountsModule } from '../user-accounts/user-accounts.module';
 import { GetUsersQueryHandler } from './application/queries/get-users.query';
+import { GetUserQueryHandler } from './application/queries/get-user.query';
 import { UsersQueryRepository } from './infrastructure/queries/users.query.repository';
 
 const queryHandlers = [
   GetUsersQueryHandler,
+  GetUserQueryHandler,
 ];
 
 @Module({

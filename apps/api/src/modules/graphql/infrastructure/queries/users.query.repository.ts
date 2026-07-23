@@ -56,6 +56,22 @@ export class UsersQueryRepository {
     return { users, totalCount };
   }
 
+  async getUserById(userId: number): Promise<UserWithProfile | null> {
+    return this.prisma.user.findUnique({
+      where: {
+        id: userId,
+        deletedAt: null,
+      },
+      include: {
+        profile: {
+          include: {
+            avatar: true,
+          },
+        },
+      },
+    });
+  }
+
   private buildWhereClause(
     searchTerm?: string,
     statusFilter?: UserStatusFilter,
