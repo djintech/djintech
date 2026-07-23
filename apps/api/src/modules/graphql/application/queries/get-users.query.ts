@@ -3,6 +3,7 @@ import { GetUsersInput } from '../../dto/get-users.input';
 import { UsersPaginatedView } from '../../dto/users-paginated.view';
 import { UserView } from '../../dto/user.view';
 import { UsersQueryRepository, UserWithProfile } from '../../infrastructure/queries/users.query.repository';
+import { FileUrlService } from '@src/core/file/file-url.service';
 
 export class GetUsersQuery {
   constructor(public input: GetUsersInput) {}
@@ -12,7 +13,10 @@ export class GetUsersQuery {
 export class GetUsersQueryHandler
   implements IQueryHandler<GetUsersQuery, UsersPaginatedView>
 {
-  constructor(private usersQueryRepository: UsersQueryRepository) {}
+  constructor(
+    private usersQueryRepository: UsersQueryRepository,
+    private readonly fileUrlService: FileUrlService
+  ) {}
 
   async execute({ input }: GetUsersQuery): Promise<UsersPaginatedView> {
     const { pageNumber, pageSize } = input;
@@ -39,13 +43,33 @@ export class GetUsersQueryHandler
   }
 
   private mapToUserView(user: UserWithProfile): UserView {
+    const profile = user.profile;
+    const buildUrl = this.fileUrlService.getPublicUrl.bind(this.fileUrlService);
+
     return {
       id: user.id,
-      username: user.username,
+      userName: user.username,
       email: user.email,
       createdAt: user.createdAt,
-      isBanned: user.isBanned,
-      profileId: user.profile?.id || null,
+      profile: {
+        id: profile!.id,
+        userName: user.username,
+        firstName: profile!.firstName,
+        lastName: profile!.lastName,
+        city: profile!.city,
+        country: profile!.country,
+        dateOfBirth: profile!.dateOfBirth,
+        aboutMe: profile!.aboutMe,
+        createdAt: profile!.createdAt,
+        avatar: profile!.avatar?.key ? buildUrl(profile!.avatar.key) : null,
+      },
+      userBan:
+        user.isBanned && user.banReason && user.banDate
+          ? {
+              reason: user.banReason,
+              createdAt: user.banDate,
+            }
+          : null,
     };
   }
 }

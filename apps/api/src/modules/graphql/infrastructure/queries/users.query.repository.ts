@@ -7,7 +7,11 @@ import { Prisma } from '@src/generated/prisma/client';
 
 export type UserWithProfile = Prisma.UserGetPayload<{
   include: {
-    profile: true;
+    profile: {
+      include: {
+        avatar: true;
+      };
+    };
   };
 }>;
 
@@ -39,7 +43,11 @@ export class UsersQueryRepository {
         take: pageSize,
         orderBy: this.buildOrderBy(sortBy, sortDirection),
         include: {
-          profile: true,
+          profile: {
+            include: {
+              avatar: true,
+            },
+          },
         },
       }),
       this.prisma.user.count({ where }),
