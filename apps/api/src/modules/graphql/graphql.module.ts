@@ -13,11 +13,17 @@ import { AdminUsersResolver } from './resolvers/admin-users.resolver';
 import { UserAccountsModule } from '../user-accounts/user-accounts.module';
 import { GetUsersQueryHandler } from './application/queries/get-users.query';
 import { GetUserQueryHandler } from './application/queries/get-user.query';
+import { BanUserCommandHandler } from './application/commands/ban-user.command';
 import { UsersQueryRepository } from './infrastructure/queries/users.query.repository';
+import { UsersRepository } from './infrastructure/users.repository';
 
 const queryHandlers = [
   GetUsersQueryHandler,
   GetUserQueryHandler,
+];
+
+const commandHandlers = [
+  BanUserCommandHandler,
 ];
 
 @Module({
@@ -43,7 +49,9 @@ const queryHandlers = [
     AdminAuthService,
     GqlAuthGuard,
     ...queryHandlers,
+    ...commandHandlers,
     UsersQueryRepository,
+    UsersRepository,
   ],
 })
 export class GraphqlModule {}
