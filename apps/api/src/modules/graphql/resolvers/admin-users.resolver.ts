@@ -11,6 +11,8 @@ import { GqlAuthGuard } from '../guards/gql-super-admin.guard';
 import { DomainGraphqlExceptionsFilter } from '@libs/core/exceptions/filters/domain-graphql-exceptions.filter';
 import { SkipThrottle } from '@nestjs/throttler';
 import { BanUserInput } from '../dto/ban-user.input';
+import { UnbanUserInput } from '../dto/unban-user.input';
+import { UnbanUserCommand } from '../application/commands/unban-user.command';
 
 @Resolver()
 @SkipThrottle()
@@ -46,6 +48,16 @@ export class AdminUsersResolver {
   ): Promise<boolean> {
     return this.commandBus.execute(
       new BanUserCommand(input.userId, input.banReason),
+    );
+  }
+
+  @Mutation(() => Boolean, { name: 'unbanUser' })
+  @UseGuards(GqlAuthGuard)
+  async unbanUser(
+    @Args('input') input: UnbanUserInput,
+  ): Promise<boolean> {
+    return this.commandBus.execute(
+      new UnbanUserCommand(input.userId),
     );
   }
 }

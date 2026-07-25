@@ -16,6 +16,7 @@ import { GetUserQueryHandler } from './application/queries/get-user.query';
 import { BanUserCommandHandler } from './application/commands/ban-user.command';
 import { UsersQueryRepository } from './infrastructure/queries/users.query.repository';
 import { UsersRepository } from './infrastructure/users.repository';
+import { UnbanUserCommandHandler } from './application/commands/unban-user.command';
 
 const queryHandlers = [
   GetUsersQueryHandler,
@@ -24,6 +25,7 @@ const queryHandlers = [
 
 const commandHandlers = [
   BanUserCommandHandler,
+  UnbanUserCommandHandler,
 ];
 
 @Module({

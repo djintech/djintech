@@ -80,6 +80,7 @@ enum UserStatusFilter {
 type Mutation {
   login(input: LoginInput!): LoginPayload!
   banUser(input: BanUserInput!): Boolean!
+  unbanUser(input: UnbanUserInput!): Boolean!
 }
 
 input LoginInput {
@@ -90,4 +91,8 @@ input LoginInput {
 input BanUserInput {
   userId: Int!
   banReason: String!
+}
+
+input UnbanUserInput {
+  userId: Int!
 }
