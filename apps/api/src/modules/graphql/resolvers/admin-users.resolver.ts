@@ -13,6 +13,8 @@ import { SkipThrottle } from '@nestjs/throttler';
 import { BanUserInput } from '../dto/ban-user.input';
 import { UnbanUserInput } from '../dto/unban-user.input';
 import { UnbanUserCommand } from '../application/commands/unban-user.command';
+import { RemoveUserInput } from '../dto/remove-user.input';
+import { RemoveUserCommand } from '../application/commands/remove-user.command';
 
 @Resolver()
 @SkipThrottle()
@@ -58,6 +60,16 @@ export class AdminUsersResolver {
   ): Promise<boolean> {
     return this.commandBus.execute(
       new UnbanUserCommand(input.userId),
+    );
+  }
+
+  @Mutation(() => Boolean, { name: 'removeUser' })
+  @UseGuards(GqlAuthGuard)
+  async removeUser(
+    @Args('input') input: RemoveUserInput,
+  ): Promise<boolean> {
+    return this.commandBus.execute(
+      new RemoveUserCommand(input.userId),
     );
   }
 }

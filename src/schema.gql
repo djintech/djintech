@@ -81,6 +81,7 @@ type Mutation {
   login(input: LoginInput!): LoginPayload!
   banUser(input: BanUserInput!): Boolean!
   unbanUser(input: UnbanUserInput!): Boolean!
+  removeUser(input: RemoveUserInput!): Boolean!
 }
 
 input LoginInput {
@@ -94,5 +95,9 @@ input BanUserInput {
 }
 
 input UnbanUserInput {
+  userId: Int!
+}
+
+input RemoveUserInput {
   userId: Int!
 }
