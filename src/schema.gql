@@ -6,15 +6,98 @@ type LoginPayload {
   accessToken: String!
 }
 
+type ProfileView {
+  id: Int!
+  userName: String
+  firstName: String
+  lastName: String
+  city: String
+  country: String
+  dateOfBirth: DateTime
+  aboutMe: String
+  createdAt: DateTime!
+  avatar: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserBanView {
+  reason: String!
+  createdAt: DateTime!
+}
+
+type UserView {
+  id: Int!
+  userName: String!
+  email: String!
+  createdAt: DateTime!
+  profile: ProfileView!
+  userBan: UserBanView
+}
+
+type UsersPaginatedView {
+  items: [UserView!]!
+  totalCount: Int!
+  pagesCount: Int!
+  page: Int!
+  pageSize: Int!
+}
+
 type Query {
   health: String!
+  getUsers(input: GetUsersInput): UsersPaginatedView!
+  getUser(userId: Int!): UserView!
+}
+
+input GetUsersInput {
+  pageNumber: Int! = 1
+  pageSize: Int! = 8
+  searchTerm: String
+  sortBy: UserSortBy! = CREATED_AT
+  sortDirection: SortDirection! = Desc
+  statusFilter: UserStatusFilter! = ALL
+}
+
+enum UserSortBy {
+  USERNAME
+  CREATED_AT
+}
+
+enum SortDirection {
+  Asc
+  Desc
+}
+
+enum UserStatusFilter {
+  ALL
+  BLOCKED
+  UNBLOCKED
 }
 
 type Mutation {
   login(input: LoginInput!): LoginPayload!
+  banUser(input: BanUserInput!): Boolean!
+  unbanUser(input: UnbanUserInput!): Boolean!
+  removeUser(input: RemoveUserInput!): Boolean!
 }
 
 input LoginInput {
   email: String!
   password: String!
+}
+
+input BanUserInput {
+  userId: Int!
+  banReason: String!
+}
+
+input UnbanUserInput {
+  userId: Int!
+}
+
+input RemoveUserInput {
+  userId: Int!
 }

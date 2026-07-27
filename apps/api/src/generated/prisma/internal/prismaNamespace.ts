@@ -1348,6 +1348,9 @@ export const UserScalarFieldEnum = {
   username: 'username',
   passwordHash: 'passwordHash',
   isConfirmed: 'isConfirmed',
+  isBanned: 'isBanned',
+  banReason: 'banReason',
+  banDate: 'banDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
