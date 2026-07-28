@@ -13,6 +13,7 @@ import { CancelAutoRenewalUseCase } from './application/usecases/cancel-auto-ren
 import { RenewAutoRenewalUseCase } from './application/usecases/renew-auto-renewal.usecase';
 import { GetMyPaymentsHandler } from './application/queries/get-my-payments.query';
 import { GetCurrentPaymentSubscriptionHandler } from './application/queries/get-current-payment-subscription.query';
+import { GetPaymentsHandler } from './application/queries/get-payments.query';
 import { SubscriptionQueryRepository } from './infrastructure/query/subscription.query.repository';
 import { RabbitMQModule } from './infrastructure/rabbitmq/rabbitmq.module';
 
@@ -27,6 +28,7 @@ const queryHandlers = [
   GetPlansHandler,
   GetMyPaymentsHandler,
   GetCurrentPaymentSubscriptionHandler,
+  GetPaymentsHandler,
 ];
 
 @Module({

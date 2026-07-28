@@ -15,6 +15,7 @@ export const PATTERN_CREATE_SUBSCRIPTION = 'subscription.create';
 export const PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION = 'subscription.cancel.auto.renewal';
 export const PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION = 'subscription.renew.auto.renewal';
 export const PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION = 'subscription.get.my.payments';
+export const PATTERN_GET_PAYMENTS = 'subscription.get.payments';
 export const PATTERN_GET_PLANS = 'subscription.get.plans';
 export const PATTERN_GET_CURRENT_PAYMENT_SUBSCRIPTION = 'subscription.get.current.payment';
 export const PATTERN_STRIPE_WEBHOOK = 'stripe.webhook';

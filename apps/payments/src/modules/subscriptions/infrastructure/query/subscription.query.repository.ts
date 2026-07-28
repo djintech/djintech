@@ -6,6 +6,13 @@ import {
   PaymentsWithPaginationViewModel,
 } from '@libs/contracts/payments/get-my-payments';
 import {
+  GetPaymentsRequest,
+  PaymentsWithPaginationViewModel as AdminPaymentsWithPaginationViewModel,
+  PaymentsViewModel as AdminPaymentsViewModel,
+  PaymentsSortBy as PaymentsSortByContract,
+  PaymentsSortDirection as PaymentsSortDirectionContract,
+} from '@libs/contracts/payments/get-payments';
+import {
   PaymentType,
   SubscriptionType,
 } from '@libs/contracts/payments/subscription';
@@ -24,6 +31,50 @@ export class SubscriptionQueryRepository {
         expireAt: 'desc',
       }
     });
+  }
+
+  async getPayments(payload: GetPaymentsRequest): Promise<AdminPaymentsWithPaginationViewModel> {
+    const where: Prisma.SubscriptionWhereInput = {
+      deletedAt: null,
+    };
+
+    if (payload.userIds && payload.userIds.length > 0) {
+      where.userId = { in: payload.userIds };
+    }
+
+    const orderBy = this.buildPaymentsOrderBy(payload.sortBy, payload.sortDirection);
+
+    const [subscriptions, totalCount] = await Promise.all([
+      this.prisma.subscription.findMany({
+        where,
+        ...(payload.disablePagination
+          ? {}
+          : {
+              skip: (payload.pageNumber - 1) * payload.pageSize,
+              take: payload.pageSize,
+            }),
+        orderBy,
+        include: { plan: true },
+      }),
+      this.prisma.subscription.count({ where }),
+    ]);
+
+    return {
+      totalCount,
+      pagesCount: Math.ceil(totalCount / payload.pageSize),
+      page: payload.pageNumber,
+      pageSize: payload.pageSize,
+      items: subscriptions.map(
+        (subscription): AdminPaymentsViewModel => ({
+          id: subscription.id,
+          userId: subscription.userId,
+          createdAt: subscription.createdAt.toISOString(),
+          amount: subscription.plan.price,
+          paymentType: subscription.paymentType as PaymentType,
+          subscriptionType: subscription.plan.subscriptionType as SubscriptionType,
+        }),
+      ),
+    };
   }
   
   async getMyPayments(
@@ -62,6 +113,21 @@ export class SubscriptionQueryRepository {
         }),
       ),
     };
+  }
+
+  private buildPaymentsOrderBy(
+    sortBy: PaymentsSortByContract,
+    sortDirection: PaymentsSortDirectionContract,
+  ): Prisma.SubscriptionOrderByWithRelationInput {
+    switch (sortBy) {
+      case PaymentsSortByContract.price:
+        return { plan: { price: sortDirection } };
+      case PaymentsSortByContract.paymentType:
+        return { paymentType: sortDirection };
+      case PaymentsSortByContract.createdAt:
+      default:
+        return { createdAt: sortDirection };
+    }
   }
 
   private buildOrderBy(
