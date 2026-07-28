@@ -1,7 +1,11 @@
-import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_CURRENT_PAYMENT_SUBSCRIPTION, PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK, PAYMENTS_SERVICE, } from '@libs/constants';
+import { PATTERN_CANCEL_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_CREATE_SUBSCRIPTION, PATTERN_GET_CURRENT_PAYMENT_SUBSCRIPTION, PATTERN_GET_MY_PAYMENTS_SUBSCRIPTION, PATTERN_GET_PAYMENTS, PATTERN_GET_PLANS, PATTERN_RENEW_AUTO_RENEWAL_SUBSCRIPTION, PATTERN_STRIPE_WEBHOOK, PAYMENTS_SERVICE, } from '@libs/constants';
 import { CancelAutoRenewalRequest, CancelAutoRenewalResponse } from '@libs/contracts/payments/cancel-auto-renewal';
 import { CreateSubscriptionRequest, CreateSubscriptionResponse } from '@libs/contracts/payments/create-subscription';
 import { GetMyPaymentsRequest, PaymentsWithPaginationViewModel } from '@libs/contracts/payments/get-my-payments';
+import { 
+  GetPaymentsRequest, 
+  PaymentsWithPaginationViewModel as AdminPaymentsWithPaginationViewModel, 
+} from '@libs/contracts/payments/get-payments';
 import { GetCurrentPaymentSubscriptionRequest, GetCurrentPaymentSubscriptionResponse } from '@libs/contracts/payments/get-current-payment-subscription';
 import { RenewAutoRenewalRequest, RenewAutoRenewalResponse } from '@libs/contracts/payments/renew-auto-renewal';
 import { StripeWebhookRequest, StripeWebhookResponse } from '@libs/contracts/payments/stripe-webhook';
@@ -61,6 +65,14 @@ export class PaymentsClientService {
     return firstValueFrom(
       this.client
         .send(PATTERN_GET_CURRENT_PAYMENT_SUBSCRIPTION, payload)
+        .pipe(timeout(5000)),
+    );
+  }
+
+  async getPayments(payload: GetPaymentsRequest): Promise<AdminPaymentsWithPaginationViewModel> {
+    return firstValueFrom(
+      this.client
+        .send(PATTERN_GET_PAYMENTS, payload)
         .pipe(timeout(5000)),
     );
   }

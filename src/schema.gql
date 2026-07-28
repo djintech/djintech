@@ -46,10 +46,41 @@ type UsersPaginatedView {
   pageSize: Int!
 }
 
+type PaymentView {
+  id: Int!
+  userId: Int!
+  userName: String!
+  avatar: String
+  createdAt: DateTime!
+  amount: Int!
+  paymentMethod: PaymentType!
+  subscriptionType: SubscriptionType!
+}
+
+enum PaymentType {
+  STRIPE
+  PAYPAL
+}
+
+enum SubscriptionType {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+type PaymentsPaginatedView {
+  items: [PaymentView!]!
+  totalCount: Int!
+  pagesCount: Int!
+  page: Int!
+  pageSize: Int!
+}
+
 type Query {
   health: String!
   getUsers(input: GetUsersInput): UsersPaginatedView!
   getUser(userId: Int!): UserView!
+  getPayments(input: GetPaymentsInput!): PaymentsPaginatedView!
 }
 
 input GetUsersInput {
@@ -75,6 +106,21 @@ enum UserStatusFilter {
   ALL
   BLOCKED
   UNBLOCKED
+}
+
+input GetPaymentsInput {
+  pageNumber: Int! = 1
+  pageSize: Int! = 6
+  searchTerm: String
+  sortBy: PaymentsSortBy! = CREATED_AT
+  sortDirection: SortDirection! = Desc
+}
+
+enum PaymentsSortBy {
+  USERNAME
+  CREATED_AT
+  AMOUNT
+  PAYMENT_METHOD
 }
 
 type Mutation {

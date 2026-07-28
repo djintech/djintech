@@ -13,15 +13,18 @@ import { AdminUsersResolver } from './resolvers/admin-users.resolver';
 import { UserAccountsModule } from '../user-accounts/user-accounts.module';
 import { GetUsersQueryHandler } from './application/queries/get-users.query';
 import { GetUserQueryHandler } from './application/queries/get-user.query';
+import { GetPaymentsQueryHandler } from './application/queries/get-payments.query';
 import { BanUserCommandHandler } from './application/commands/ban-user.command';
 import { UsersQueryRepository } from './infrastructure/queries/users.query.repository';
 import { UsersRepository } from './infrastructure/users.repository';
 import { UnbanUserCommandHandler } from './application/commands/unban-user.command';
 import { RemoveUserCommandHandler } from './application/commands/remove-user.command';
+import { AdminPaymentsResolver } from './resolvers/admin-payments.resolver';
 
 const queryHandlers = [
   GetUsersQueryHandler,
   GetUserQueryHandler,
+  GetPaymentsQueryHandler,
 ];
 
 const commandHandlers = [
@@ -50,6 +53,7 @@ const commandHandlers = [
     HealthResolver,
     AdminAuthResolver,
     AdminUsersResolver,
+    AdminPaymentsResolver,
     AdminAuthService,
     GqlAuthGuard,
     ...queryHandlers,

@@ -56,6 +56,41 @@ export class UsersQueryRepository {
     return { users, totalCount };
   }
 
+  async getUsersShort(params: {
+    ids?: number[];
+    searchTerm?: string;
+  }): Promise<
+    {
+      id: number;
+      username: string;
+      profile: {
+        avatar: {
+          key: string;
+        } | null;
+      } | null;
+    }[]
+  > {
+    return this.prisma.user.findMany({
+      where: {
+        deletedAt: null,
+        ...(params.ids && { id: { in: params.ids, }, }),
+        ...(params.searchTerm && { username: { contains: params.searchTerm, mode: 'insensitive', }, }),
+      },
+      select: {
+        id: true,
+        username: true,
+        profile: {
+          select: {
+            avatar: {
+              where: { deletedAt: null },
+              select: { key: true, },
+            },
+          },
+        },
+      },
+    });
+  }
+
   async getUserById(userId: number): Promise<UserWithProfile | null> {
     return this.prisma.user.findUnique({
       where: {
