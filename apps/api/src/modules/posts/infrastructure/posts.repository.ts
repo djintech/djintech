@@ -11,25 +11,31 @@ export class PostsRepository {
     return this.prisma.post.create({ data });
   }
 
-  async createPostWithImages(
-    userId: number,
-    description: string | null,
-    images: UploadFileResponse[]
-  ): Promise<Post> {
+  async createPostWithImages( userId: number, description: string | null, images: UploadFileResponse[] ) {
     return this.prisma.$transaction(async (tx) => {
       const post = await tx.post.create({
         data: {
           userId,
           description,
           postImages: {
-            create: images.map(( img, index) => ({
+            create: images.map((img, index) => ({
               key: img.key,
               mimeType: img.mimeType,
               size: img.size,
               position: index,
             })),
           },
-        }
+        },
+        include: {
+          postImages: true,
+          user: {
+            include: {
+              profile: {
+                include: { avatar: true },
+              },
+            },
+          },
+        },
       });
 
       return post;

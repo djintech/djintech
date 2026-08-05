@@ -4,6 +4,7 @@ import { PostsPaginatedView } from '../../dto/posts-paginated.view';
 import { PostFullInfo, PostsQueryRepository } from '../../infrastructure/queries/posts.query.repository';
 import { ImagePostView, PostView } from '../../dto/post.view';
 import { FileUrlService } from '@src/core/file/file-url.service';
+import { mapPostToView } from '../../mappers/post.mapper';
 
 export class GetPostsQuery {
   constructor(public readonly input: GetPostsInput) {}
@@ -24,9 +25,7 @@ export class GetPostsQueryHandler
     const { posts, totalCount } = await this.postsQueryRepository.getAll({ sortDirection, endCursorPostId, pageSize, searchTerm, sortBy});
     
     return {
-      items: posts.map((post) =>
-        this.mapPost(post, this.fileUrlService),
-      ),
+      items: posts.map((post) => mapPostToView(post, this.fileUrlService) ),
       totalCount,
       pagesCount: Math.ceil(totalCount / pageSize),
       pageSize,

@@ -5,6 +5,9 @@ import cookieParser from 'cookie-parser';
 import { initAppModule } from './init-app-module';
 import { Transport } from '@nestjs/microservices';
 import { RABBITMQ_EXCHANGE, RABBITMQ_QUEUE_SUBSCRIPTION_ACTIVATED, RABBITMQ_QUEUE_SUBSCRIPTION_EXPIRED } from '@libs/constants/rabbitmq';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/use/ws';
+import { GraphQLSchemaHost } from '@nestjs/graphql';
 
 async function bootstrap() {
   const DynamicAppModule = await initAppModule();
@@ -52,5 +55,34 @@ async function bootstrap() {
     console.log('App starting listen port: ', port);
     console.log('NODE_ENV: ', coreConfig.env);
   });
+
+  const httpServer = app.getHttpServer();
+  const { schema } = app.get(GraphQLSchemaHost);
+
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: '/api/v1/graphql',
+    handleProtocols: (protocols) => {
+      if (protocols.has('graphql-transport-ws')) {
+        return 'graphql-transport-ws';
+      }
+      return false;
+    },
+  });
+
+  useServer(
+    {
+      schema,
+
+      onConnect: () => {
+        console.log('GraphQL WS connected');
+      },
+
+      onDisconnect: () => {
+        console.log('GraphQL WS disconnected');
+      },
+    },
+    wsServer,
+  );
 }
 bootstrap();

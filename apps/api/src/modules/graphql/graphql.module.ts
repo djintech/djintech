@@ -43,6 +43,7 @@ const commandHandlers = [
     UserAccountsModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      path: '/graphql',
       useGlobalPrefix: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: true,
