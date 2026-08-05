@@ -5,6 +5,9 @@ import { DomainException } from "@libs/core/exceptions/domain-exceptions";
 import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
 import { FilesClientService } from "@src/modules/files/infrastructure/files.client";
 import { UploadFileResponse } from "@libs/contracts/files/upload-file.contract";
+import { pubSub } from "@src/modules/graphql/pubsub/pubsub";
+import { FileUrlService } from "@src/core/file/file-url.service";
+import { mapPostToView } from "@src/modules/graphql/mappers/post.mapper";
 
 
 export class CreatePostCommand {
@@ -22,6 +25,7 @@ export class CreatePostUseCase
   constructor( 
     private postsRepository: PostsRepository,
     private readonly filesClient: FilesClientService,
+  private readonly fileUrlService: FileUrlService,
   ) {}
 
   async execute({ dto, userId, files }: CreatePostCommand): Promise<number> {
@@ -46,6 +50,10 @@ export class CreatePostUseCase
       uploadedImages = await this.filesClient.upload(payload);
       const description = dto.description ?? null;
       const post = await this.postsRepository.createPostWithImages( userId, description, uploadedImages);
+      
+      const postView = mapPostToView( post, this.fileUrlService );
+      await pubSub.publish('postAdded', { postAdded: postView });
+
       return post.id;
     } catch (error: any) {
       if (uploadedImages.length) {

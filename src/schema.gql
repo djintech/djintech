@@ -190,3 +190,7 @@ input UnbanUserInput {
 input RemoveUserInput {
   userId: Int!
 }
+
+type Subscription {
+  postAdded: PostView!
+}
