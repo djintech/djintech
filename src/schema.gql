@@ -76,11 +76,41 @@ type PaymentsPaginatedView {
   pageSize: Int!
 }
 
+type ImagePostView {
+  url: String!
+  position: Int!
+}
+
+type PostOwnerView {
+  id: Int!
+  userName: String!
+  avatar: String
+}
+
+type PostView {
+  id: Int!
+  ownerId: Int!
+  description: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  userBan: UserBanView
+  images: [ImagePostView!]!
+  postOwner: PostOwnerView!
+}
+
+type PostsPaginatedView {
+  items: [PostView!]!
+  totalCount: Int!
+  pagesCount: Int!
+  pageSize: Int!
+}
+
 type Query {
   health: String!
   getUsers(input: GetUsersInput): UsersPaginatedView!
   getUser(userId: Int!): UserView!
   getPayments(input: GetPaymentsInput!): PaymentsPaginatedView!
+  getPosts(input: GetPostsInput!): PostsPaginatedView!
 }
 
 input GetUsersInput {
@@ -121,6 +151,19 @@ enum PaymentsSortBy {
   CREATED_AT
   AMOUNT
   PAYMENT_METHOD
+}
+
+input GetPostsInput {
+  endCursorPostId: Int
+  pageSize: Int! = 10
+  searchTerm: String
+  sortBy: PostsSortBy! = CREATED_AT
+  sortDirection: SortDirection! = Desc
+}
+
+enum PostsSortBy {
+  USERNAME
+  CREATED_AT
 }
 
 type Mutation {

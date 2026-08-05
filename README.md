@@ -45,7 +45,7 @@ pnpm install
 $ pnpm run start:api
 
 # watch mode
-$ pnpm run start:api:dev
+$ pnpm run start:dev:api
 
 # debug mode
 $ pnpm run start:api:debug

@@ -20,11 +20,15 @@ import { UsersRepository } from './infrastructure/users.repository';
 import { UnbanUserCommandHandler } from './application/commands/unban-user.command';
 import { RemoveUserCommandHandler } from './application/commands/remove-user.command';
 import { AdminPaymentsResolver } from './resolvers/admin-payments.resolver';
+import { GetPostsQueryHandler } from './application/queries/get-posts.query';
+import { AdminPostsResolver } from './resolvers/admin-posts.resolver';
+import { PostsQueryRepository } from './infrastructure/queries/posts.query.repository';
 
 const queryHandlers = [
   GetUsersQueryHandler,
   GetUserQueryHandler,
   GetPaymentsQueryHandler,
+  GetPostsQueryHandler,
 ];
 
 const commandHandlers = [
@@ -54,12 +58,14 @@ const commandHandlers = [
     AdminAuthResolver,
     AdminUsersResolver,
     AdminPaymentsResolver,
+    AdminPostsResolver,
     AdminAuthService,
     GqlAuthGuard,
     ...queryHandlers,
     ...commandHandlers,
     UsersQueryRepository,
     UsersRepository,
+    PostsQueryRepository,
   ],
 })
 export class GraphqlModule {}
