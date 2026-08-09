@@ -31,7 +31,30 @@ model User {
   profile           Profile?
   notification      Notification[]
 
+  followers UserFollow[] @relation("Follower")
+  following UserFollow[] @relation("Following")
+
   @@map("users")
+}
+
+model UserFollow {
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  followingId Int
+  createdAt   DateTime @default(now())
+
+  // Кто подписался
+  follower User @relation( "Follower", fields: [followerId], references: [id], onDelete: Cascade )
+  // На кого подписались
+  following User @relation( "Following", fields: [followingId], references: [id], onDelete: Cascade )
+
+  // Один пользователь не может подписаться на одного и того же пользователя больше одного раза
+  @@unique([followerId, followingId])
+
+  @@index([followerId])
+  @@index([followingId])
+
+  @@map("userFollows")
 }
 
 model EmailConfirmation {
