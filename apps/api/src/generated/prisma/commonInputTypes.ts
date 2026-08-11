@@ -253,6 +253,23 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
 }
 
+export type EnumLikeCommentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LikeCommentStatus | Prisma.EnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LikeCommentStatus[] | Prisma.ListEnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LikeCommentStatus[] | Prisma.ListEnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLikeCommentStatusFilter<$PrismaModel> | $Enums.LikeCommentStatus
+}
+
+export type EnumLikeCommentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LikeCommentStatus | Prisma.EnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LikeCommentStatus[] | Prisma.ListEnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LikeCommentStatus[] | Prisma.ListEnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLikeCommentStatusWithAggregatesFilter<$PrismaModel> | $Enums.LikeCommentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLikeCommentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLikeCommentStatusFilter<$PrismaModel>
+}
+
 export type EnumAccountTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.AccountType | Prisma.EnumAccountTypeFieldRefInput<$PrismaModel>
   in?: $Enums.AccountType[] | Prisma.ListEnumAccountTypeFieldRefInput<$PrismaModel>
@@ -537,6 +554,23 @@ export type NestedFloatNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
+}
+
+export type NestedEnumLikeCommentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LikeCommentStatus | Prisma.EnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LikeCommentStatus[] | Prisma.ListEnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LikeCommentStatus[] | Prisma.ListEnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLikeCommentStatusFilter<$PrismaModel> | $Enums.LikeCommentStatus
+}
+
+export type NestedEnumLikeCommentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LikeCommentStatus | Prisma.EnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LikeCommentStatus[] | Prisma.ListEnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LikeCommentStatus[] | Prisma.ListEnumLikeCommentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLikeCommentStatusWithAggregatesFilter<$PrismaModel> | $Enums.LikeCommentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLikeCommentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLikeCommentStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumAccountTypeFilter<$PrismaModel = never> = {

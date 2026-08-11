@@ -78,6 +78,11 @@ export type PostLike = Prisma.PostLikeModel
  */
 export type Comment = Prisma.CommentModel
 /**
+ * Model CommentLike
+ * 
+ */
+export type CommentLike = Prisma.CommentLikeModel
+/**
  * Model Profile
  * 
  */
