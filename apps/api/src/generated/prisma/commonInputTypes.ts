@@ -209,6 +209,23 @@ export type EnumProviderTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumProviderTypeFilter<$PrismaModel>
 }
 
+export type EnumLikePostStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LikePostStatus | Prisma.EnumLikePostStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LikePostStatus[] | Prisma.ListEnumLikePostStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LikePostStatus[] | Prisma.ListEnumLikePostStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLikePostStatusFilter<$PrismaModel> | $Enums.LikePostStatus
+}
+
+export type EnumLikePostStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LikePostStatus | Prisma.EnumLikePostStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LikePostStatus[] | Prisma.ListEnumLikePostStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LikePostStatus[] | Prisma.ListEnumLikePostStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLikePostStatusWithAggregatesFilter<$PrismaModel> | $Enums.LikePostStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLikePostStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLikePostStatusFilter<$PrismaModel>
+}
+
 export type IntNullableFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
@@ -476,6 +493,23 @@ export type NestedEnumProviderTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumProviderTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumProviderTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumLikePostStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LikePostStatus | Prisma.EnumLikePostStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LikePostStatus[] | Prisma.ListEnumLikePostStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LikePostStatus[] | Prisma.ListEnumLikePostStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLikePostStatusFilter<$PrismaModel> | $Enums.LikePostStatus
+}
+
+export type NestedEnumLikePostStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LikePostStatus | Prisma.EnumLikePostStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LikePostStatus[] | Prisma.ListEnumLikePostStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LikePostStatus[] | Prisma.ListEnumLikePostStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLikePostStatusWithAggregatesFilter<$PrismaModel> | $Enums.LikePostStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLikePostStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLikePostStatusFilter<$PrismaModel>
 }
 
 export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {

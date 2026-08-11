@@ -25,6 +25,15 @@ export const ProviderType = {
 export type ProviderType = (typeof ProviderType)[keyof typeof ProviderType]
 
 
+export const LikePostStatus = {
+  NONE: 'NONE',
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
+} as const
+
+export type LikePostStatus = (typeof LikePostStatus)[keyof typeof LikePostStatus]
+
+
 export const AccountType = {
   Personal: 'Personal',
   Business: 'Business'
