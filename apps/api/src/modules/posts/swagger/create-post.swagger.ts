@@ -1,5 +1,5 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiBody, ApiConsumes, ApiOkResponse, ApiBadRequestResponse, ApiNotFoundResponse, ApiUnauthorizedResponse, ApiSecurity } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOkResponse, ApiBadRequestResponse, ApiNotFoundResponse, ApiUnauthorizedResponse, ApiSecurity, ApiForbiddenResponse } from '@nestjs/swagger';
 import { CreatePostWithFilesDto } from '../api/input-dto/posts-with-files.input-dto';
 import { PostViewDto } from '../api/view-dto/posts.view-dto';
 import { ErrorResponseDto } from '@src/core/error-dto/error-response.dto';
@@ -20,6 +20,7 @@ export function ApiCreatePostDocs() {
     }),
     ApiNotFoundResponse({ description: 'Post not found', type: ErrorResponseDto }),
     ApiUnauthorizedResponse({ description: 'Unauthorized' }),
+    ApiForbiddenResponse({ description: 'Forbidden. User is banned' }),
   );
 }
   

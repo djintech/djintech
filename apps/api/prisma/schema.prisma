@@ -33,6 +33,7 @@ model User {
   posts             Post[]
   profile           Profile?
   notification      Notification[]
+  comments          Comment[]
 
   followers UserFollow[] @relation("Follower")
   following UserFollow[] @relation("Following")
@@ -163,6 +164,7 @@ model Post {
   deletedAt    DateTime?
 
   postImages   PostImage[]
+  comments     Comment[]
   user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
@@ -186,6 +188,29 @@ model PostImage {
   @@unique([postId, position])
   @@index([postId])
   @@map("postImages")
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  postId    Int
+  userId    Int
+  parentId  Int?
+  content   String    @db.VarChar(300)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  post Post @relation( fields: [postId], references: [id], onDelete: Cascade )
+  user User @relation( fields: [userId], references: [id], onDelete: Cascade )
+  parent Comment? @relation( "CommentReplies", fields: [parentId], references: [id], onDelete: SetNull )
+
+  replies Comment[] @relation("CommentReplies")
+
+  @@index([postId])
+  @@index([userId])
+  @@index([parentId])
+  @@index([deletedAt])
+  @@map("comments")
 }
 
 enum AccountType {

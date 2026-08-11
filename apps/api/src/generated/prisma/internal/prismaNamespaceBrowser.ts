@@ -61,6 +61,7 @@ export const ModelName = {
   UserProvider: 'UserProvider',
   Post: 'Post',
   PostImage: 'PostImage',
+  Comment: 'Comment',
   Profile: 'Profile',
   Avatar: 'Avatar',
   Notification: 'Notification'
@@ -210,6 +211,20 @@ export const PostImageScalarFieldEnum = {
 } as const
 
 export type PostImageScalarFieldEnum = (typeof PostImageScalarFieldEnum)[keyof typeof PostImageScalarFieldEnum]
+
+
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  userId: 'userId',
+  parentId: 'parentId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
 
 
 export const ProfileScalarFieldEnum = {
