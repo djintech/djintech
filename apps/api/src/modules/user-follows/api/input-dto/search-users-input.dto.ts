@@ -13,11 +13,12 @@ export class SearchUsersInputDto {
 
   @ApiPropertyOptional({
     description: 'ID последнего пользователя предыдущей страницы',
-    example: 25,
+    example: 0,
+    default: 0,
   })
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  @Min(1)
-  cursor?: number;
+  @Min(0)
+  cursor: number = 0;
 }

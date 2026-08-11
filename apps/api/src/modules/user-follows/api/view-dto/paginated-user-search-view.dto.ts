@@ -39,10 +39,9 @@ export class UserSearchItemDto {
 
 export class PaginatedUserSearchViewDto {
   @ApiProperty({
-    example: 25,
-    nullable: true,
+    example: 0,
   })
-  prevCursor!: number | null;
+  prevCursor!: number;
 
   @ApiProperty({
     example: 37,
@@ -62,7 +61,7 @@ export class PaginatedUserSearchViewDto {
 
   static mapToView(
     result: SearchUsersResult,
-    prevCursor: number | null,
+    prevCursor: number,
     pageSize: number,
     buildUrl: (key: string) => string,
   ): PaginatedUserSearchViewDto {

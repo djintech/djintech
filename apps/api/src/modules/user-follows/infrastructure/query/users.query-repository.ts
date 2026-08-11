@@ -18,7 +18,9 @@ export type SearchUsersResult = {
       };
     };
   }>[];
+  prevCursor: number;
   nextCursor: number | null;
+  pageSize: number;
 };
 
 @Injectable()
@@ -28,7 +30,11 @@ export class UsersQueryRepository {
   async searchUsers(
     params: SearchUsersParams,
   ): Promise<SearchUsersResult> {
-    const { username, cursor, pageSize } = params;
+    const {
+      username,
+      cursor = 0,
+      pageSize,
+    } = params;
 
     const users = await this.prisma.user.findMany({
       where: {
@@ -58,7 +64,7 @@ export class UsersQueryRepository {
         id: 'asc',
       },
 
-      ...(cursor !== undefined
+      ...(cursor > 0
         ? {
             skip: 1,
             cursor: {
@@ -78,9 +84,11 @@ export class UsersQueryRepository {
 
     return {
       items,
+      prevCursor: cursor,
       nextCursor: hasNextPage
         ? items[items.length - 1]?.id ?? null
         : null,
+      pageSize,
     };
   }
 }
