@@ -20,6 +20,7 @@ import { ApiGetPostByIdDocs } from '../swagger/get-post-by-id.swagger';
 import { ApiGetAllPostsDocs } from '../swagger/get-all-posts.swagger';
 import { ApiDeletePostDocs } from '../swagger/delete-post.swagger';
 import { ApiUpdatePostDocs } from '../swagger/update-post.swagger';
+import { BannedUserGuard } from '@src/modules/user-accounts/auth/guards/banned-user.guard';
 
 @SkipThrottle()
 @Controller('posts')
@@ -31,7 +32,7 @@ export class PostsController {
   
   @Post()
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
   @ApiCreatePostDocs()
   @UseInterceptors(CustomFilesInterceptor)
   async createPost(
@@ -68,7 +69,7 @@ export class PostsController {
   }
 
   @Put(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
   @ApiUpdatePostDocs()
   @HttpCode(HttpStatus.NO_CONTENT)
   async updatePost(
@@ -80,7 +81,7 @@ export class PostsController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
   @ApiDeletePostDocs()
   @HttpCode(HttpStatus.NO_CONTENT)
   async deletePost(
