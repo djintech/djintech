@@ -24,6 +24,7 @@ import { PaymentsModule } from './modules/payments/payments.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { GraphqlModule } from './modules/graphql/graphql.module';
+import { UserFollowsModule } from './modules/user-follows/urer-follows.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { GraphqlModule } from './modules/graphql/graphql.module';
     FileModule,
     SubscriptionsModule,
     NotificationsModule,
+    UserFollowsModule,
   ],
   controllers: [ApiController],
   providers: [
