@@ -34,6 +34,7 @@ model User {
   profile           Profile?
   notification      Notification[]
   comments          Comment[]
+  postLikes         PostLike[]
 
   followers UserFollow[] @relation("Follower")
   following UserFollow[] @relation("Following")
@@ -165,6 +166,7 @@ model Post {
 
   postImages   PostImage[]
   comments     Comment[]
+  postLikes    PostLike[]
   user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
@@ -188,6 +190,28 @@ model PostImage {
   @@unique([postId, position])
   @@index([postId])
   @@map("postImages")
+}
+
+enum LikePostStatus {
+  NONE
+  LIKE
+  DISLIKE
+}
+
+model PostLike {
+  id        Int             @id @default(autoincrement())
+  status    LikePostStatus  @default(NONE)
+  postId    Int
+  userId    Int
+  createdAt DateTime        @default(now())
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+  @@index([postId])
+  @@index([userId])
+  @@map("postLikes")
 }
 
 model Comment {
