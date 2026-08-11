@@ -34,6 +34,15 @@ export const LikePostStatus = {
 export type LikePostStatus = (typeof LikePostStatus)[keyof typeof LikePostStatus]
 
 
+export const LikeCommentStatus = {
+  NONE: 'NONE',
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
+} as const
+
+export type LikeCommentStatus = (typeof LikeCommentStatus)[keyof typeof LikeCommentStatus]
+
+
 export const AccountType = {
   Personal: 'Personal',
   Business: 'Business'

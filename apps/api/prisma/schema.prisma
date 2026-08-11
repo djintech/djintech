@@ -35,6 +35,7 @@ model User {
   notification      Notification[]
   comments          Comment[]
   postLikes         PostLike[]
+  commentLikes      CommentLike[]
 
   followers UserFollow[] @relation("Follower")
   following UserFollow[] @relation("Following")
@@ -230,11 +231,35 @@ model Comment {
 
   replies Comment[] @relation("CommentReplies")
 
+  commentLikes CommentLike[]
+
   @@index([postId])
   @@index([userId])
   @@index([parentId])
   @@index([deletedAt])
   @@map("comments")
+}
+
+enum LikeCommentStatus {
+  NONE
+  LIKE
+  DISLIKE
+}
+
+model CommentLike {
+  id        Int               @id @default(autoincrement())
+  status    LikeCommentStatus @default(NONE)
+  commentId Int
+  userId    Int
+  createdAt DateTime          @default(now())
+
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, userId])
+  @@index([commentId])
+  @@index([userId])
+  @@map("commentLikes")
 }
 
 enum AccountType {
