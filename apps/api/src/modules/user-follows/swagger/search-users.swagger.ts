@@ -1,5 +1,5 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiBearerAuth,  ApiOperation, ApiQuery, ApiResponse, ApiSecurity, ApiUnauthorizedResponse, } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiSecurity, ApiUnauthorizedResponse, } from '@nestjs/swagger';
 import { PaginatedUserSearchViewDto } from '../api/view-dto/paginated-user-search-view.dto';
 
 export function ApiSearchUsersDocs() {
