@@ -7,6 +7,11 @@ import { SearchUsersQueryHandler } from './application/queries/search-users.quer
 import { FollowUserUseCase } from './application/usecases/follow-user.usecase';
 import { UserFollowRepository } from './infrastructure/user-follow.repository';
 import { UnfollowUserUseCase } from './application/usecases/unfollow-user.usecase';
+import { GetUserProfileQueryHandler } from './application/queries/get-user-profile.query';
+import { GetUserFollowersQueryHandler } from './application/queries/get-user-followers.query';
+import { GetUserFollowingQueryHandler } from './application/queries/get-user-following.query';
+import { ProfileQueryRepository } from './infrastructure/query/profile.query.repository';
+import { UserFollowQueryRepository } from './infrastructure/query/user-follow.query.repository';
 
 const commandHandlers = [
   FollowUserUseCase,
@@ -15,6 +20,9 @@ const commandHandlers = [
 
 const queryHandlers = [
   SearchUsersQueryHandler,
+  GetUserProfileQueryHandler,
+  GetUserFollowersQueryHandler,
+  GetUserFollowingQueryHandler,
 ];
 
 @Module({
@@ -30,6 +38,8 @@ const queryHandlers = [
     ...queryHandlers,
     UsersQueryRepository,
     UserFollowRepository,
+    ProfileQueryRepository,
+    UserFollowQueryRepository,
   ],
 })
 export class UserFollowsModule {}

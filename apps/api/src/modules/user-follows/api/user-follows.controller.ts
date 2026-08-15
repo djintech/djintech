@@ -12,6 +12,16 @@ import { FollowUserCommand } from '../application/usecases/follow-user.usecase';
 import { ApiUserFollowDocs } from '../swagger/user-follow.swagger';
 import { UnfollowUserCommand } from '../application/usecases/unfollow-user.usecase';
 import { ApiUserUnfollowDocs } from '../swagger/user-unfollow.swagger';
+import { GetUserFollowersInputDto } from './input-dto/get-user-followers-input.dto';
+import { GetUserFollowingInputDto } from './input-dto/get-user-following-input.dto';
+import { ApiGetUserProfileDocs } from '../swagger/get-user-profile.swagger';
+import { UserProfileViewDto } from './view-dto/user-profile-view.dto';
+import { GetUserProfileQuery } from '../application/queries/get-user-profile.query';
+import { ApiGetUserFollowersDocs } from '../swagger/get-user-followers.swagger';
+import { PaginatedUserFollowViewDto } from './view-dto/paginated-user-follow-view.dto';
+import { GetUserFollowersQuery } from '../application/queries/get-user-followers.query';
+import { ApiGetUserFollowingDocs } from '../swagger/get-user-following.swagger';
+import { GetUserFollowingQuery } from '../application/queries/get-user-following.query';
 
 @SkipThrottle()
 @Controller('users')
@@ -33,6 +43,44 @@ export class UserFollowsController {
       SearchUsersQuery,
       PaginatedUserSearchViewDto
     >(new SearchUsersQuery(userId, query));
+  }
+
+  @Get('/:userName')
+  @ApiGetUserProfileDocs()
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  async getUserProfile(
+    @UserId() userId: number,
+    @Param('userName') userName: string,
+  ): Promise<UserProfileViewDto> {
+    return await this.queryBus.execute< GetUserProfileQuery, UserProfileViewDto >(
+      new GetUserProfileQuery(userId, userName));
+  }
+
+  @Get('/:userName/followers')
+  @ApiGetUserFollowersDocs()
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  async getUserFollowers(
+    @UserId() userId: number,
+    @Param('userName') userName: string,
+    @Query() query: GetUserFollowersInputDto,
+  ): Promise<PaginatedUserFollowViewDto> {
+    return await this.queryBus.execute< GetUserFollowersQuery, PaginatedUserFollowViewDto >(
+      new GetUserFollowersQuery(userId, userName, query));
+  }
+
+  @Get('/:userName/following')
+  @ApiGetUserFollowingDocs()
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  async getUserFollowing(
+    @UserId() userId: number,
+    @Param('userName') userName: string,
+    @Query() query: GetUserFollowingInputDto,
+  ): Promise<PaginatedUserFollowViewDto> {
+    return await this.queryBus.execute< GetUserFollowingQuery, PaginatedUserFollowViewDto >(
+      new GetUserFollowingQuery(userId, userName, query));
   }
 
   @Post('following')
