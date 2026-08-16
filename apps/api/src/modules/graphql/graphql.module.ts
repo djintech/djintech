@@ -23,12 +23,18 @@ import { AdminPaymentsResolver } from './resolvers/admin-payments.resolver';
 import { GetPostsQueryHandler } from './application/queries/get-posts.query';
 import { AdminPostsResolver } from './resolvers/admin-posts.resolver';
 import { PostsQueryRepository } from './infrastructure/queries/posts.query.repository';
+import { AdminFollowersResolver } from './resolvers/admin-followers.resolver';
+import { GetFollowersQueryHandler } from './application/queries/get-followers.query';
+import { GetFollowingQueryHandler } from './application/queries/get-following.query';
+import { UserFollowQueryRepository } from './infrastructure/queries/user-follow.query.repository';
 
 const queryHandlers = [
   GetUsersQueryHandler,
   GetUserQueryHandler,
   GetPaymentsQueryHandler,
   GetPostsQueryHandler,
+  GetFollowersQueryHandler,
+  GetFollowingQueryHandler,
 ];
 
 const commandHandlers = [
@@ -60,6 +66,7 @@ const commandHandlers = [
     AdminUsersResolver,
     AdminPaymentsResolver,
     AdminPostsResolver,
+    AdminFollowersResolver,
     AdminAuthService,
     GqlAuthGuard,
     ...queryHandlers,
@@ -67,6 +74,7 @@ const commandHandlers = [
     UsersQueryRepository,
     UsersRepository,
     PostsQueryRepository,
+    UserFollowQueryRepository,
   ],
 })
 export class GraphqlModule {}
