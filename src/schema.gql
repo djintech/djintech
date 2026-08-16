@@ -105,12 +105,31 @@ type PostsPaginatedView {
   pageSize: Int!
 }
 
+type FollowView {
+  id: Int!
+  userId: Int!
+  userName: String!
+  firstName: String
+  lastName: String
+  createdAt: DateTime!
+}
+
+type FollowersPaginatedView {
+  items: [FollowView!]!
+  totalCount: Int!
+  pagesCount: Int!
+  page: Int!
+  pageSize: Int!
+}
+
 type Query {
   health: String!
   getUsers(input: GetUsersInput): UsersPaginatedView!
   getUser(userId: Int!): UserView!
   getPayments(input: GetPaymentsInput!): PaymentsPaginatedView!
   getPosts(input: GetPostsInput!): PostsPaginatedView!
+  getFollowers(input: GetFollowUsersInput): FollowersPaginatedView!
+  getFollowing(input: GetFollowUsersInput): FollowersPaginatedView!
 }
 
 input GetUsersInput {
@@ -162,6 +181,19 @@ input GetPostsInput {
 }
 
 enum PostsSortBy {
+  USERNAME
+  CREATED_AT
+}
+
+input GetFollowUsersInput {
+  pageNumber: Int! = 1
+  pageSize: Int! = 10
+  sortBy: FollowersSortBy! = CREATED_AT
+  sortDirection: SortDirection! = Desc
+  userId: Int!
+}
+
+enum FollowersSortBy {
   USERNAME
   CREATED_AT
 }
