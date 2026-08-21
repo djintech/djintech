@@ -16,6 +16,9 @@ export abstract class PaginatedViewDto<T> {
 
   @ApiProperty()
   pageSize!: number;
+  
+  @ApiProperty({ example: 5, required: false })
+  unreadCount?: number;
 
   //статический метод-утилита для мапинга
   public static mapToView<T>(data: {
@@ -23,6 +26,7 @@ export abstract class PaginatedViewDto<T> {
     page: number;
     size: number;
     totalCount: number;
+    unreadCount?: number;
   }): PaginatedViewDto<T> {
     return {
       totalCount: data.totalCount,
@@ -30,6 +34,7 @@ export abstract class PaginatedViewDto<T> {
       page: data.page,
       pageSize: data.size,
       items: data.items,
+      unreadCount: data.unreadCount,
     };
   }
 }
