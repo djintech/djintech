@@ -11,17 +11,24 @@ import { GetPostsByUserIdQueryHandler } from './application/queries/get-posts-by
 import { GetPostsQueryHandler } from './application/queries/get-posts.query';
 import { DeletePostUseCase } from './application/usecases/delete-post.usecase';
 import { UpdatePostUseCase } from './application/usecases/update-post.usecase';
+import { PostsCommentsController } from './api/posts-comments.controller';
+import { CreateCommentUseCase } from './application/usecases/create-comment.usecase';
+import { CommentsRepository } from './infrastructure/comments.repository';
+import { GetCommentsQueryHandler } from './application/queries/get-comments.query';
+import { CommentsQueryRepository } from './infrastructure/query/comments.query.repository';
 
 const commandHandlers = [
   CreatePostUseCase,
   DeletePostUseCase,
   UpdatePostUseCase,
+  CreateCommentUseCase,
 ];
 
 const queryHandlers = [
   GetPostByIdQueryHandler,
   GetPostsByUserIdQueryHandler,
   GetPostsQueryHandler,
+  GetCommentsQueryHandler,
 ];
 
 @Module({
@@ -31,12 +38,15 @@ const queryHandlers = [
   ],
   controllers: [
     PostsController,
+    PostsCommentsController,
   ],
   providers: [
     ...commandHandlers,
     ...queryHandlers,
     PostsRepository,
     PostsQueryRepository,
+    CommentsRepository,
+    CommentsQueryRepository,
     FilesConfig,
   ],
 })
