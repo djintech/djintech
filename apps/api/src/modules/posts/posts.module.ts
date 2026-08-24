@@ -16,12 +16,15 @@ import { CreateCommentUseCase } from './application/usecases/create-comment.usec
 import { CommentsRepository } from './infrastructure/comments.repository';
 import { GetCommentsQueryHandler } from './application/queries/get-comments.query';
 import { CommentsQueryRepository } from './infrastructure/query/comments.query.repository';
+import { CreateAnswerUseCase } from './application/usecases/create-answer.usecase';
+import { GetAnswersQueryHandler } from './application/queries/get-answers.query';
 
 const commandHandlers = [
   CreatePostUseCase,
   DeletePostUseCase,
   UpdatePostUseCase,
   CreateCommentUseCase,
+  CreateAnswerUseCase,
 ];
 
 const queryHandlers = [
@@ -29,6 +32,7 @@ const queryHandlers = [
   GetPostsByUserIdQueryHandler,
   GetPostsQueryHandler,
   GetCommentsQueryHandler,
+  GetAnswersQueryHandler,
 ];
 
 @Module({
