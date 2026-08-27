@@ -52,6 +52,18 @@ export class CommentsRepository {
     });
   }
 
+  async findAnswerByIdAndCommentIdAndPostId( answerId: number, commentId: number, postId: number, ): Promise<{ id: number } | null> {
+    return this.prisma.comment.findFirst({
+      where: {
+        id: answerId,
+        postId,
+        parentId: commentId,
+        deletedAt: null,
+      },
+      select: { id: true },
+    });
+  }
+
   /**
    * Returns a comment with all data required to build CommentViewDto.
    * likeCount: number of active LIKEs only.

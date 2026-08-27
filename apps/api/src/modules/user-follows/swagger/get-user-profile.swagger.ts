@@ -1,5 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import {ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiSecurity, ApiUnauthorizedResponse, ApiNotFoundResponse,} from '@nestjs/swagger';
+import { UserProfileViewDto } from '../api/view-dto/user-profile-view.dto';
 
 export function ApiGetUserProfileDocs() {
   return applyDecorators(
@@ -18,7 +19,7 @@ export function ApiGetUserProfileDocs() {
       description: 'Username of the user',
     }),
 
-    ApiResponse({ status: 200, description: 'User profile retrieved successfully' }),
+    ApiResponse({ status: 200, type: UserProfileViewDto, description: 'User profile retrieved successfully' }),
     ApiNotFoundResponse({ description: 'User not found' }),
     ApiUnauthorizedResponse({ description: 'Unauthorized' }),
   );

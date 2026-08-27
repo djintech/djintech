@@ -5,7 +5,19 @@ import { Prisma } from "@src/generated/prisma/client";
 export type ProfileFullInfo = Prisma.ProfileGetPayload<{
   include: {
     avatar: true;
-    user: true;
+    user: {
+      include: {
+        _count: {
+          select: {
+            followers: true;
+            following: true;
+            posts: {
+              where: { deletedAt: null },
+            },
+          };
+        };
+      };
+    };
   };
 }>;
 
@@ -14,18 +26,25 @@ export class ProfileQueryRepository {
   constructor(private prisma: PrismaService) {}
 
   async findyUserId( userId: number ): Promise<ProfileFullInfo | null> {
-    return this.prisma.profile.findFirst(
-      { 
-        where: { userId, deletedAt: null },
-        include: { 
-          avatar: {
-            where: {
-             deletedAt: null,
+   return this.prisma.profile.findFirst({
+      where: { userId, deletedAt: null },
+      include: {
+        avatar: {
+          where: { deletedAt: null },
+        },
+
+        user: {
+          include: {
+            _count: {
+              select: {
+                followers: true,
+                following: true,
+                posts: true,
+              },
             },
-          }, 
-          user: true 
-        }
-      },      
-    )
+          },
+        },
+      },
+    });
   }
 }

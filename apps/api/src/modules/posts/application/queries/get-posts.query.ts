@@ -8,7 +8,8 @@ import { MAIN_PAGE_SIZE } from "../../constants";
 
 export class GetPostsQuery {
   constructor(
-    public query: BaseQueryParams
+    public query: BaseQueryParams,
+    public userId?: number,
   ) {}
 }
 
@@ -21,7 +22,7 @@ export class GetPostsQueryHandler
         private readonly fileUrlService: FileUrlService
   ) {}
 
-  async execute({ query }: GetPostsQuery) {
+  async execute({ query, userId }: GetPostsQuery) {
     const { pageNumber, pageSize, sortDirection } = query;
     const pageSizeValue = pageSize ?? MAIN_PAGE_SIZE;
     const order = sortDirection === SortDirection.Asc ? SortDirection.Asc : SortDirection.Desc;
@@ -37,7 +38,7 @@ export class GetPostsQueryHandler
       page: pageNumber,
       size: pageSizeValue,
       totalCount,
-      items: posts.map(post => PostViewDto.mapToView(post, buildUrl)),
+      items: posts.map(post => PostViewDto.mapToView(post, buildUrl, userId)),      
     });
 }
 }

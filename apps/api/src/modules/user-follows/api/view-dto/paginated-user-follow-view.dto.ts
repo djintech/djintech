@@ -1,14 +1,24 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { FollowsUsersResult } from '../../infrastructure/query/user-follow.query.repository';
 import { UserFollowViewDto } from './user-follow-view.dto';
 
 export class PaginatedUserFollowViewDto {
+  @ApiProperty()
   totalCount!: number;
+
+  @ApiProperty()
   pagesCount!: number;
+
+  @ApiProperty()
   pageSize!: number;
 
+  @ApiProperty({ type: Number, nullable: true })
   prevCursor!: number | null;
+
+  @ApiProperty({ type: Number, nullable: true })
   nextCursor!: number | null;
 
+  @ApiProperty()
   items!: UserFollowViewDto[];
 
   static mapToView(

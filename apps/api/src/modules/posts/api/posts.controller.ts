@@ -21,6 +21,18 @@ import { ApiGetAllPostsDocs } from '../swagger/get-all-posts.swagger';
 import { ApiDeletePostDocs } from '../swagger/delete-post.swagger';
 import { ApiUpdatePostDocs } from '../swagger/update-post.swagger';
 import { BannedUserGuard } from '@src/modules/user-accounts/auth/guards/banned-user.guard';
+import { UpdatePostLikeStatusInputDto } from './input-dto/update-post-like-status.input-dto';
+import { ApiUpdatePostLikeStatusDocs } from '../swagger/update-post-like-status.swagger';
+import { UpdatePostLikeStatusCommand } from '../application/usecases/update-post-like-status.usecase';
+import { BasePaginationInputDto } from '@src/core/dto/base.paginated-with-cursor.view-dto';
+import { ApiGetPostLikesDocs } from '../swagger/get-post-likes.swagger';
+import { BasePaginatedWithCursorViewDto } from '@src/core/dto/base-paginated-with-cursor-view.dto';
+import { UserFollowViewDto } from '@src/modules/user-follows/api/view-dto/user-follow-view.dto';
+import { GetPostLikesQuery } from '../application/queries/get-post-likes.query';
+import { OptionalJwtGuard } from '@src/modules/user-accounts/auth/guards/bearer/jwt-optional.quard';
+import { GetFeedQuery } from '../application/queries/get-feed.query';
+import { ApiGetFeedDocs } from '../swagger/get-feed.swagger';
+import { FeedViewDto } from './view-dto/feed.view-dto';
 
 @SkipThrottle()
 @Controller('posts')
@@ -41,31 +53,52 @@ export class PostsController {
     @Body() dto: PostInputDto,
   ): Promise<PostViewDto> {
     const postId = await this.commandBus.execute(new CreatePostCommand( dto, userId, files ));
-    return this.queryBus.execute(new GetPostByIdQuery( postId ));
+    return this.queryBus.execute(new GetPostByIdQuery( postId, userId ));
   }
 
   @Get('user/:id')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(OptionalJwtGuard)
   @ApiGetPostsByUserDocs()
   async getPostsByUserId(
     @Param('id', ParseIntPipe) id: number, 
-    @Query() query: BaseQueryParams
+    @Query() query: BaseQueryParams,
+    @UserId() userId: number | undefined,
   ): Promise<PaginatedViewDto<PostViewDto[]>>  {
-    return this.queryBus.execute(new GetPostsByUserIdQuery(query, id));
+    return this.queryBus.execute(new GetPostsByUserIdQuery(query, id, userId));
+  }
+
+  @Get('feed')
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
+  @HttpCode(HttpStatus.OK)
+  @ApiGetFeedDocs()
+  async getFeed(
+    @UserId() userId: number,
+    @Query() query: BasePaginationInputDto,
+  ): Promise<BasePaginatedWithCursorViewDto<FeedViewDto[]>> {
+    return this.queryBus.execute( new GetFeedQuery(userId, query) );
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(OptionalJwtGuard)
   @ApiGetPostByIdDocs()
-  async getPost(@Param('id', ParseIntPipe) id: number) {
-    return this.queryBus.execute(new GetPostByIdQuery( id ));
+  async getPost(
+    @Param('id', ParseIntPipe) id: number,
+    @UserId() userId: number | undefined,
+  ) {
+    return this.queryBus.execute(new GetPostByIdQuery( id, userId ));
   }
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @UseGuards(OptionalJwtGuard)
   @ApiGetAllPostsDocs()
-  async getAll(@Query() query: BaseQueryParams): Promise<PaginatedViewDto<PostViewDto[]>> {
-    return this.queryBus.execute(new GetPostsQuery(query));
+  async getAll(
+    @Query() query: BaseQueryParams,
+    @UserId() userId: number | undefined,
+  ): Promise<PaginatedViewDto<PostViewDto[]>> {
+    return this.queryBus.execute(new GetPostsQuery(query, userId));
   }
 
   @Put(':id')
@@ -90,4 +123,28 @@ export class PostsController {
   ) {
     return this.commandBus.execute(new DeletePostCommand(id, userId));
  }
+ 
+  @Put(':id/like-status')
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
+  @ApiUpdatePostLikeStatusDocs()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async updatePostLikeStatus(
+    @UserId() userId: number,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdatePostLikeStatusInputDto,
+  ) {
+    return await this.commandBus.execute( new UpdatePostLikeStatusCommand(userId, id, dto) );
+  }
+
+  @Get(':id/likes')
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
+  @HttpCode(HttpStatus.OK)
+  @ApiGetPostLikesDocs()
+  async getPostLikes(
+    @UserId() userId: number,
+    @Param('id', ParseIntPipe) id: number,
+    @Query() query: BasePaginationInputDto
+  ): Promise<BasePaginatedWithCursorViewDto<UserFollowViewDto[]>> {
+    return this.queryBus.execute(new GetPostLikesQuery( id, userId, query ));
+  }
 }
