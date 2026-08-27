@@ -7,7 +7,8 @@ import { FileUrlService } from "../../../../core/file/file-url.service";
 
 export class GetPostByIdQuery {
   constructor(
-    public id: number
+    public id: number,
+    public userId?: number,
   ) {}
 }
 
@@ -20,7 +21,7 @@ export class GetPostByIdQueryHandler
         private readonly fileUrlService: FileUrlService
   ) {}
 
-  async execute({ id }: GetPostByIdQuery) {
+  async execute({ id, userId }: GetPostByIdQuery) {
     const post = await this.postsQueryRepository.findPostById( id );
 
     if ( !post ){
@@ -32,6 +33,6 @@ export class GetPostByIdQueryHandler
     }
 
     const buildUrl = this.fileUrlService.getPublicUrl.bind(this.fileUrlService);
-    return PostViewDto.mapToView( post, buildUrl );
+    return PostViewDto.mapToView( post, buildUrl, userId );
 }
 }

@@ -21,6 +21,15 @@ export class ProfileViewDto {
   @ApiProperty({ example: '2026-04-02T19:36:31.129Z' })
   createdAt!: Date ;
 
+  @ApiProperty({ example: 10 })
+  followersCount!: number;
+
+  @ApiProperty({ example: 25 })
+  followingCount!: number;
+
+  @ApiProperty({ example: 7 })
+  postsCount!: number;
+
   static mapToView( profile: ProfileFullInfo, buildUrl: (key: string) => string ) {
     const dto = new this();
 
@@ -33,6 +42,9 @@ export class ProfileViewDto {
     dto.country = profile.country;
     dto.avatar = profile.avatar?.key ? buildUrl(profile.avatar.key) : null;
     dto.createdAt = profile.createdAt;
+    dto.followersCount = profile.user._count.followers;
+    dto.followingCount = profile.user._count.following;
+    dto.postsCount = profile.user._count.posts;
 
     return dto;
   }

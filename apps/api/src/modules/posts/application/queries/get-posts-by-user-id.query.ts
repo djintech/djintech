@@ -2,8 +2,6 @@ import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { BaseQueryParams, SortDirection } from "@src/core/dto/base.query-params.input-dto";
 import { PostViewDto } from "../../api/view-dto/posts.view-dto";
 import { PostsQueryRepository } from "../../infrastructure/query/posts.query.repository";
-import { DomainException } from "@libs/core/exceptions/domain-exceptions";
-import { DomainExceptionCode } from "@libs/core/exceptions/domain-exception-codes";
 import { FileUrlService } from "../../../../core/file/file-url.service";
 import { PaginatedViewDto } from "@src/core/dto/base.paginated.view-dto";
 import { USER_PROFILE_PAGE_SIZE } from "../../constants";
@@ -11,7 +9,8 @@ import { USER_PROFILE_PAGE_SIZE } from "../../constants";
 export class GetPostsByUserIdQuery {
   constructor(
     public query: BaseQueryParams,
-    public id: number
+    public id: number,
+    public userId?: number,
   ) {}
 }
 
@@ -24,7 +23,7 @@ export class GetPostsByUserIdQueryHandler
     private readonly fileUrlService: FileUrlService
   ) {}
 
-  async execute({ query, id }: GetPostsByUserIdQuery) {
+  async execute({ query, id, userId }: GetPostsByUserIdQuery) {
     const { pageNumber, pageSize, sortDirection } = query;
     const pageSizeValue = pageSize ?? USER_PROFILE_PAGE_SIZE;
     const order = sortDirection === SortDirection.Asc ? SortDirection.Asc : SortDirection.Desc;
@@ -41,7 +40,7 @@ export class GetPostsByUserIdQueryHandler
       page: pageNumber,
       size: pageSizeValue,
       totalCount,
-      items: posts.map(post => PostViewDto.mapToView(post, buildUrl)),
+      items: posts.map(post => PostViewDto.mapToView(post, buildUrl, userId)),
     });
 }
 }

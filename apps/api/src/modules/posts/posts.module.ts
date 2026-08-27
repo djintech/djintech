@@ -18,6 +18,17 @@ import { GetCommentsQueryHandler } from './application/queries/get-comments.quer
 import { CommentsQueryRepository } from './infrastructure/query/comments.query.repository';
 import { CreateAnswerUseCase } from './application/usecases/create-answer.usecase';
 import { GetAnswersQueryHandler } from './application/queries/get-answers.query';
+import { UpdatePostLikeStatusUseCase } from './application/usecases/update-post-like-status.usecase';
+import { PostLikesRepository } from './infrastructure/post-likes.repository';
+import { UpdateCommentLikeStatusUseCase } from './application/usecases/update-comment-like-status.usecase';
+import { CommentLikesRepository } from './infrastructure/comment-likes.repository';
+import { UpdateAnswerLikeStatusUseCase } from './application/usecases/update-answer-like-status.usecase';
+import { GetPostLikesQueryHandler } from './application/queries/get-post-likes.query';
+import { PostLikesQueryRepository } from './infrastructure/query/post-likes.query.repository';
+import { GetCommentLikesQueryHandler } from './application/queries/get-comment-likes.query';
+import { GetAnswerLikesQueryHandler } from './application/queries/get-answer-likes.query';
+import { CommentLikesQueryRepository } from './infrastructure/query/comment-likes.query.repository';
+import { GetFeedQueryHandler } from './application/queries/get-feed.query';
 
 const commandHandlers = [
   CreatePostUseCase,
@@ -25,6 +36,9 @@ const commandHandlers = [
   UpdatePostUseCase,
   CreateCommentUseCase,
   CreateAnswerUseCase,
+  UpdatePostLikeStatusUseCase,
+  UpdateCommentLikeStatusUseCase,
+  UpdateAnswerLikeStatusUseCase,
 ];
 
 const queryHandlers = [
@@ -33,6 +47,10 @@ const queryHandlers = [
   GetPostsQueryHandler,
   GetCommentsQueryHandler,
   GetAnswersQueryHandler,
+  GetPostLikesQueryHandler,
+  GetCommentLikesQueryHandler,
+  GetAnswerLikesQueryHandler,
+  GetFeedQueryHandler,
 ];
 
 @Module({
@@ -51,6 +69,10 @@ const queryHandlers = [
     PostsQueryRepository,
     CommentsRepository,
     CommentsQueryRepository,
+    PostLikesRepository,
+    PostLikesQueryRepository,
+    CommentLikesRepository,
+    CommentLikesQueryRepository,
     FilesConfig,
   ],
 })

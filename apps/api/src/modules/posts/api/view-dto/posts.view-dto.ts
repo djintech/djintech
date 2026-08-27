@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { PostFullInfo } from "../../infrastructure/query/posts.query.repository";
+import { PostFullInfo } from "../../infrastructure/types/post-include.type";
 
 export class PostImageViewDto {
   @ApiProperty()
@@ -17,14 +17,6 @@ class ownerViewDto {
   name!: string;
 }
 
-interface PostInfoInputDto {
-  id: number;
-  owner: ownerViewDto;
-  description: string | null;
-  images: PostImageViewDto[];
-  createdAt: Date,
-};
-
 export class PostViewDto {
   @ApiProperty()
   id!:	number;
@@ -41,7 +33,16 @@ export class PostViewDto {
   @ApiProperty()
   createdAt!: Date;
 
-  static mapToView( post: PostFullInfo, buildUrl: (key: string) => string ): PostViewDto {
+  @ApiProperty()
+  likesCount!: number;
+
+  @ApiProperty()
+  isLiked!: boolean;
+
+  @ApiProperty({ type: [String] })
+  avatarWhoLikes!: string[];
+
+  static mapToView( post: PostFullInfo, buildUrl: (key: string) => string, currentUserId?: number ): PostViewDto {
     const dto = new PostViewDto();
 
     dto.id = post.id;
@@ -57,6 +58,17 @@ export class PostViewDto {
         url: buildUrl(img.key),
         position: img.position,
       }));
+
+    dto.likesCount = post._count.postLikes;
+
+    dto.isLiked = currentUserId
+      ? post.postLikes.some( (like) => like.userId === currentUserId )
+      : false;
+
+    dto.avatarWhoLikes = post.postLikes
+      .map( (like) =>  like.user.profile?.avatar )
+      .filter( (avatar): avatar is NonNullable<typeof avatar> => avatar !== null && avatar !== undefined )
+      .map((avatar) => buildUrl(avatar.key) );
 
     return dto;
   }

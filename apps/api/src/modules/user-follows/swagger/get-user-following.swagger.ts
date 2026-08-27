@@ -9,6 +9,7 @@ import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
 } from '@nestjs/swagger';
+import { PaginatedUserFollowViewDto } from '../api/view-dto/paginated-user-follow-view.dto';
 
 export function ApiGetUserFollowingDocs() {
   return applyDecorators(
@@ -21,7 +22,7 @@ export function ApiGetUserFollowingDocs() {
     ApiQuery({ name: 'pageNumber', required: false, type: Number, example: 1, description: 'Page number', }),
     ApiQuery({ name: 'cursor', required: false, type: Number, example: 0, description: 'Cursor for loading the next page', }),
 
-    ApiResponse({ status: 200, description: 'Following retrieved successfully', }),
+    ApiResponse({ status: 200, type: PaginatedUserFollowViewDto, description: 'Following retrieved successfully', }),
     ApiBadRequestResponse({ description: 'The inputModel has incorrect values', }),
     ApiNotFoundResponse({description: 'User not found',}),
     ApiUnauthorizedResponse({ description: 'Unauthorized', }),
