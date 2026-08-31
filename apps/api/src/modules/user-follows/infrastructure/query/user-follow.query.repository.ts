@@ -37,9 +37,9 @@ export class UserFollowQueryRepository {
     private readonly prisma: PrismaService,
   ) {}
 
-  async findUserByUsername( userName: string ): Promise<User | null> {
+  async findUserById( id: number ): Promise<User | null> {
     return this.prisma.user.findFirst({
-      where: { username: userName, deletedAt: null}
+      where: { id, deletedAt: null}
     });
   }
 

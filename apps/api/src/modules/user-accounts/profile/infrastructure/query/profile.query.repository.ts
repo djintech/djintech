@@ -39,7 +39,9 @@ export class ProfileQueryRepository {
               select: {
                 followers: true,
                 following: true,
-                posts: true,
+                posts: {
+                  where: { deletedAt: null} 
+                },
               },
             },
           },

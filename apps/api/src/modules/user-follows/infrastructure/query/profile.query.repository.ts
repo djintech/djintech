@@ -9,9 +9,9 @@ export class ProfileQueryRepository {
     private readonly prisma: PrismaService,
   ) {}
 
-  async getUserProfile( currentUserId: number, userName: string ) {
+  async getUserProfile( currentUserId: number, userId: number ) {
     const user = await this.prisma.user.findFirst({
-      where: { username: userName, deletedAt: null, },
+      where: { id: userId, deletedAt: null, },
       include: {
         profile: {
           where: { deletedAt: null },

@@ -6,7 +6,7 @@ import { FileUrlService } from '@src/core/file/file-url.service';
 export class GetUserProfileQuery {
   constructor(
     public readonly currentUserId: number,
-    public readonly userName: string,
+    public readonly userId: number,
   ) {}
 }
 
@@ -19,8 +19,8 @@ export class GetUserProfileQueryHandler
     private readonly fileUrlService: FileUrlService,
   ) {}
 
-  async execute({ currentUserId, userName}: GetUserProfileQuery ): Promise<UserProfileViewDto> {
-    const result = await this.profileQueryRepository.getUserProfile( currentUserId, userName );
+  async execute({ currentUserId, userId}: GetUserProfileQuery ): Promise<UserProfileViewDto> {
+    const result = await this.profileQueryRepository.getUserProfile( currentUserId, userId );
 
     return {
       id: result.id,

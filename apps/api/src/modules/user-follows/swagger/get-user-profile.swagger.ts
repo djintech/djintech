@@ -12,11 +12,11 @@ export function ApiGetUserProfileDocs() {
     }),
 
     ApiParam({
-      name: 'userName',
+      name: 'userId',
       required: true,
-      type: String,
-      example: 'string',
-      description: 'Username of the user',
+      type: Number,
+      example: 123,
+      description: 'Id of the user',
     }),
 
     ApiResponse({ status: 200, type: UserProfileViewDto, description: 'User profile retrieved successfully' }),

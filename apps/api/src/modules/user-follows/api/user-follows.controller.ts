@@ -45,42 +45,42 @@ export class UserFollowsController {
     >(new SearchUsersQuery(userId, query));
   }
 
-  @Get('/:userName')
+  @Get('/:userId')
   @ApiGetUserProfileDocs()
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   async getUserProfile(
-    @UserId() userId: number,
-    @Param('userName') userName: string,
+    @UserId() currentUserId: number,
+    @Param('userId', ParseIntPipe) userId: number,
   ): Promise<UserProfileViewDto> {
     return await this.queryBus.execute< GetUserProfileQuery, UserProfileViewDto >(
-      new GetUserProfileQuery(userId, userName));
+      new GetUserProfileQuery(currentUserId, userId));
   }
 
-  @Get('/:userName/followers')
+  @Get('/:userId/followers')
   @ApiGetUserFollowersDocs()
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   async getUserFollowers(
-    @UserId() userId: number,
-    @Param('userName') userName: string,
+    @UserId() currentUserId: number,
+    @Param('userId', ParseIntPipe) userId: number,
     @Query() query: GetUserFollowersInputDto,
   ): Promise<PaginatedUserFollowViewDto> {
     return await this.queryBus.execute< GetUserFollowersQuery, PaginatedUserFollowViewDto >(
-      new GetUserFollowersQuery(userId, userName, query));
+      new GetUserFollowersQuery(currentUserId, userId, query));
   }
 
-  @Get('/:userName/following')
+  @Get('/:userId/following')
   @ApiGetUserFollowingDocs()
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   async getUserFollowing(
-    @UserId() userId: number,
-    @Param('userName') userName: string,
+    @UserId() currentUserId: number,
+    @Param('userId', ParseIntPipe) userId: number,
     @Query() query: GetUserFollowingInputDto,
   ): Promise<PaginatedUserFollowViewDto> {
     return await this.queryBus.execute< GetUserFollowingQuery, PaginatedUserFollowViewDto >(
-      new GetUserFollowingQuery(userId, userName, query));
+      new GetUserFollowingQuery(currentUserId, userId, query));
   }
 
   @Post('following')

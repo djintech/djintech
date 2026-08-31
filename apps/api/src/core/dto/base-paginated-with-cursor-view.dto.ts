@@ -11,6 +11,7 @@ export abstract class BasePaginatedWithCursorViewDto<T> {
 
   @ApiProperty({
     example: 37,
+    type: Number,
     nullable: true,
   })
   nextCursor!: number | null;
