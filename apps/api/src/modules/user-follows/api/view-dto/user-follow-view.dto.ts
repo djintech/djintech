@@ -14,7 +14,7 @@ export class UserFollowViewDto {
   @ApiProperty()
   createdAt!: Date;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, nullable: true })
   avatar!: string | null;
 
   @ApiProperty()
