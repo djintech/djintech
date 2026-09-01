@@ -10,23 +10,27 @@ export class UserSearchItemDto {
 
   @ApiProperty({
     example: 'ivan_petrov',
+    type: String,
   })
   username!: string;
 
   @ApiProperty({
     nullable: true,
+    type: String,
     example: 'Иван',
   })
   firstName!: string | null;
 
   @ApiProperty({
     nullable: true,
+    type: String,
     example: 'Петров',
   })
   lastName!: string | null;
 
   @ApiProperty({
     nullable: true,
+    type: String,
     example: 'https://example.com/avatar.jpg',
   })
   avatarUrl!: string | null;
@@ -45,6 +49,7 @@ export class PaginatedUserSearchViewDto {
 
   @ApiProperty({
     example: 37,
+    type: Number,
     nullable: true,
   })
   nextCursor!: number | null;

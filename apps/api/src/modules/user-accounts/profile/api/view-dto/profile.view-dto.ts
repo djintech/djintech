@@ -42,8 +42,13 @@ export class ProfileViewDto {
     dto.country = profile.country;
     dto.avatar = profile.avatar?.key ? buildUrl(profile.avatar.key) : null;
     dto.createdAt = profile.createdAt;
-    dto.followersCount = profile.user._count.followers;
-    dto.followingCount = profile.user._count.following;
+
+    // Map Prisma relations to the business meaning of the counters:
+    // followersCount — users who follow this user,
+    // followingCount — users this user follows.
+    dto.followersCount = profile.user._count.following;
+    dto.followingCount = profile.user._count.followers;
+    
     dto.postsCount = profile.user._count.posts;
 
     return dto;

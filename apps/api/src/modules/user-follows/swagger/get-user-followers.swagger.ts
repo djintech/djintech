@@ -10,7 +10,7 @@ export function ApiGetUserFollowersDocs() {
       summary: 'Get followers by username',
       description: 'Returns a paginated list of users who follow the specified user.', }),
 
-    ApiParam({ name: 'userName', required: true, type: String, example: 'string', description: 'Username of the user', }),
+    ApiParam({ name: 'userId', required: true, type: Number, example: 123, description: 'Id of the user', }),
 
     ApiQuery({ name: 'search', required: false, type: String, example: 'alex', description: 'Search followers by username', }),
     ApiQuery({ name: 'pageSize', required: false, type: Number, example: 12, description: 'Number of users per page',}),

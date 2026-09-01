@@ -9,7 +9,7 @@ import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-code
 export class GetUserFollowingQuery {
   constructor(
     public readonly currentUserId: number,
-    public readonly userName: string,
+    public readonly userId: number,
     public readonly query: GetUserFollowingInputDto,
   ) {}
 }
@@ -23,13 +23,13 @@ export class GetUserFollowingQueryHandler
     private readonly fileUrlService: FileUrlService,
   ) {}
 
-  async execute({ currentUserId, userName, query }: GetUserFollowingQuery ): Promise<PaginatedUserFollowViewDto> {
-    const targetUser = await this.userFollowQueryRepository.findUserByUsername(userName);
+  async execute({ currentUserId, userId, query }: GetUserFollowingQuery ): Promise<PaginatedUserFollowViewDto> {
+    const targetUser = await this.userFollowQueryRepository.findUserById(userId);
     
     if (!targetUser) {
       throw new DomainException({
         code: DomainExceptionCode.NotFound,
-        message: 'User not found', extensions: [{ message: 'User not found', field: 'userName' }],
+        message: 'User not found', extensions: [{ message: 'User not found', field: 'userId' }],
       });
     }
     
