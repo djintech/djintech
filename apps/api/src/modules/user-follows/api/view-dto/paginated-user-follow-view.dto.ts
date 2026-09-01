@@ -18,7 +18,7 @@ export class PaginatedUserFollowViewDto {
   @ApiProperty({ type: Number, nullable: true })
   nextCursor!: number | null;
 
-  @ApiProperty()
+  @ApiProperty({ type: () => [UserFollowViewDto] })
   items!: UserFollowViewDto[];
 
   static mapToView(

@@ -25,6 +25,7 @@ import { SubscriptionsModule } from './modules/subscriptions/subscriptions.modul
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { GraphqlModule } from './modules/graphql/graphql.module';
 import { UserFollowsModule } from './modules/user-follows/urer-follows.module';
+import { MessengerModule } from './modules/messenger/messenger.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { UserFollowsModule } from './modules/user-follows/urer-follows.module';
     SubscriptionsModule,
     NotificationsModule,
     UserFollowsModule,
+    MessengerModule,
   ],
   controllers: [ApiController],
   providers: [

@@ -59,3 +59,21 @@ export const NotificationType = {
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const MessageStatus = {
+  SENT: 'SENT',
+  RECEIVED: 'RECEIVED',
+  READ: 'READ'
+} as const
+
+export type MessageStatus = (typeof MessageStatus)[keyof typeof MessageStatus]
+
+
+export const MessageType = {
+  TEXT: 'TEXT',
+  IMAGE: 'IMAGE',
+  VOICE: 'VOICE'
+} as const
+
+export type MessageType = (typeof MessageType)[keyof typeof MessageType]
