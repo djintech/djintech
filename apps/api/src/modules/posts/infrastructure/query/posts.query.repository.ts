@@ -62,7 +62,7 @@ export class PostsQueryRepository {
         deletedAt: null,
 
         user: {
-          followers: {
+          following: {
             some: {
               followerId: userId,
             },
