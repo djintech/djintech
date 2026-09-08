@@ -7,6 +7,9 @@ import { MessageRepository } from './infrastructure/message.repository';
 import { UsersRepository } from './infrastructure/users.repository';
 import { SendMessageCommandHandler } from './application/usecases/send-message.usecase';
 import { MarkMessageReceivedCommandHandler } from './application/usecases/mark-message-received.usecase';
+import { GetMessagesHandler } from './application/queries/get-messages.query';
+import { GetDialogueByIdHandler } from './application/queries/get-dialogue-by-id.query';
+import { MessengerController } from './api/messenger.controller';
 
 const commandHandlers = [
   SendMessageCommandHandler,
@@ -14,7 +17,8 @@ const commandHandlers = [
 ];
 
 const queryHandlers = [
-  //GetNotificationsHandler,
+  GetMessagesHandler,
+  GetDialogueByIdHandler,
 ];
 
 @Module({
@@ -23,7 +27,7 @@ const queryHandlers = [
     UserAccountsModule,
   ],
   controllers: [
-    //NotificationsController,
+    MessengerController,
     //SubscriptionConsumer,
   ],
   providers: [
