@@ -10,10 +10,15 @@ import { MarkMessageReceivedCommandHandler } from './application/usecases/mark-m
 import { GetMessagesHandler } from './application/queries/get-messages.query';
 import { GetDialogueByIdHandler } from './application/queries/get-dialogue-by-id.query';
 import { MessengerController } from './api/messenger.controller';
+import { DeleteMessageUseCase } from './application/usecases/delete-message.usecase';
+import { UpdateMessageStatusUseCase } from './application/usecases/update-message-status.usecase';
+import { MessengerService } from './application/services/messenger.service';
 
 const commandHandlers = [
   SendMessageCommandHandler,
   MarkMessageReceivedCommandHandler,
+  DeleteMessageUseCase,
+  UpdateMessageStatusUseCase,
 ];
 
 const queryHandlers = [
@@ -35,7 +40,7 @@ const queryHandlers = [
     MessageQueryRepository,
     MessageRepository,
     UsersRepository,
-    // NotificationsService,
+    MessengerService,
     // NotificationsScheduler,
     ...commandHandlers,
     ...queryHandlers,

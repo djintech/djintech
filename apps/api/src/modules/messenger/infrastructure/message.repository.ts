@@ -15,6 +15,12 @@ export class MessageRepository {
     });
   }
 
+  async findByIds(ids: number[]): Promise<Message[]> {
+    return this.prisma.message.findMany({
+      where: { id: { in: ids }},
+    });
+  }
+
   async createMessage(params: {
     ownerId: number;
     receiverId: number;
@@ -41,5 +47,23 @@ export class MessageRepository {
         status,
       },
     });
+  }
+
+  async updateStatuses(
+    ids: number[],
+    receiverId: number,
+    status: MessageStatus,
+  ): Promise<Message[]> {
+    await this.prisma.message.updateMany({
+      where: { id: { in: ids }, receiverId },
+      data: { status },
+    });
+
+    return this.findByIds(ids);
+
+  }
+
+  async delete(id: number): Promise<Message> {
+    return this.prisma.message.delete({ where: { id } });
   }
 }

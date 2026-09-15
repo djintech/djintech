@@ -168,6 +168,27 @@ export class MessengerGateway
     }
   }
 
+  sendMessageUpdated( ownerId: number, receiverId: number, message: MessageViewDto ): void {
+    this.server
+      .to(this.getUserRoom(ownerId))
+      .emit(MessengerWsEvent.UPDATE_MESSAGE, message);
+
+    this.server
+      .to(this.getUserRoom(receiverId))
+      .emit(MessengerWsEvent.UPDATE_MESSAGE, message);
+  }
+
+  sendMessageDeleted( ownerId: number, receiverId: number, payload: { id: number } ): void {
+    this.server
+      .to(this.getUserRoom(ownerId))
+      .emit(MessengerWsEvent.MESSAGE_DELETED, payload);
+
+    this.server
+      .to(this.getUserRoom(receiverId))
+      .emit(MessengerWsEvent.MESSAGE_DELETED, payload);
+  }
+
+
   private getUserRoom( userId: number ): string {
     return `user:${userId}`;
   }
