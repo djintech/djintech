@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 import { MessageViewDto } from './message.view-dto';
-import { Message } from '@src/generated/prisma/client';
+import { MessageWithMedia } from '../../infrastructure/types/message-with-media.type';
+import { FileUrlService } from '@src/core/file/file-url.service';
 
 export class GetDialogueViewDto {
   @ApiProperty({
@@ -25,10 +26,11 @@ export class GetDialogueViewDto {
   items!: MessageViewDto[];
 
   static mapDialogueToView(
-    items: Message[],
+    items: MessageWithMedia[],
     pageSize: number,
     totalCount: number,
     notReadCount: number,
+    fileUrlService: FileUrlService,
   ): GetDialogueViewDto {
     return {
       pageSize,
@@ -36,7 +38,7 @@ export class GetDialogueViewDto {
       notReadCount,
 
       items: items.map(
-        MessageViewDto.mapToView,
+        (item) => MessageViewDto.mapToView( item, fileUrlService ),
       ),
     };
   }

@@ -1,6 +1,18 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Message } from "@src/generated/prisma/client";
-import { MessageStatus, MessageType } from "@src/generated/prisma/enums";
+import { FileUrlService } from "@src/core/file/file-url.service";
+import { MessageMediaType, MessageStatus, MessageType } from "@src/generated/prisma/enums";
+import { MessageWithMedia } from "../../infrastructure/types/message-with-media.type";
+
+export class MediaContentViewDto {
+  @ApiProperty({
+    enum: MessageMediaType,
+    example: MessageMediaType.IMAGE,
+  })
+  fileType!: MessageMediaType;
+  
+  @ApiProperty({ type: String, nullable: true })
+  fileUrl!: string | null;
+}
 
 export class MessageViewDto {
   @ApiProperty()
@@ -15,6 +27,9 @@ export class MessageViewDto {
   @ApiProperty()
   messageText!: string | null;
 
+  @ApiProperty({ type: MediaContentViewDto, nullable: true })
+  mediaContent!: MediaContentViewDto | null; 
+
   @ApiProperty({ enum: MessageStatus })
   status!: MessageStatus;
 
@@ -27,12 +42,18 @@ export class MessageViewDto {
   @ApiProperty()
   updatedAt!: Date;
 
-  static mapToView( message: Message ): MessageViewDto {
+  static mapToView( message: MessageWithMedia, fileUrlService: FileUrlService  ): MessageViewDto {
     return {
       id: message.id,
       ownerId: message.ownerId,
       receiverId: message.receiverId,
       messageText: message.messageText,
+
+      mediaContent: message.media ? {
+        fileType: message.media.fileType,
+        fileUrl: message.media.key ? fileUrlService.getPublicUrl(message.media.key) : null,
+      } : null,
+      
       status: message.status,
       messageType: message.messageType,
       createdAt: message.createdAt,

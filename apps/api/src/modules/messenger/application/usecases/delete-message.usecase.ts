@@ -2,7 +2,8 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { MessageRepository } from '../../infrastructure/message.repository';
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
-import { Message } from '@src/generated/prisma/client';
+import { FilesClientService } from '@src/modules/files/infrastructure/files.client';
+import { MessageWithMedia } from '../../infrastructure/types/message-with-media.type';
 
 export class DeleteMessageCommand {
   constructor(
@@ -13,13 +14,14 @@ export class DeleteMessageCommand {
 
 @CommandHandler(DeleteMessageCommand)
 export class DeleteMessageUseCase
-  implements ICommandHandler<DeleteMessageCommand, Message>
+  implements ICommandHandler<DeleteMessageCommand, MessageWithMedia>
 {
   constructor(
     private readonly messageRepository: MessageRepository, 
+    private readonly filesClient: FilesClientService,
   ) {}
 
-  async execute({ messageId, userId }: DeleteMessageCommand): Promise<Message> {
+  async execute({ messageId, userId }: DeleteMessageCommand): Promise<MessageWithMedia> {
     const message = await this.messageRepository.findById(messageId);
 
     if (!message) {
@@ -37,6 +39,18 @@ export class DeleteMessageUseCase
       });
     }
 
-    return this.messageRepository.delete(messageId);
+    const mediaKey = message.media?.key ?? null;
+
+    const deletedMessage = await this.messageRepository.delete(messageId);
+
+    if (mediaKey) {
+      try {
+        await this.filesClient.delete([mediaKey]);
+      } catch {
+        //Здесь желательно добавить Logger.
+      }
+    }
+
+    return deletedMessage;
   }
 }

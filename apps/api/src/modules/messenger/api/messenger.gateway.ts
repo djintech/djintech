@@ -99,21 +99,7 @@ export class MessengerGateway
       const message = await this.commandBus.execute< SendMessageCommand, MessageViewDto >(
         new SendMessageCommand( ownerId, data.receiverId, data.message ),
       );
-
-      /**
-       * Отправителю. Здесь message уже сохранён в БД  и содержит настоящий id.
-       */
-      client.emit( MessengerWsEvent.RECEIVE_MESSAGE, message );
-
-      /**
-       * Получателю. Он должен получить сообщение и вызвать ACK callback.
-       */
-      this.server
-        .to(this.getUserRoom(data.receiverId))
-        .emit(
-          MessengerWsEvent.MESSAGE_SEND,
-          message,
-        );
+        this.emitMessage( ownerId, data.receiverId, message );
     } catch (error) {
       this.emitError(client, error);
     }
@@ -178,6 +164,10 @@ export class MessengerGateway
       .emit(MessengerWsEvent.UPDATE_MESSAGE, message);
   }
 
+  sendMessage( ownerId: number, receiverId: number, message: MessageViewDto ): void {
+    this.emitMessage(ownerId, receiverId, message);
+  }
+
   sendMessageDeleted( ownerId: number, receiverId: number, payload: { id: number } ): void {
     this.server
       .to(this.getUserRoom(ownerId))
@@ -191,6 +181,16 @@ export class MessengerGateway
 
   private getUserRoom( userId: number ): string {
     return `user:${userId}`;
+  }
+
+  private emitMessage( ownerId: number, receiverId: number, message: MessageViewDto ): void {
+    this.server
+      .to(this.getUserRoom(ownerId))
+      .emit( MessengerWsEvent.RECEIVE_MESSAGE, message );
+
+    this.server
+      .to(this.getUserRoom(receiverId))
+      .emit( MessengerWsEvent.MESSAGE_SEND, message );
   }
 
   private emitError( client: Socket, error: unknown ): void {

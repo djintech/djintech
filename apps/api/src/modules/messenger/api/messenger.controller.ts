@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { SkipThrottle } from '@nestjs/throttler';
 import { BasePaginationInputDto } from '@src/core/dto/base.paginated-with-cursor.view-dto';
@@ -15,9 +15,14 @@ import { ApiDeleteMessageDocs } from '../swagger/delete-messages.swagger';
 import { ApiUpdateMessageStatusDocs } from '../swagger/update-message-status.swagger';
 import { UpdateMessageStatusCommand } from '../application/usecases/update-message-status.usecase';
 import { MessengerService } from '../application/services/messenger.service';
-import { Message } from '@src/generated/prisma/client';
+import { BannedUserGuard } from '@src/modules/user-accounts/auth/guards/banned-user.guard';
+import { MessageViewDto } from './view-dto/message.view-dto';
+import { ImageInputDto } from './input-dto/image.input-dto';
+import { ApiCreateImageDocs } from '../swagger/create-image.swagger';
+import { CustomFileInterceptor } from '../interseptors/custom-file.interceptor';
+import { MessageWithMedia } from '../infrastructure/types/message-with-media.type';
+import { CreateImageMessageCommand } from '../application/usecases/create-image-message.usecase';
 
-@SkipThrottle()
 @Controller('messenger')
 export class MessengerController {
   constructor(
@@ -26,8 +31,9 @@ export class MessengerController {
     private readonly messengerService: MessengerService,
   ) {}
 
+  @SkipThrottle()
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
   @ApiGetMessagesDocs()
   async getMessages(
     @Query() query: GetMessagesParamsDto,
@@ -36,8 +42,9 @@ export class MessengerController {
     return this.queryBus.execute( new GetMessagesQuery(userId, query ));
   }
 
+  @SkipThrottle()
   @Get('/:dialoguePartnerId')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
   @ApiGetDialogueByIdDocs()
   async getDialogueById(
     @Param('dialoguePartnerId', ParseIntPipe) dialoguePartnerId: number,
@@ -47,9 +54,10 @@ export class MessengerController {
     return this.queryBus.execute( new GetDialogueByIdQuery( userId, dialoguePartnerId, query ));
   }
 
+  @SkipThrottle()
   @Put('')
   @HttpCode(HttpStatus.ACCEPTED)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
   @ApiUpdateMessageStatusDocs()
   async updateMessageStatus(
     @Body() dto: UpdateMessageStatusDto,
@@ -57,7 +65,7 @@ export class MessengerController {
   ) {
     const updatedMessages = await this.commandBus.execute<
       UpdateMessageStatusCommand,
-      Message[]
+      MessageWithMedia[]
     >( new UpdateMessageStatusCommand( userId, dto.ids ));
 
     for (const message of updatedMessages) {
@@ -66,8 +74,9 @@ export class MessengerController {
     return;
   }
 
+  @SkipThrottle()
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
   @ApiDeleteMessageDocs()
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteMessage(
@@ -76,5 +85,23 @@ export class MessengerController {
   ) {
     const deletedMessage = await this.commandBus.execute(new DeleteMessageCommand(id, userId));
     this.messengerService.sendMessageDeleted(deletedMessage);
+  }
+   
+  @Post('/:receiverId/image')
+  @HttpCode(HttpStatus.CREATED)
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
+  @ApiCreateImageDocs()
+  @UseInterceptors(CustomFileInterceptor)
+  async createImage(
+    @UserId() userId: number,
+    @Param('receiverId', ParseIntPipe) receiverId: number,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() dto: ImageInputDto,
+  ): Promise<MessageViewDto> {
+    const message = await this.commandBus.execute(new CreateImageMessageCommand( dto.message, userId, receiverId, file ));
+
+    this.messengerService.sendMessage( message );
+    
+    return message;
   }
 }

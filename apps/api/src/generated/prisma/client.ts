@@ -124,3 +124,8 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type Message = Prisma.MessageModel
+/**
+ * Model MessageMedia
+ * 
+ */
+export type MessageMedia = Prisma.MessageMediaModel

@@ -250,6 +250,7 @@ export type MessageWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   receiver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  media?: Prisma.XOR<Prisma.MessageMediaNullableScalarRelationFilter, Prisma.MessageMediaWhereInput> | null
 }
 
 export type MessageOrderByWithRelationInput = {
@@ -263,6 +264,7 @@ export type MessageOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   owner?: Prisma.UserOrderByWithRelationInput
   receiver?: Prisma.UserOrderByWithRelationInput
+  media?: Prisma.MessageMediaOrderByWithRelationInput
 }
 
 export type MessageWhereUniqueInput = Prisma.AtLeast<{
@@ -279,6 +281,7 @@ export type MessageWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   receiver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  media?: Prisma.XOR<Prisma.MessageMediaNullableScalarRelationFilter, Prisma.MessageMediaWhereInput> | null
 }, "id">
 
 export type MessageOrderByWithAggregationInput = {
@@ -319,6 +322,7 @@ export type MessageCreateInput = {
   updatedAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutMessagesSentInput
   receiver: Prisma.UserCreateNestedOneWithoutMessagesReceivedInput
+  media?: Prisma.MessageMediaCreateNestedOneWithoutMessageInput
 }
 
 export type MessageUncheckedCreateInput = {
@@ -330,6 +334,7 @@ export type MessageUncheckedCreateInput = {
   messageType?: $Enums.MessageType
   createdAt?: Date | string
   updatedAt?: Date | string
+  media?: Prisma.MessageMediaUncheckedCreateNestedOneWithoutMessageInput
 }
 
 export type MessageUpdateInput = {
@@ -340,6 +345,7 @@ export type MessageUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutMessagesSentNestedInput
   receiver?: Prisma.UserUpdateOneRequiredWithoutMessagesReceivedNestedInput
+  media?: Prisma.MessageMediaUpdateOneWithoutMessageNestedInput
 }
 
 export type MessageUncheckedUpdateInput = {
@@ -351,6 +357,7 @@ export type MessageUncheckedUpdateInput = {
   messageType?: Prisma.EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  media?: Prisma.MessageMediaUncheckedUpdateOneWithoutMessageNestedInput
 }
 
 export type MessageCreateManyInput = {
@@ -436,6 +443,11 @@ export type MessageSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
+}
+
+export type MessageScalarRelationFilter = {
+  is?: Prisma.MessageWhereInput
+  isNot?: Prisma.MessageWhereInput
 }
 
 export type MessageCreateNestedManyWithoutOwnerInput = {
@@ -530,6 +542,20 @@ export type EnumMessageTypeFieldUpdateOperationsInput = {
   set?: $Enums.MessageType
 }
 
+export type MessageCreateNestedOneWithoutMediaInput = {
+  create?: Prisma.XOR<Prisma.MessageCreateWithoutMediaInput, Prisma.MessageUncheckedCreateWithoutMediaInput>
+  connectOrCreate?: Prisma.MessageCreateOrConnectWithoutMediaInput
+  connect?: Prisma.MessageWhereUniqueInput
+}
+
+export type MessageUpdateOneRequiredWithoutMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.MessageCreateWithoutMediaInput, Prisma.MessageUncheckedCreateWithoutMediaInput>
+  connectOrCreate?: Prisma.MessageCreateOrConnectWithoutMediaInput
+  upsert?: Prisma.MessageUpsertWithoutMediaInput
+  connect?: Prisma.MessageWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MessageUpdateToOneWithWhereWithoutMediaInput, Prisma.MessageUpdateWithoutMediaInput>, Prisma.MessageUncheckedUpdateWithoutMediaInput>
+}
+
 export type MessageCreateWithoutOwnerInput = {
   messageText?: string | null
   status?: $Enums.MessageStatus
@@ -537,6 +563,7 @@ export type MessageCreateWithoutOwnerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   receiver: Prisma.UserCreateNestedOneWithoutMessagesReceivedInput
+  media?: Prisma.MessageMediaCreateNestedOneWithoutMessageInput
 }
 
 export type MessageUncheckedCreateWithoutOwnerInput = {
@@ -547,6 +574,7 @@ export type MessageUncheckedCreateWithoutOwnerInput = {
   messageType?: $Enums.MessageType
   createdAt?: Date | string
   updatedAt?: Date | string
+  media?: Prisma.MessageMediaUncheckedCreateNestedOneWithoutMessageInput
 }
 
 export type MessageCreateOrConnectWithoutOwnerInput = {
@@ -566,6 +594,7 @@ export type MessageCreateWithoutReceiverInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutMessagesSentInput
+  media?: Prisma.MessageMediaCreateNestedOneWithoutMessageInput
 }
 
 export type MessageUncheckedCreateWithoutReceiverInput = {
@@ -576,6 +605,7 @@ export type MessageUncheckedCreateWithoutReceiverInput = {
   messageType?: $Enums.MessageType
   createdAt?: Date | string
   updatedAt?: Date | string
+  media?: Prisma.MessageMediaUncheckedCreateNestedOneWithoutMessageInput
 }
 
 export type MessageCreateOrConnectWithoutReceiverInput = {
@@ -634,6 +664,64 @@ export type MessageUpdateManyWithWhereWithoutReceiverInput = {
   data: Prisma.XOR<Prisma.MessageUpdateManyMutationInput, Prisma.MessageUncheckedUpdateManyWithoutReceiverInput>
 }
 
+export type MessageCreateWithoutMediaInput = {
+  messageText?: string | null
+  status?: $Enums.MessageStatus
+  messageType?: $Enums.MessageType
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  owner: Prisma.UserCreateNestedOneWithoutMessagesSentInput
+  receiver: Prisma.UserCreateNestedOneWithoutMessagesReceivedInput
+}
+
+export type MessageUncheckedCreateWithoutMediaInput = {
+  id?: number
+  ownerId: number
+  receiverId: number
+  messageText?: string | null
+  status?: $Enums.MessageStatus
+  messageType?: $Enums.MessageType
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type MessageCreateOrConnectWithoutMediaInput = {
+  where: Prisma.MessageWhereUniqueInput
+  create: Prisma.XOR<Prisma.MessageCreateWithoutMediaInput, Prisma.MessageUncheckedCreateWithoutMediaInput>
+}
+
+export type MessageUpsertWithoutMediaInput = {
+  update: Prisma.XOR<Prisma.MessageUpdateWithoutMediaInput, Prisma.MessageUncheckedUpdateWithoutMediaInput>
+  create: Prisma.XOR<Prisma.MessageCreateWithoutMediaInput, Prisma.MessageUncheckedCreateWithoutMediaInput>
+  where?: Prisma.MessageWhereInput
+}
+
+export type MessageUpdateToOneWithWhereWithoutMediaInput = {
+  where?: Prisma.MessageWhereInput
+  data: Prisma.XOR<Prisma.MessageUpdateWithoutMediaInput, Prisma.MessageUncheckedUpdateWithoutMediaInput>
+}
+
+export type MessageUpdateWithoutMediaInput = {
+  messageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
+  messageType?: Prisma.EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  owner?: Prisma.UserUpdateOneRequiredWithoutMessagesSentNestedInput
+  receiver?: Prisma.UserUpdateOneRequiredWithoutMessagesReceivedNestedInput
+}
+
+export type MessageUncheckedUpdateWithoutMediaInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
+  messageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
+  messageType?: Prisma.EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type MessageCreateManyOwnerInput = {
   id?: number
   receiverId: number
@@ -661,6 +749,7 @@ export type MessageUpdateWithoutOwnerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receiver?: Prisma.UserUpdateOneRequiredWithoutMessagesReceivedNestedInput
+  media?: Prisma.MessageMediaUpdateOneWithoutMessageNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutOwnerInput = {
@@ -671,6 +760,7 @@ export type MessageUncheckedUpdateWithoutOwnerInput = {
   messageType?: Prisma.EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  media?: Prisma.MessageMediaUncheckedUpdateOneWithoutMessageNestedInput
 }
 
 export type MessageUncheckedUpdateManyWithoutOwnerInput = {
@@ -690,6 +780,7 @@ export type MessageUpdateWithoutReceiverInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutMessagesSentNestedInput
+  media?: Prisma.MessageMediaUpdateOneWithoutMessageNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutReceiverInput = {
@@ -700,6 +791,7 @@ export type MessageUncheckedUpdateWithoutReceiverInput = {
   messageType?: Prisma.EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  media?: Prisma.MessageMediaUncheckedUpdateOneWithoutMessageNestedInput
 }
 
 export type MessageUncheckedUpdateManyWithoutReceiverInput = {
@@ -725,6 +817,7 @@ export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  media?: boolean | Prisma.Message$mediaArgs<ExtArgs>
 }, ExtArgs["result"]["message"]>
 
 export type MessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -768,6 +861,7 @@ export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type MessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  media?: boolean | Prisma.Message$mediaArgs<ExtArgs>
 }
 export type MessageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -783,6 +877,7 @@ export type $MessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     owner: Prisma.$UserPayload<ExtArgs>
     receiver: Prisma.$UserPayload<ExtArgs>
+    media: Prisma.$MessageMediaPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1189,6 +1284,7 @@ export interface Prisma__MessageClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   owner<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   receiver<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  media<T extends Prisma.Message$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Message$mediaArgs<ExtArgs>>): Prisma.Prisma__MessageMediaClient<runtime.Types.Result.GetResult<Prisma.$MessageMediaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1624,6 +1720,25 @@ export type MessageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Messages to delete.
    */
   limit?: number
+}
+
+/**
+ * Message.media
+ */
+export type Message$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MessageMedia
+   */
+  select?: Prisma.MessageMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MessageMedia
+   */
+  omit?: Prisma.MessageMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageMediaInclude<ExtArgs> | null
+  where?: Prisma.MessageMediaWhereInput
 }
 
 /**

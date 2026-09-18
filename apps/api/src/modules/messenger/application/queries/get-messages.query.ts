@@ -34,7 +34,7 @@ export class GetMessagesHandler
       pageSize,
       totalCount,
       notReadCount,
-      (key: string | null) => key ? this.fileUrlService.getPublicUrl(key) : null
+      this.fileUrlService,
     );
   }
 }

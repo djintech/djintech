@@ -2,7 +2,8 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { MessageRepository } from '../../infrastructure/message.repository';
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
-import { Message, MessageStatus } from '@src/generated/prisma/browser';
+import { MessageStatus } from '@src/generated/prisma/browser';
+import { MessageWithMedia } from '../../infrastructure/types/message-with-media.type';
 
 export class UpdateMessageStatusCommand {
   constructor(
@@ -13,11 +14,11 @@ export class UpdateMessageStatusCommand {
 
 @CommandHandler(UpdateMessageStatusCommand)
 export class UpdateMessageStatusUseCase
-  implements ICommandHandler<UpdateMessageStatusCommand, Message[]>
+  implements ICommandHandler<UpdateMessageStatusCommand, MessageWithMedia[]>
 {
   constructor(private readonly messageRepository: MessageRepository,) {}
 
-  async execute({ userId, ids }: UpdateMessageStatusCommand): Promise<Message[]> {
+  async execute({ userId, ids }: UpdateMessageStatusCommand): Promise<MessageWithMedia[]> {
     const messages = await this.messageRepository.findByIds(ids);
 
     if (messages.length !== ids.length) {

@@ -5,6 +5,7 @@ export const PAYMENTS_SERVICE = 'PAYMENTS_SERVICE'
 
 export const POST_MAX_IMAGES_COUNT = 10;
 export const POST_IMAGE_SIZE = 20 * 1024 * 1024;
+export const MESSENGER_IMAGE_SIZE = 1 * 1024 * 1024;
 
 export const AVATAR_IMAGE_SIZE = 10 * 1024 * 1024;
 
