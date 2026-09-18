@@ -77,3 +77,11 @@ export const MessageType = {
 } as const
 
 export type MessageType = (typeof MessageType)[keyof typeof MessageType]
+
+
+export const MessageMediaType = {
+  IMAGE: 'IMAGE',
+  VOICE: 'VOICE'
+} as const
+
+export type MessageMediaType = (typeof MessageMediaType)[keyof typeof MessageMediaType]

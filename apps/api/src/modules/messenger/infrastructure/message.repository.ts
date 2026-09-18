@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/db/prisma.service';
-import { Message } from '@src/generated/prisma/client';
-import { MessageStatus, MessageType } from '@src/generated/prisma/enums';
+import { MessageMediaType, MessageStatus, MessageType } from '@src/generated/prisma/enums';
+import { MessageWithMedia } from './types/message-with-media.type';
 
 @Injectable()
 export class MessageRepository {
@@ -9,15 +9,19 @@ export class MessageRepository {
     private readonly prisma: PrismaService,
   ) {}
 
-  async findById(id: number): Promise<Message | null> {
+  async findById(id: number): Promise<MessageWithMedia | null> {
     return this.prisma.message.findUnique({
       where: { id },
+      include: { media: true },
     });
   }
 
-  async findByIds(ids: number[]): Promise<Message[]> {
+  async findByIds(ids: number[]): Promise<MessageWithMedia[]> {
     return this.prisma.message.findMany({
       where: { id: { in: ids }},
+      include: {
+        media: true,
+      },
     });
   }
 
@@ -25,7 +29,7 @@ export class MessageRepository {
     ownerId: number;
     receiverId: number;
     messageText: string;
-  }): Promise<Message> {
+  }): Promise<MessageWithMedia> {
     return this.prisma.message.create({
       data: {
         ownerId: params.ownerId,
@@ -34,18 +38,20 @@ export class MessageRepository {
         messageType: MessageType.TEXT,
         status: MessageStatus.SENT,
       },
+      include: { media: true },
     });
   }
 
   async updateStatus(
     id: number,
     status: MessageStatus,
-  ): Promise<Message> {
+  ): Promise<MessageWithMedia> {
     return this.prisma.message.update({
       where: { id },
       data: {
         status,
       },
+      include: { media: true },
     });
   }
 
@@ -53,7 +59,7 @@ export class MessageRepository {
     ids: number[],
     receiverId: number,
     status: MessageStatus,
-  ): Promise<Message[]> {
+  ): Promise<MessageWithMedia[]> {
     await this.prisma.message.updateMany({
       where: { id: { in: ids }, receiverId },
       data: { status },
@@ -63,7 +69,44 @@ export class MessageRepository {
 
   }
 
-  async delete(id: number): Promise<Message> {
-    return this.prisma.message.delete({ where: { id } });
+  async delete(id: number): Promise<MessageWithMedia> {
+    return this.prisma.message.delete({
+      where: { id },
+      include: { media: true },
+    });
   }
+
+  async createMessageWithMedia(params: {
+  ownerId: number;
+  receiverId: number;
+  messageText: string | null;
+  messageType: MessageType;
+  fileType: MessageMediaType;
+  key: string;
+  mimeType: string;
+  size: number;
+}): Promise<MessageWithMedia> {
+  return this.prisma.message.create({
+    data: {
+      ownerId: params.ownerId,
+      receiverId: params.receiverId,
+      messageText: params.messageText,
+      messageType: params.messageType,
+      status: MessageStatus.SENT,
+
+      media: {
+        create: {
+          key: params.key,
+          mimeType: params.mimeType,
+          size: params.size,
+          fileType: params.fileType,
+        },
+      },
+    },
+
+    include: {
+      media: true,
+    },
+  });
+}
 }

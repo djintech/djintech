@@ -400,7 +400,8 @@ export const ModelName = {
   Profile: 'Profile',
   Avatar: 'Avatar',
   Notification: 'Notification',
-  Message: 'Message'
+  Message: 'Message',
+  MessageMedia: 'MessageMedia'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userFollow" | "emailConfirmation" | "passwordRecovery" | "device" | "policies" | "userPolicyAgreement" | "userProvider" | "post" | "postImage" | "postLike" | "comment" | "commentLike" | "profile" | "avatar" | "notification" | "message"
+    modelProps: "user" | "userFollow" | "emailConfirmation" | "passwordRecovery" | "device" | "policies" | "userPolicyAgreement" | "userProvider" | "post" | "postImage" | "postLike" | "comment" | "commentLike" | "profile" | "avatar" | "notification" | "message" | "messageMedia"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1678,6 +1679,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MessageMedia: {
+      payload: Prisma.$MessageMediaPayload<ExtArgs>
+      fields: Prisma.MessageMediaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MessageMediaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MessageMediaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload>
+        }
+        findFirst: {
+          args: Prisma.MessageMediaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MessageMediaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload>
+        }
+        findMany: {
+          args: Prisma.MessageMediaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload>[]
+        }
+        create: {
+          args: Prisma.MessageMediaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload>
+        }
+        createMany: {
+          args: Prisma.MessageMediaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MessageMediaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload>[]
+        }
+        delete: {
+          args: Prisma.MessageMediaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload>
+        }
+        update: {
+          args: Prisma.MessageMediaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload>
+        }
+        deleteMany: {
+          args: Prisma.MessageMediaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MessageMediaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MessageMediaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload>[]
+        }
+        upsert: {
+          args: Prisma.MessageMediaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageMediaPayload>
+        }
+        aggregate: {
+          args: Prisma.MessageMediaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMessageMedia>
+        }
+        groupBy: {
+          args: Prisma.MessageMediaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MessageMediaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MessageMediaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MessageMediaCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1945,6 +2020,20 @@ export const MessageScalarFieldEnum = {
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
+export const MessageMediaScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  key: 'key',
+  mimeType: 'mimeType',
+  size: 'size',
+  fileType: 'fileType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MessageMediaScalarFieldEnum = (typeof MessageMediaScalarFieldEnum)[keyof typeof MessageMediaScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2137,6 +2226,20 @@ export type ListEnumMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'MessageMediaType'
+ */
+export type EnumMessageMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageMediaType'>
+    
+
+
+/**
+ * Reference to a field of type 'MessageMediaType[]'
+ */
+export type ListEnumMessageMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageMediaType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2276,6 +2379,7 @@ export type GlobalOmitConfig = {
   avatar?: Prisma.AvatarOmit
   notification?: Prisma.NotificationOmit
   message?: Prisma.MessageOmit
+  messageMedia?: Prisma.MessageMediaOmit
 }
 
 /* Types for Logging */

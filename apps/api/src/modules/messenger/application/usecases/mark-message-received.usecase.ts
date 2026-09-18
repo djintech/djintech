@@ -2,6 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { MessageRepository } from '../../infrastructure/message.repository';
 import { MessageStatus } from '@src/generated/prisma/browser';
 import { MessageViewDto } from '../../api/view-dto/message.view-dto';
+import { FileUrlService } from '@src/core/file/file-url.service';
 
 export class MarkMessageReceivedCommand {
   constructor(
@@ -16,6 +17,7 @@ export class MarkMessageReceivedCommandHandler
 {
   constructor(
     private readonly messageRepository: MessageRepository,
+    private readonly fileUrlService: FileUrlService,
   ) {}
 
   async execute({ messageId, receiverId }: MarkMessageReceivedCommand): Promise<MessageViewDto | null> {
@@ -31,10 +33,10 @@ export class MarkMessageReceivedCommandHandler
     }
 
     if (message.status !== MessageStatus.SENT) {
-      return MessageViewDto.mapToView(message);
+      return MessageViewDto.mapToView(message, this.fileUrlService);
     }
 
     const updatedMessage = await this.messageRepository.updateStatus( message.id, MessageStatus.RECEIVED );
-    return MessageViewDto.mapToView(updatedMessage);
+    return MessageViewDto.mapToView(updatedMessage, this.fileUrlService);
   }
 }

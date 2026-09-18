@@ -4,6 +4,7 @@ import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
 import { UsersRepository } from '../../infrastructure/users.repository';
 import { MessageViewDto } from '../../api/view-dto/message.view-dto';
+import { FileUrlService } from '@src/core/file/file-url.service';
 
 export class SendMessageCommand {
   constructor(
@@ -20,6 +21,7 @@ export class SendMessageCommandHandler
   constructor(
     private readonly messageRepository: MessageRepository,
     private readonly usersRepository: UsersRepository, 
+    private readonly fileUrlService: FileUrlService,
   ) {}
 
   async execute({ ownerId, receiverId, message }: SendMessageCommand): Promise<MessageViewDto> {
@@ -57,6 +59,6 @@ export class SendMessageCommandHandler
       messageText: message,
     });
 
-    return MessageViewDto.mapToView(createdMessage);
+    return MessageViewDto.mapToView(createdMessage, this.fileUrlService);
   }
 }

@@ -67,7 +67,8 @@ export const ModelName = {
   Profile: 'Profile',
   Avatar: 'Avatar',
   Notification: 'Notification',
-  Message: 'Message'
+  Message: 'Message',
+  MessageMedia: 'MessageMedia'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -312,6 +313,20 @@ export const MessageScalarFieldEnum = {
 } as const
 
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const MessageMediaScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  key: 'key',
+  mimeType: 'mimeType',
+  size: 'size',
+  fileType: 'fileType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MessageMediaScalarFieldEnum = (typeof MessageMediaScalarFieldEnum)[keyof typeof MessageMediaScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/db/prisma.service';
-import { Message } from '@src/generated/prisma/client';
 import { MessageStatus } from '@src/generated/prisma/enums';
 import { ChatQueryResult } from '../types/chat-query-result';
+import { MessageWithMedia } from '../types/message-with-media.type';
 
 @Injectable()
 export class MessageQueryRepository {
@@ -10,13 +10,14 @@ export class MessageQueryRepository {
     private readonly prisma: PrismaService,
   ) {}
 
-  async findById(id: number) {
+  async findById(id: number): Promise<MessageWithMedia | null> {
     return this.prisma.message.findUnique({
       where: { id },
+      include: { media: true },
     });
   }
 
-  async findDialogueMessages( userId: number, dialoguePartnerId: number, pageSize: number, cursor: number ): Promise<Message[]> {
+  async findDialogueMessages( userId: number, dialoguePartnerId: number, pageSize: number, cursor: number ): Promise<MessageWithMedia[]> {
     return this.prisma.message.findMany({
       where: {
         OR: [
@@ -33,6 +34,8 @@ export class MessageQueryRepository {
         ...(cursor > 0 && { id: { lt: cursor }}),
       },
 
+      include: { media: true },
+      
       orderBy: { id: 'desc' },
       take: pageSize,
     });
@@ -121,6 +124,11 @@ export class MessageQueryRepository {
 
         a.key AS "avatarUrl",
 
+        mm.key AS "mediaKey",
+        mm."mimeType" AS "mediaMimeType",
+        mm.size AS "mediaSize",
+        mm."fileType" AS "mediaFileType",
+
         (
           SELECT COUNT(*)::int
           FROM "messages" unread
@@ -134,13 +142,18 @@ export class MessageQueryRepository {
 
       INNER JOIN "users" u
         ON u.id = lm."partnerId"
+        AND u."deletedAt" IS NULL
 
       LEFT JOIN "profiles" p
         ON p."userId" = u.id
+        AND p."deletedAt" IS NULL
 
       LEFT JOIN "avatars" a
         ON a."profileId" = p.id
         AND a."deletedAt" IS NULL
+
+      LEFT JOIN "messageMedia" mm
+        ON mm."messageId" = lm.id
 
       WHERE
         (

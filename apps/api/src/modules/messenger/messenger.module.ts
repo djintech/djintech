@@ -13,12 +13,14 @@ import { MessengerController } from './api/messenger.controller';
 import { DeleteMessageUseCase } from './application/usecases/delete-message.usecase';
 import { UpdateMessageStatusUseCase } from './application/usecases/update-message-status.usecase';
 import { MessengerService } from './application/services/messenger.service';
+import { CreateImageMessageUseCase } from './application/usecases/create-image-message.usecase';
 
 const commandHandlers = [
   SendMessageCommandHandler,
   MarkMessageReceivedCommandHandler,
   DeleteMessageUseCase,
   UpdateMessageStatusUseCase,
+  CreateImageMessageUseCase,
 ];
 
 const queryHandlers = [
@@ -33,7 +35,6 @@ const queryHandlers = [
   ],
   controllers: [
     MessengerController,
-    //SubscriptionConsumer,
   ],
   providers: [
     MessengerGateway,
@@ -41,7 +42,6 @@ const queryHandlers = [
     MessageRepository,
     UsersRepository,
     MessengerService,
-    // NotificationsScheduler,
     ...commandHandlers,
     ...queryHandlers,
   ],

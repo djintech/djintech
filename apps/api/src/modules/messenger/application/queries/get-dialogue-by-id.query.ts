@@ -4,6 +4,7 @@ import { MessageQueryRepository } from '../../infrastructure/query/message.query
 import { GetDialogueViewDto } from '../../api/view-dto/get-dialogue.view-dto';
 import { DomainException } from '@libs/core/exceptions/domain-exceptions';
 import { DomainExceptionCode } from '@libs/core/exceptions/domain-exception-codes';
+import { FileUrlService } from '@src/core/file/file-url.service';
 
 export class GetDialogueByIdQuery {
   constructor(
@@ -17,7 +18,10 @@ export class GetDialogueByIdQuery {
 export class GetDialogueByIdHandler
   implements IQueryHandler<GetDialogueByIdQuery, GetDialogueViewDto>
 {
-  constructor(private readonly  messageQueryRepository: MessageQueryRepository) {}
+  constructor(
+    private readonly  messageQueryRepository: MessageQueryRepository,
+    private readonly fileUrlService: FileUrlService
+  ) {}
 
   async execute({ userId, dialoguePartnerId,query }: GetDialogueByIdQuery): Promise<GetDialogueViewDto> {
     if (userId === dialoguePartnerId) {
@@ -46,6 +50,6 @@ export class GetDialogueByIdHandler
       this.messageQueryRepository.countUnreadMessagesFromPartner( userId, dialoguePartnerId ),
     ]);
 
-    return GetDialogueViewDto.mapDialogueToView( messages, pageSize, totalCount, notReadCount );
+    return GetDialogueViewDto.mapDialogueToView( messages, pageSize, totalCount, notReadCount, this.fileUrlService );
   }
 }

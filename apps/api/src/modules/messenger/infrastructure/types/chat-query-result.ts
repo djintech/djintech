@@ -1,4 +1,4 @@
-import { MessageStatus, MessageType } from '@src/generated/prisma/enums';
+import { MessageMediaType, MessageStatus, MessageType } from '@src/generated/prisma/enums';
 
 export type ChatQueryResult = {
   id: number;
@@ -12,5 +12,11 @@ export type ChatQueryResult = {
 
   userName: string;
   avatarUrl: string | null;
+
   notReadCount: number;
+
+  mediaKey: string | null;
+  mediaMimeType: string | null;
+  mediaSize: number | null;
+  mediaFileType: MessageMediaType | null;
 };

@@ -351,7 +351,7 @@ enum MessageType {
 }
 
 model Message {
-  id          Int           @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   ownerId     Int
   receiverId  Int
   messageText String?
@@ -361,11 +361,35 @@ model Message {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  owner    User @relation("MessageOwner", fields: [ownerId], references: [id], onDelete: Cascade)
-  receiver User @relation("MessageReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  owner       User         @relation("MessageOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  receiver    User         @relation("MessageReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  media       MessageMedia?
 
   @@index([ownerId])
   @@index([receiverId])
   @@index([ownerId, receiverId])
   @@map("messages")
+}
+
+model MessageMedia {
+  id        Int         @id @default(autoincrement())
+  messageId Int         @unique
+
+  key       String      @unique
+  mimeType  String
+  size      Int
+  fileType  MessageMediaType
+
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  message   Message     @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@map("messageMedia")
+}
+
+enum MessageMediaType {
+  IMAGE
+  VOICE
 }

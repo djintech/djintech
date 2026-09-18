@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { MessageViewDto } from './message.view-dto';
-import { ChatQueryResult } from '../../infrastructure/types/chat-query-result';
 
 export class MessengerChatViewDto extends MessageViewDto {
   @ApiProperty({
