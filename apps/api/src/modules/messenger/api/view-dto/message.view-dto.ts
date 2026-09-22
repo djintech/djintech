@@ -24,7 +24,7 @@ export class MessageViewDto {
   @ApiProperty()
   receiverId!: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, nullable: true })
   messageText!: string | null;
 
   @ApiProperty({ type: MediaContentViewDto, nullable: true })

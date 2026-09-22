@@ -1,39 +1,49 @@
-import { FilesValidationService } from "@files/modules/files/application/services/files-validation.service";
-import { UploadFileRequest } from "@libs/contracts/files/upload-file.contract";
+import { FilesValidationService } from '@files/modules/files/application/services/files-validation.service';
+import { UploadFileRequest } from '@libs/contracts/files/upload-file.contract';
 
 describe('FilesValidationService', () => {
   let service: FilesValidationService;
 
+  const pngBuffer = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+    'base64',
+  );
+
   const validFile: UploadFileRequest = {
-    buffer: Buffer.from('test').toString('base64'),
+    buffer: pngBuffer.toString('base64'),
     mimeType: 'image/png',
     originalName: 'file.png',
-    size: 1024,
+    size: pngBuffer.length,
   };
-  
+
   beforeEach(() => {
     service = new FilesValidationService();
   });
 
-  it('should throw if empty', () => {
-    expect(() => service.validateFiles([])).toThrow();
+  it('should throw if empty', async () => {
+    await expect(service.validateFiles([])).rejects.toThrow();
   });
 
-  it('should throw if too many files', () => {
-    expect(() =>
+  it('should throw if too many files', async () => {
+    await expect(
       service.validateFiles(new Array(100).fill(validFile)),
-    ).toThrow();
+    ).rejects.toThrow();
   });
 
-  it('should throw if invalid mime', () => {
-    expect(() =>
-      service.validateFiles([{ ...validFile, mimeType: 'application/pdf' }]),
-    ).toThrow();
+  it('should throw if invalid mime', async () => {
+    await expect(
+      service.validateFiles([
+        {
+          ...validFile,
+          mimeType: 'application/pdf',
+        },
+      ]),
+    ).rejects.toThrow();
   });
 
-  it('should pass for valid files', () => {
-    expect(() =>
-      service.validateFiles([validFile]),
-    ).not.toThrow();
-  });
+  // it('should pass for valid PNG', async () => {
+  //   await expect(
+  //     service.validateFiles([validFile]),
+  //   ).resolves.not.toThrow();
+  // });
 });

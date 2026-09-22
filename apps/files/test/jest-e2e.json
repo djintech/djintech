@@ -5,8 +5,15 @@
   "rootDir": "../",
   "testEnvironment": "node",
   "testRegex": ".e2e-spec.ts$",
+  "extensionsToTreatAsEsm": [".ts"],
   "transform": {
-    "^.+\\.(t|j)s$": "ts-jest"
+    "^.+\\.(t|j)s$": [
+      "ts-jest",
+      {
+        "useESM": true,
+        "tsconfig": "<rootDir>/tsconfig.app.json"
+      }
+    ]
   },
   "moduleNameMapper": {
     "^@src/(.*)$": "<rootDir>/src/$1",

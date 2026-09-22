@@ -12,7 +12,7 @@ describe('UploadFilesCommandHandler', () => {
   beforeEach(() => {
     s3 = { upload: jest.fn() } as any;
     uuid = { generate: jest.fn() } as any;
-    validation = { validateFiles: jest.fn() } as any;
+    validation = { validateFiles: jest.fn().mockResolvedValue(undefined) } as any;
 
     handler = new UploadFilesCommandHandler(s3, uuid, validation);
   });
