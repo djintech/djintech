@@ -1,6 +1,7 @@
 export enum UploadType {
   BASE = 'base',
   AVATAR = 'avatar',
+  VOICE = 'voice',
 }
 
 export class UploadFileRequest {

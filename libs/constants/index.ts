@@ -5,7 +5,21 @@ export const PAYMENTS_SERVICE = 'PAYMENTS_SERVICE'
 
 export const POST_MAX_IMAGES_COUNT = 10;
 export const POST_IMAGE_SIZE = 20 * 1024 * 1024;
+
 export const MESSENGER_IMAGE_SIZE = 1 * 1024 * 1024;
+
+export const MESSENGER_VOICE_SIZE = 3 * 1024 * 1024;
+export const MESSENGER_VOICE_MAX_DURATION = 60;
+export const ALLOWED_AUDIO_MIME_TYPES = [
+  'audio/mpeg',
+  'audio/mp4',
+  'audio/wav',
+  'audio/x-wav',
+  'audio/ogg',
+  'audio/webm',
+  'audio/aac',
+  'audio/flac',
+];
 
 export const AVATAR_IMAGE_SIZE = 10 * 1024 * 1024;
 

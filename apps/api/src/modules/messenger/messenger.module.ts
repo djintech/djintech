@@ -14,6 +14,7 @@ import { DeleteMessageUseCase } from './application/usecases/delete-message.usec
 import { UpdateMessageStatusUseCase } from './application/usecases/update-message-status.usecase';
 import { MessengerService } from './application/services/messenger.service';
 import { CreateImageMessageUseCase } from './application/usecases/create-image-message.usecase';
+import { CreateVoiceMessageUseCase } from './application/usecases/create-voice-message.usecase';
 
 const commandHandlers = [
   SendMessageCommandHandler,
@@ -21,6 +22,7 @@ const commandHandlers = [
   DeleteMessageUseCase,
   UpdateMessageStatusUseCase,
   CreateImageMessageUseCase,
+  CreateVoiceMessageUseCase,
 ];
 
 const queryHandlers = [

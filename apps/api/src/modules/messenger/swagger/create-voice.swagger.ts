@@ -1,10 +1,9 @@
 import { applyDecorators } from "@nestjs/common";
 import { ApiBadRequestResponse, ApiBody, ApiConsumes, ApiCreatedResponse, ApiForbiddenResponse, ApiOperation, ApiParam, ApiSecurity, ApiTooManyRequestsResponse, ApiUnauthorizedResponse } from "@nestjs/swagger";
-import { ImageInputDto } from "../api/input-dto/image.input-dto";
 import { MessageViewDto } from "../api/view-dto/message.view-dto";
 import { ErrorResponseDto } from "@src/core/error-dto/error-response.dto";
 
-export function ApiCreateImageDocs() {
+export function ApiCreateVoiceDocs() {
   return applyDecorators(
     ApiSecurity('JwtAuth'),
     ApiParam({ name: 'receiverId', type: Number, example: 1, description: 'receiver ID' }),
@@ -12,27 +11,21 @@ export function ApiCreateImageDocs() {
     ApiBody({
       schema: {
         type: 'object',
-        description: 'JPG, JPEG, or PNG image, maximum size 1 MB.',
+        description: 'AAC, M4A, MP3, OGG, WAV, or WebM audio, maximum size 3 MB and duration 60 seconds',
         properties: {
           file: {
             type: 'string',
             format: 'binary',
-          },
-          message: {
-            type: 'string',
-            maxLength: 5000,
-            example: 'Look at this photo',
-          },
+          }
         },
         required: ['file'],
       },
     }),
-    ApiCreatedResponse({ type: MessageViewDto, description: 'The image has been successfully created. The response body contains the message data' }),
+    ApiCreatedResponse({ type: MessageViewDto, description: 'The voice message has been successfully created. The response body contains the message data' }),
     ApiBadRequestResponse({ description: 'The inputModel has incorrect values', type: ErrorResponseDto }),
     ApiUnauthorizedResponse({ description: 'Unauthorized'}),
     ApiForbiddenResponse({ description: 'Forbidden. User is banned.' }),
     ApiTooManyRequestsResponse({ description: 'More than 5 attempts from one IP-address during 10 seconds.' }),
-    ApiOperation({ summary: 'Create image' }),
+    ApiOperation({ summary: 'Create voice message' }),
   );
 }
-  

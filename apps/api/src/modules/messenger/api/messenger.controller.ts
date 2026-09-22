@@ -22,6 +22,9 @@ import { ApiCreateImageDocs } from '../swagger/create-image.swagger';
 import { CustomFileInterceptor } from '../interseptors/custom-file.interceptor';
 import { MessageWithMedia } from '../infrastructure/types/message-with-media.type';
 import { CreateImageMessageCommand } from '../application/usecases/create-image-message.usecase';
+import { ApiCreateVoiceDocs } from '../swagger/create-voice.swagger';
+import { CustomFileVoiceInterceptor } from '../interseptors/custom-file-voice.interceptor';
+import { CreateVoiceMessageCommand } from '../application/usecases/create-voice-message.usecase';
 
 @Controller('messenger')
 export class MessengerController {
@@ -99,6 +102,23 @@ export class MessengerController {
     @Body() dto: ImageInputDto,
   ): Promise<MessageViewDto> {
     const message = await this.commandBus.execute(new CreateImageMessageCommand( dto.message, userId, receiverId, file ));
+
+    this.messengerService.sendMessage( message );
+    
+    return message;
+  }
+    
+  @Post('/:receiverId/voice')
+  @HttpCode(HttpStatus.CREATED)
+  @UseGuards(JwtAuthGuard, BannedUserGuard)
+  @ApiCreateVoiceDocs()
+  @UseInterceptors(CustomFileVoiceInterceptor)
+  async createVoice(
+    @UserId() userId: number,
+    @Param('receiverId', ParseIntPipe) receiverId: number,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<MessageViewDto> {
+    const message = await this.commandBus.execute(new CreateVoiceMessageCommand( userId, receiverId, file ));
 
     this.messengerService.sendMessage( message );
     
